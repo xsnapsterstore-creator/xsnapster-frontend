@@ -79,7 +79,6 @@ const AddCategory = () => {
     if (res.status === 400) alert("Sub-Category already exists");
     if (res.status === 500) alert("Something went wrong");
     if (res.status === 200) alert("Sub-Category added successfully");
-    console.log(res);
     setCategory("");
     setCategoryOneLiner("");
     setSubCategories([""]);

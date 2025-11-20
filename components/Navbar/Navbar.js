@@ -70,7 +70,7 @@ const Navbar = () => {
 
       setVisible(
         prevScrollPos > currentScrollPos || // Scrolling up
-          currentScrollPos < 10 // At the top
+        currentScrollPos < 10 // At the top
       );
 
       setPrevScrollPos(currentScrollPos);
@@ -82,16 +82,15 @@ const Navbar = () => {
 
   if (!isMounted) return null;
 
-  async function CheckLogin(){
+  async function CheckLogin() {
     router.replace('/login');
   }
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 shadow z-30 bg-white transition-transform duration-300 ${
-          visible ? "translate-y-0" : "-translate-y-full"
-        }`}
+        className={`fixed top-0 left-0 right-0 shadow z-30 bg-white transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"
+          }`}
       >
         {/* For Mobile View */}
         <div className="flex lg:hidden justify-between items-center h-[65px]">
@@ -156,11 +155,10 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
-                      isCategoriesOpen
-                        ? "max-h-[500px] mt-2 opacity-100 visible"
-                        : "max-h-0 opacity-0 invisible"
-                    }`}
+                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${isCategoriesOpen
+                      ? "max-h-[500px] mt-2 opacity-100 visible"
+                      : "max-h-0 opacity-0 invisible"
+                      }`}
                   >
                     <div className="flex flex-col p-4 space-y-3">
                       {categories.map((item) => (
@@ -192,11 +190,10 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
-                      isHelpCenterOpen
-                        ? "max-h-[500px] mt-2 opacity-100 visible"
-                        : "max-h-0 opacity-0 invisible"
-                    }`}
+                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${isHelpCenterOpen
+                      ? "max-h-[500px] mt-2 opacity-100 visible"
+                      : "max-h-0 opacity-0 invisible"
+                      }`}
                   >
                     <div className="flex flex-col p-4 space-y-3">
                       {[
@@ -294,9 +291,8 @@ const Navbar = () => {
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex h-[65px] justify-between items-center p-4 border-b">
           <div className="flex items-center gap-[1px]">
@@ -314,10 +310,10 @@ const Navbar = () => {
 
         <div className="flex flex-col h-[calc(100%-120px)]">
           <div className="flex-1 text-[17px] scrollbar-hide overflow-y-auto p-4 text-white space-y-5">
-            <div className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-5">
+            <Link href={"/login"} onClick={toggleSidebar} className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-5">
               <PersonIcon />
               <p>Guest User</p>
-            </div>
+            </Link>
             <div>
               <div
                 className="flex items-center justify-between cursor-pointer"
@@ -334,9 +330,8 @@ const Navbar = () => {
 
               {isCategoriesOpen && (
                 <div
-                  className={`overflow-hidden text-[15px] transform transition-transform duration-300 ${
-                    isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
-                  } ml-4 flex flex-col space-y-5`}
+                  className={`overflow-hidden text-[15px] transform transition-transform duration-300 ${isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
+                    } ml-4 flex flex-col space-y-5`}
                 >
                   {categories.map((item) => (
                     <a

@@ -17,7 +17,11 @@ const OTPVerify = () => {
     } else {
       const res = await verifyOTP(email, otp);
       if(res.status === 200){
-        window.location.replace("/");
+        localStorage.setItem("access_token", res.data.access_token);
+        localStorage.setItem("token_type", res.data.token_type);
+        localStorage.setItem("userID", res.data.user.id);
+        localStorage.setItem("userEmail", res.data.user.email);
+        // window.location.replace("/");
         console.log(res);
       }
       SetNoOtp(false);

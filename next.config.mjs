@@ -1,3 +1,5 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // output: "export",
@@ -12,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: "/v1/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
+        destination: `${API_URL}/:path*`,
       },
     ];
   },
