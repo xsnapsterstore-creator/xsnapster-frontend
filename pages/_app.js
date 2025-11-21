@@ -10,7 +10,6 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <Navbar />
       <Component {...pageProps} />
-      <ReviewCarousel />
       <Footer />
     </Provider>
   );
