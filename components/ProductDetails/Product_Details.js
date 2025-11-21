@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSwipeable } from "react-swipeable";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -16,6 +16,7 @@ import { Button } from "@mui/material";
 export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
+  const [fullscreenImage, setFullscreenImage] = useState(null);
 
   const product = {
     id: prod.id,
@@ -69,15 +70,15 @@ export default function ProductDetailsPage({ prod }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? product.images.length - 1 : prev - 1
-    );
+    const total = prod?.image_links?.length || 0;
+    if (total === 0) return;
+    setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === prod.image_links.length - 1 ? 0 : prev + 1
-    );
+    const total = prod?.image_links?.length || 0;
+    if (total === 0) return;
+    setCurrentIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
   };
 
   const handlers = useSwipeable({
@@ -117,7 +118,8 @@ export default function ProductDetailsPage({ prod }) {
                   alt={`${prod.title} ${index + 1}`}
                   width={600}
                   height={400}
-                  className="object-cover w-full h-[400px] md:h-[600px]"
+                  onClick={() => setFullscreenImage(src)}
+                  className="object-cover cursor-pointer w-full h-[400px] md:h-[600px]"
                 />
               </div>
             ))}
@@ -144,13 +146,28 @@ export default function ProductDetailsPage({ prod }) {
             <span
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-2 w-2 rounded-full cursor-pointer ${
-                index === currentIndex ? "bg-blue-600" : "bg-gray-400"
-              }`}
+              className={`h-2 w-2 rounded-full cursor-pointer ${index === currentIndex ? "bg-blue-600" : "bg-gray-400"
+                }`}
             />
           ))}
         </div>
       </div>
+
+      {/* Image Full Screen */}
+      {fullscreenImage && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <img
+            src={fullscreenImage}
+            alt="preview"
+            className="max-w-[90%] max-h-[90%] rounded-lg shadow-xl animate-fadeIn"
+            onClick={(e) => e.stopPropagation()} // prevents closing when clicking image
+          />
+        </div>
+      )}
+
 
       {/* Product Info */}
       <div>
