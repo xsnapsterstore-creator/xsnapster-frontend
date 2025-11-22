@@ -1,11 +1,13 @@
 import React from "react";
 import Product from "../Product/Product";
 import SubCategoryChips from "./SubCategoryChips";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { fetchSubCategoriesProduct } from "../API/api";
 import { motion } from "framer-motion";
+import { CategoryTitle } from "../Data/data";
+import { CategorySubtitle } from "../Data/data";
 
 const CategoryPage = ({ category, productName, SubCategory }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -13,8 +15,10 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
   const [products, setProducts] = useState(productName);
   const router = useRouter();
   const { category_name, sub_category_name } = router.query;
+  let subCateg = SubCategory;
 
   const handleSubCategorySelect = async (cat) => {
+
     setLoading(true);
     setSelectedCategory(cat.slug);
 
@@ -40,47 +44,23 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
     }
   };
 
-  const title = {
-    cars: "Fast & Curious",
-    anime: "Hentai...But Not Really",
-    "black-and-white-aesthetics": "Fifty Shades of Frames",
-    gym: "Hard & Heavy",
-    sports: "Sweaty & Wild",
-    "for-him": "Big Boys Collection",
-    "for-her": "She Wants It All",
-    movies: "Rated Frames Only",
-    "music-album": "Moan & Groan Records",
-    marvel: "Super Hard Heroes",
-  };
-
-  const subtitle = {
-    cars: "Because people come for speed... and curosity",
-    anime: "Instant clickbait frames, not fantasies",
-    "black-and-white-aesthetics": "No whips, only frames in grayscale",
-    gym: "Weights? Or something else? You decide",
-    sports: "Messi dripping, not what you imagined",
-    "for-him": "Because size does matter... in Frames",
-    "for-her": "Frames, not boyfriends",
-    movies: "Popcorn included? Nope, Just Aesthetics",
-    "music-album": "You'll still hang Drake next to your bed",
-    marvel: "Not the kind of heroes you thought... they just save your walls",
-  };
-
-  // useEffect(() => {
-  //   setProducts(productName);
-  // }, [sub_category_name]);
+  useEffect(() => {
+    subCateg.map((item) => {
+      if (item.slug === sub_category_name) {
+        handleSubCategorySelect(item);
+      }
+    })
+  }, [sub_category_name]);
 
   return (
     <div>
       <div>
         <h1 className="text-[25px] font-semibold text-center mt-4">
           {" "}
-          {/* {CategName[category] || "Category Not Found"} */}
-          {title[router.query.category_name] || "Subtitle Not Found"}
+          {CategoryTitle[router.query.category_name] || "Subtitle Not Found"}
         </h1>
-        {/* <h2 className="text-center text-[10px] text-red-500 font-semibold">{title[category] || "Subtitle Not Found"}</h2> */}
         <h3 className="text-center text-[12px] text-black">
-          {subtitle[router.query.category_name] || "Subtitle Not Found"}
+          {CategorySubtitle[router.query.category_name] || "Subtitle Not Found"}
         </h3>
         <hr />
       </div>
@@ -98,9 +78,10 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
               <Image
                 src={"/loading.webp"}
                 alt="Loading..."
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 unoptimized
+                className="opacity-25"
               />
             </div>
           </div>

@@ -131,3 +131,29 @@ export const CategoryID = {
   movies:19,
   "music-album":20
 }
+
+export const CategoryTitle = {
+  cars: "Fast & Curious",
+  anime: "Hentai...But Not Really",
+  "black-and-white-aesthetics": "Fifty Shades of Frames",
+  gym: "Hard & Heavy",
+  sports: "Sweaty & Wild",
+  "for-him": "Big Boys Collection",
+  "for-her": "She Wants It All",
+  movies: "Rated Frames Only",
+  "music-album": "Moan & Groan Records",
+  marvel: "Super Hard Heroes",
+};
+
+export const CategorySubtitle = {
+  cars: "Because people come for speed... and curosity",
+  anime: "Instant clickbait frames, not fantasies",
+  "black-and-white-aesthetics": "No whips, only frames in grayscale",
+  gym: "Weights? Or something else? You decide",
+  sports: "Messi dripping, not what you imagined",
+  "for-him": "Because size does matter... in Frames",
+  "for-her": "Frames, not boyfriends",
+  movies: "Popcorn included? Nope, Just Aesthetics",
+  "music-album": "You'll still hang Drake next to your bed",
+  marvel: "Not the kind of heroes you thought... they just save your walls",
+};
