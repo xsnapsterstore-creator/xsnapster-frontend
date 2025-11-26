@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../store/cartSlice";
+import GppGoodIcon from "@mui/icons-material/GppGood";
 
 const Cart = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -36,30 +37,6 @@ const Cart = ({ isOpen, onClose }) => {
     window.location.href = `/categories/${categ}/${subcateg}/${id}`;
   }
 
-  const items = [
-    {
-      id: 1,
-      img: "/bmw_1.webp",
-      name: "BMW M4 GT4 | Car Frames",
-      price: 399,
-      oldPrice: 799,
-    },
-    {
-      id: 2,
-      img: "/porsche_1.webp",
-      name: "Ferrari F8 Tribute",
-      price: 399,
-      oldPrice: 899,
-    },
-    {
-      id: 3,
-      img: "/ferrari_1.webp",
-      name: "Porsche 911 Turbo S",
-      price: 399,
-      oldPrice: 999,
-    },
-  ];
-
   const tot = cart.map((item) => item.price);
   const total = tot.reduce((sum, item) => sum + item, 0);
 
@@ -79,7 +56,6 @@ const Cart = ({ isOpen, onClose }) => {
 
       {cart.length === 0 && (
         <div className="flex flex-col justify-center items-center h-[calc(100%-65px)] text-center px-4">
-
           {/* Content */}
           <h2 className="text-2xl font-semibold text-white tracking-wide">
             Your Cart is Empty
@@ -148,8 +124,14 @@ const Cart = ({ isOpen, onClose }) => {
 
         {/* Footer / Checkout (sticky) */}
         <div className="p-4 border-t border-neutral-800 bg-grey-900 backdrop-blur-md sticky bottom-0">
+          <div className="flex gap-3 justify-between items-center mb-3">
+            <GppGoodIcon fontSize="small" />
+            <p className="text-xs">
+              Safe and Secure Payments. Easy Returns. 100% Authentic Products
+            </p>
+          </div>
           <div className="flex justify-between mb-3 text-sm">
-            <span className="text-gray-400">Subtotal</span>
+            <span className="text-gray-400">Total</span>
             <span className="font-semibold">₹{total}</span>
           </div>
           <button

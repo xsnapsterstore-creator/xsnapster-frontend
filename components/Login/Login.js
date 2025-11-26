@@ -60,8 +60,14 @@ export default function AuthPage() {
 
       setMsg({ type: "success", text: "OTP Verified Successfully" });
 
-      router.replace("/");
-    } else {
+      const temp = (localStorage.getItem("cart"))
+      if(temp.length === 0){
+        router.replace("/");
+      }else{
+        router.replace('/address')
+      }
+
+        } else {
       setMsg({ type: "error", text: data?.message || "OTP Verification Failed" });
     }
 
@@ -77,7 +83,7 @@ export default function AuthPage() {
         : "text-gray-500";
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-50 to-white">
+    <div className="pt-[95px] min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
