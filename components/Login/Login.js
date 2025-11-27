@@ -60,15 +60,17 @@ export default function AuthPage() {
 
       setMsg({ type: "success", text: "OTP Verified Successfully" });
 
-      const temp = (localStorage.getItem("cart"))
-      if(temp.length === 0){
+      const temp = localStorage.getItem("cart");
+      if (temp.length === 0) {
         router.replace("/");
-      }else{
-        router.replace('/address')
+      } else {
+        router.replace("/address");
       }
-
-        } else {
-      setMsg({ type: "error", text: data?.message || "OTP Verification Failed" });
+    } else {
+      setMsg({
+        type: "error",
+        text: data?.message || "OTP Verification Failed",
+      });
     }
 
     setLoading(false);
@@ -79,8 +81,8 @@ export default function AuthPage() {
     msg.type === "error"
       ? "text-red-600"
       : msg.type === "success"
-        ? "text-green-600"
-        : "text-gray-500";
+      ? "text-green-600"
+      : "text-gray-500";
 
   return (
     <div className="pt-[95px] min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-50 to-white">
@@ -91,9 +93,16 @@ export default function AuthPage() {
         transition={{ duration: 0.4 }}
         className="text-center mb-10 px-3"
       >
-        <Image className="m-auto" src="/logo.svg" alt="Logo" width={60} height={60} />
+        <Image
+          className="m-auto"
+          src="/logo.svg"
+          alt="Logo"
+          width={60}
+          height={60}
+        />
         <h2 className="text-3xl mt-2 lg:text-4xl font-extrabold text-gray-900">
-          Join the <span className="text-red-600 animate-pulse">Wall of Fame</span>
+          Join the{" "}
+          <span className="text-red-600 animate-pulse">Wall of Fame</span>
         </h2>
         <p className="text-gray-600 mt-2 text-sm lg:text-base">
           Because your walls deserve better — and so do you.
@@ -108,9 +117,7 @@ export default function AuthPage() {
           className="w-[90%] max-w-md bg-white shadow-xl rounded-3xl p-8"
         >
           <div className="mb-6 flex justify-center gap-6">
-            <button
-              className="pb-3 font-semibold border-b-2 border-black flex items-center gap-2"
-            >
+            <button className="pb-3 font-semibold border-b-2 border-black flex items-center gap-2">
               <EmailIcon fontSize="small" /> Email
             </button>
           </div>
@@ -186,11 +193,17 @@ export default function AuthPage() {
       <div className="mt-8 text-center text-xs text-gray-500 px-6 max-w-xs">
         <p>
           By signing up, you agree to our{" "}
-          <Link href="/terms-and-conditions" className="text-black font-medium hover:underline">
+          <Link
+            href="/terms-and-conditions"
+            className="text-black font-medium hover:underline"
+          >
             Terms & Conditions
           </Link>{" "}
           and{" "}
-          <Link href="/privacy-policy" className="text-black font-medium hover:underline">
+          <Link
+            href="/privacy-policy"
+            className="text-black font-medium hover:underline"
+          >
             Privacy Policy
           </Link>
           .

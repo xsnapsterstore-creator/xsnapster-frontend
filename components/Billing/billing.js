@@ -2,9 +2,38 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const BillingTemplate = () => {
   const router = useRouter();
+  const [paymentOpt, setPaymentOpt] = useState("");
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load cart items from localStorage
+  useEffect(() => {
+    setLoading(true);
+
+    const cartData = localStorage.getItem("cart");
+
+    try {
+      if (cartData) {
+        setItems(JSON.parse(cartData));
+      } else {
+        setItems([]);
+      }
+    } catch (error) {
+      console.log("Error parsing cart:", error);
+      setItems([]);
+    }
+
+    setLoading(false);
+  }, []);
+
+  async function ProceedPayment() {
+    console.log("The payment option is:", paymentOpt);
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -27,30 +56,42 @@ const BillingTemplate = () => {
             </h2>
 
             <div className="flex flex-col divide-y">
-              {/* Item */}
-              <div className="flex items-center gap-4 py-4">
-                <Image
-                  src="/logo.svg"
-                  height={80}
-                  width={80}
-                  className="w-20 h-20 rounded-xl object-cover border"
-                />
-
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-900 text-sm md:text-base">
-                    Wired Bluetooth Headphones
-                  </p>
-                  <p className="text-gray-500 text-xs md:text-sm">
-                    Quantity: 1
-                  </p>
-                </div>
-
-                <p className="font-semibold text-gray-900 text-sm md:text-base">
-                  ₹799
+              {loading ? (
+                <p className="text-center py-5 text-gray-500 animate-pulse">
+                  Loading items...
                 </p>
-              </div>
+              ) : items.length === 0 ? (
+                <p className="text-center py-5 text-gray-500">
+                  Your cart is empty
+                </p>
+              ) : (
+                items.map((item, index) => (
+                  <div key={index} className="flex items-center gap-4 py-4">
+                    <img
+                      alt={item.title}
+                      src={item.image_link}
+                      height={80}
+                      width={80}
+                      className="w-20 h-20 rounded-xl object-cover border"
+                    />
 
-              {/* Repeat for more items */}
+                    <div className="flex-1">
+                      <p className="font-semibold text-gray-900 text-sm md:text-base">
+                        {item.title}
+                      </p>
+                      <div>
+                        <p className="text-gray-500 text-xs md:text-sm">
+                          Quantity: 2
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="font-semibold text-gray-900 text-sm md:text-base">
+                      ₹{item.price}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
@@ -130,6 +171,101 @@ const BillingTemplate = () => {
               </div>
             </div>
 
+            <hr className="my-4" />
+
+            <div className="mt-6 space-y-4">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                Payment Options
+              </h2>
+
+              {/* Select Box */}
+              <div>
+                <label className="font-medium text-gray-700 text-sm">
+                  Choose Payment Method
+                </label>
+                <select
+                  value={paymentOpt}
+                  onChange={(e) => setPaymentOpt(e.target.value)}
+                  className="w-full mt-2 p-3 border rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                >
+                  <option value="">Select a payment method</option>
+                  <option value="cod">Cash on Delivery</option>
+                  <option value="upi">UPI (GPay / PhonePe / Paytm)</option>
+                  <option value="debit">Debit Card</option>
+                  <option value="credit">Credit Card</option>
+                </select>
+              </div>
+
+              {/* Dynamic Fields */}
+              <div className="mt-4">
+                {/* COD */}
+                {paymentOpt === "cod" && (
+                  <p className="text-gray-700 text-sm bg-gray-100 p-3 rounded-lg border">
+                    You can pay when your order arrives at your doorstep.
+                  </p>
+                )}
+
+                {/* UPI */}
+                {paymentOpt === "upi" && (
+                  <div className="space-y-2 bg-gray-50 border p-4 rounded-xl">
+                    <label className="text-xs text-gray-600">
+                      Enter UPI ID
+                    </label>
+                    <div className="flex justify-between items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="example@upi"
+                        className="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                      />
+                      <button className="py-2 px-2 cursor-pointer bg-black text-white rounded-xl text-sm font-medium active:scale-95 transition">
+                        Check
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Debit Card */}
+                {paymentOpt === "debit" && (
+                  <div className="space-y-3 bg-gray-50 border p-4 rounded-xl">
+                    <input
+                      className="w-full border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
+                      placeholder="Card Number"
+                    />
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
+                        placeholder="MM/YY"
+                      />
+                      <input
+                        className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
+                        placeholder="CVV"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Credit Card */}
+                {paymentOpt === "credit" && (
+                  <div className="space-y-3 bg-gray-50 border p-4 rounded-xl">
+                    <input
+                      className="w-full border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
+                      placeholder="Card Number"
+                    />
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
+                        placeholder="MM/YY"
+                      />
+                      <input
+                        className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
+                        placeholder="CVV"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="mt-5">
               <p className="text-[11px]">
                 By continuing with the order, you confirm that you are above 18
@@ -148,8 +284,11 @@ const BillingTemplate = () => {
             </div>
 
             {/* Payment Button */}
-            <button className="w-full mt-6 py-3 cursor-pointer bg-black text-white rounded-xl text-sm font-medium active:scale-95 transition">
-              Proceed to Payment
+            <button
+              onClick={ProceedPayment}
+              className="w-full mt-6 py-3 cursor-pointer bg-black text-white rounded-xl text-sm font-medium active:scale-95 transition"
+            >
+              {paymentOpt === "cod" ? "Place Order" : "Proceed to Payment"}
             </button>
           </div>
         </div>
