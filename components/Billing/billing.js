@@ -3,12 +3,51 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Select from "react-select";
 
 const BillingTemplate = () => {
   const router = useRouter();
-  const [paymentOpt, setPaymentOpt] = useState("");
+  const [paymentOpt, setPaymentOpt] = useState("upi");
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const paymentOptions = [
+    { value: "", label: "Select a payment method", isDisabled: true },
+    { value: "cod", label: "💵 Cash on Delivery" },
+    { value: "upi", label: "🟢 UPI (GPay / PhonePe / Paytm)" },
+    { value: "debit", label: "💳 Debit Card" },
+    { value: "credit", label: "💳 Credit Card" },
+  ];
+
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      borderRadius: "12px",
+      padding: "4px",
+      borderColor: state.isFocused ? "#6366F1" : "#D1D5DB",
+      boxShadow: state.isFocused ? "0 0 0 2px rgba(99,102,241,0.4)" : "none",
+      "&:hover": {
+        borderColor: "#6366F1",
+      },
+    }),
+    option: (base, state) => ({
+      ...base,
+      padding: "12px",
+      fontSize: "14px",
+      backgroundColor: state.isSelected
+        ? "#6366F1"
+        : state.isFocused
+        ? "#EEF2FF"
+        : "white",
+      color: state.isSelected ? "white" : "#111827",
+      cursor: "pointer",
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: "12px",
+      overflow: "hidden",
+      boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+    }),
+  };
 
   // Load cart items from localStorage
   useEffect(() => {
@@ -183,17 +222,15 @@ const BillingTemplate = () => {
                 <label className="font-medium text-gray-700 text-sm">
                   Choose Payment Method
                 </label>
-                <select
-                  value={paymentOpt}
-                  onChange={(e) => setPaymentOpt(e.target.value)}
-                  className="w-full mt-2 p-3 border rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-                >
-                  <option value="">Select a payment method</option>
-                  <option value="cod">Cash on Delivery</option>
-                  <option value="upi">UPI (GPay / PhonePe / Paytm)</option>
-                  <option value="debit">Debit Card</option>
-                  <option value="credit">Credit Card</option>
-                </select>
+                <Select
+                  value={paymentOptions.find((opt) => opt.value === paymentOpt)}
+                  onChange={(selected) => setPaymentOpt(selected.value)}
+                  options={paymentOptions}
+                  styles={customStyles}
+                  placeholder="Select a payment method"
+                  className="mt-2"
+                  classNamePrefix="react-select"
+                />
               </div>
 
               {/* Dynamic Fields */}
