@@ -65,11 +65,10 @@ export default function AuthPage() {
       dispatch(setUserDetails());
       setLoading(false);
 
-      const temp = localStorage.getItem("cart") || [];
-      if (temp.length === 0) {
-        router.push("/");
-      } else {
-        router.push("/address");
+      if (typeof window !== "undefined") {
+        const temp = localStorage.getItem("cart");
+        const cartItems = temp ? JSON.parse(temp) : [];
+        router.push(cartItems.length === 0 ? "/" : "/address");
       }
     } else {
       setMsg({
