@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useId } from "react";
 
 const initialState = {
   items:
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("cart")) || []
       : [],
+  user: null,
 };
 
 const cartSlice = createSlice({
@@ -32,10 +34,23 @@ const cartSlice = createSlice({
       const stored = JSON.parse(localStorage.getItem("cart")) || [];
       state.items = stored;
     },
+    setUserDetails: (state) => {
+      const userEmail = localStorage.getItem("userEmail") || "Guest User";
+      const userID = localStorage.getItem("userID") || null;
+      state.user = {
+        userEmail,
+        userID,
+      };
+    },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, loadCartFromStorage } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  loadCartFromStorage,
+  setUserDetails,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

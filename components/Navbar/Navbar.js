@@ -11,12 +11,15 @@ import PaidIcon from "@mui/icons-material/Paid";
 import Cart from "../Cart/Cart";
 import { useEffect } from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../API/api";
 import { useRouter } from "next/navigation";
+import { setUserDetails } from "../store/cartSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.cart.user);
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -25,7 +28,7 @@ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [isLogin, setIsLogin] = useState("Guest User");
+  let toggle = false;
   const router = useRouter();
 
   const toggleCategories = () => {
@@ -38,6 +41,10 @@ const Navbar = () => {
   };
   const toggleCart = () => setIsCartOpen(!isCartOpen);
   const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    dispatch(setUserDetails());
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -70,7 +77,7 @@ const Navbar = () => {
 
       setVisible(
         prevScrollPos > currentScrollPos || // Scrolling up
-        currentScrollPos < 10 // At the top
+          currentScrollPos < 10 // At the top
       );
 
       setPrevScrollPos(currentScrollPos);
@@ -82,15 +89,23 @@ const Navbar = () => {
 
   if (!isMounted) return null;
 
-  async function CheckLogin() {
-    router.replace('/login');
+  async function CheckLogin(toggle) {
+    if (user.userEmail && user.userID) {
+      router.replace(`/user/${user.userID}`);
+    } else {
+      router.replace("/login");
+    }
+    if(toggle){
+      toggleSidebar();
+    }
   }
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 shadow z-30 bg-white transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"
-          }`}
+        className={`fixed top-0 left-0 right-0 shadow z-30 bg-white transition-transform duration-300 ${
+          visible ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         {/* For Mobile View */}
         <div className="flex lg:hidden justify-between items-center h-[65px]">
@@ -125,7 +140,7 @@ const Navbar = () => {
         {/* For Desktop View */}
         <div className="lg:flex hidden justify-between items-center h-[65px]">
           <div className="pl-7">
-            <Link href={"/"}>
+            <a href={"/"}>
               <div className="flex items-center gap-[2px] md:text-[25px] text-[20px] font-semibold">
                 <Image src="/logo.svg" alt="xsnapster" width={30} height={30} />
                 <div className="flex items-center">
@@ -134,7 +149,7 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-            </Link>
+            </a>
           </div>
 
           <div>
@@ -155,10 +170,11 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${isCategoriesOpen
-                      ? "max-h-[500px] mt-2 opacity-100 visible"
-                      : "max-h-0 opacity-0 invisible"
-                      }`}
+                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                      isCategoriesOpen
+                        ? "max-h-[500px] mt-2 opacity-100 visible"
+                        : "max-h-0 opacity-0 invisible"
+                    }`}
                   >
                     <div className="flex flex-col p-4 space-y-3">
                       {categories.map((item) => (
@@ -190,10 +206,11 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${isHelpCenterOpen
-                      ? "max-h-[500px] mt-2 opacity-100 visible"
-                      : "max-h-0 opacity-0 invisible"
-                      }`}
+                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                      isHelpCenterOpen
+                        ? "max-h-[500px] mt-2 opacity-100 visible"
+                        : "max-h-0 opacity-0 invisible"
+                    }`}
                   >
                     <div className="flex flex-col p-4 space-y-3">
                       {[
@@ -243,10 +260,15 @@ const Navbar = () => {
                   </form>
                 </li>
 
-                <li onClick={CheckLogin} className="px-2 py-1 bg-gray-200 rounded-lg hover:cursor-pointer flex items-center">
+                <li
+                  onClick={(e) => CheckLogin(toggle)}
+                  className="px-2 py-1 bg-gray-200 rounded-lg hover:cursor-pointer flex items-center"
+                >
                   <PersonIcon />
                   <button className="ml-1 hover:cursor-pointer">
-                    {isLogin}
+                    {user?.userEmail?.length > 13
+                      ? user.userEmail.substring(0, 9) + "..."
+                      : user.userEmail}
                   </button>
                 </li>
               </ul>
@@ -291,8 +313,9 @@ const Navbar = () => {
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex h-[65px] justify-between items-center p-4 border-b">
           <div className="flex items-center gap-[1px]">
@@ -310,10 +333,17 @@ const Navbar = () => {
 
         <div className="flex flex-col h-[calc(100%-120px)]">
           <div className="flex-1 text-[17px] scrollbar-hide overflow-y-auto p-4 text-white space-y-5">
-            <Link href={"/login"} onClick={toggleSidebar} className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-5">
+            <div
+              onClick={(e) => CheckLogin(toggle=true)}
+              className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-3"
+            >
               <PersonIcon />
-              <p>Guest User</p>
-            </Link>
+              <p>
+                {user?.userEmail?.length > 13
+                  ? user.userEmail.substring(0, 20) + "..."
+                  : user.userEmail}
+              </p>
+            </div>
             <div>
               <div
                 className="flex items-center justify-between cursor-pointer"
@@ -330,8 +360,9 @@ const Navbar = () => {
 
               {isCategoriesOpen && (
                 <div
-                  className={`overflow-hidden text-[15px] transform transition-transform duration-300 ${isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
-                    } ml-4 flex flex-col space-y-5`}
+                  className={`overflow-hidden text-[15px] transform transition-transform duration-300 ${
+                    isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
+                  } ml-4 flex flex-col space-y-5`}
                 >
                   {categories.map((item) => (
                     <a

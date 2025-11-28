@@ -7,9 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { requestOTP, verifyOTP } from "../API/api";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/cartSlice";
 
 export default function AuthPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // Simplified states
   const [email, setEmail] = useState("");
@@ -58,10 +61,12 @@ export default function AuthPage() {
       localStorage.setItem("userID", data?.user?.id || "");
       localStorage.setItem("userEmail", data?.user?.email || "");
 
-      setMsg({ type: "success", text: "OTP Verified Successfully" });
+      dispatch(setUserDetails());
 
-      const temp = localStorage.getItem("cart");
-      if (temp.length === 0) {
+      setMsg({ type: "success", text: "OTP Verified Successfully" });
+      setLoading(false);
+
+      const temp = localStorage.getItem("cart") || [];      if (temp.length === 0) {
         router.replace("/");
       } else {
         router.replace("/address");
