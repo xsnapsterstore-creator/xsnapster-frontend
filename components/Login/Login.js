@@ -61,15 +61,15 @@ export default function AuthPage() {
       localStorage.setItem("userID", data?.user?.id || "");
       localStorage.setItem("userEmail", data?.user?.email || "");
 
-      dispatch(setUserDetails());
-
       setMsg({ type: "success", text: "OTP Verified Successfully" });
+      dispatch(setUserDetails());
       setLoading(false);
 
-      const temp = localStorage.getItem("cart") || [];      if (temp.length === 0) {
-        router.replace("/");
+      const temp = localStorage.getItem("cart") || [];
+      if (temp.length === 0) {
+        router.push("/");
       } else {
-        router.replace("/address");
+        router.push("/address");
       }
     } else {
       setMsg({
