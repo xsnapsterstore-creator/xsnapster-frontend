@@ -4,10 +4,18 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import Select from "react-select";
 
 const Product = ({ product, category_name }) => {
   const dispatch = useDispatch();
+  const sizeOptions = [
+    { value: "A4", saleprice: "349", actualprice: "599" },
+    { value: "A3", saleprice: "449", actualprice: "699" },
+    { value: "A2", saleprice: "549", actualprice: "799" },
+    { value: "Poster", saleprice: "69", actualprice: "199" },
+  ];
   const [added, setAdded] = useState(false);
+  const [sizeOpt, setSizeOpt] = useState(sizeOptions[0]);
 
   const category = category_name
     ? category_name.trim().replace(/\s+/g, "-").toLowerCase()
@@ -51,19 +59,33 @@ const Product = ({ product, category_name }) => {
         </h1>
 
         {/* Price Section */}
-        <div
-          onClick={() => {
-            window.location.href = `/categories/${category}/${subcategory}/${product.id}`;
-          }}
-          className="w-full"
-        >
-          <div className="flex items-center justify-start gap-2 mt-1">
-            <p className="text-red-600 font-bold text-base">399 Rs.</p>
-            <p className="line-through text-gray-400 text-xs">799 Rs.</p>
-          </div>
+        <div className="w-full mt-2 flex justify-between items-center">
           <div>
-            <p className="text-[10px] text-gray-400">Inclusive of all taxes</p>
+            <select
+              value={sizeOpt.value}
+              onChange={(e) =>
+                setSizeOpt(sizeOptions.find((s) => s.value === e.target.value))
+              }
+              className="border rounded-md px-1 py-2"
+            >
+              {sizeOptions.map((size) => (
+                <option key={size.value} value={size.value}>
+                  {size.value}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {sizeOpt && (
+            <div className="flex flex-col items-start justify-start">
+              <p className="text-red-600 font-bold text-base">
+                {sizeOpt.saleprice} Rs.
+              </p>
+              <p className="line-through text-gray-400 text-xs">
+                {sizeOpt.actualprice} Rs.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Action Buttons */}
