@@ -2,12 +2,17 @@ import React from "react";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart } from "../store/cartSlice";
+import {
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../store/cartSlice";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 
 const Cart = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -76,7 +81,7 @@ const Cart = ({ isOpen, onClose }) => {
 
         {/* Scrollable Items */}
         <div className="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-5">
-          {cart.map((item, i) => (
+          {cart.map((item, index) => (
             <div
               onClick={(e) =>
                 GoToProd(item.id, item.category, item.subcategory)
@@ -108,12 +113,40 @@ const Cart = ({ isOpen, onClose }) => {
 
               {/* Quantity / Remove */}
               <div className="flex flex-col items-center gap-2">
+                <div className="text-center">
+                  <div className="flex items-center gap-1 border rounded-lg bg-gray-300">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(decreaseQuantity(item.id));
+                      }}
+                      className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                    >
+                      -
+                    </button>
+
+                    <span className="font-semibold text-xs w-[15px] text-gray-900">
+                      {item.quantity || 1}
+                    </span>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(increaseQuantity(item.id));
+                      }}
+                      className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     dispatch(removeFromCart(item.id));
                   }}
-                  className="bg-neutral-800 px-2 py-1 rounded-md text-xs hover:bg-red-600 transition"
+                  className="bg-neutral-800 px-4 py-1.5 rounded-md text-xs hover:bg-red-600 transition"
                 >
                   Remove
                 </button>

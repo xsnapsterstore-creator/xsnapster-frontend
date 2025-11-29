@@ -267,8 +267,8 @@ const Navbar = () => {
                   <PersonIcon />
                   <button className="ml-1 hover:cursor-pointer">
                     {user?.userEmail?.length > 13
-                      ? user.userEmail.substring(0, 9) + "..."
-                      : user.userEmail}
+                      ? user.userEmail?.substring(0, 9) + "..."
+                      : user?.userEmail}
                   </button>
                 </li>
               </ul>
@@ -340,8 +340,8 @@ const Navbar = () => {
               <PersonIcon />
               <p>
                 {user?.userEmail?.length > 13
-                  ? user.userEmail.substring(0, 20) + "..."
-                  : user.userEmail}
+                  ? user.userEmail?.substring(0, 20) + "..."
+                  : user?.userEmail}
               </p>
             </div>
             <div>

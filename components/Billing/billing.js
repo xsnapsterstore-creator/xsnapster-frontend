@@ -4,9 +4,18 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Select from "react-select";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+} from "../store/cartSlice";
 
 const BillingTemplate = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.items);
+
   const [paymentOpt, setPaymentOpt] = useState("upi");
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +64,6 @@ const BillingTemplate = () => {
     if (typeof window === "undefined") return;
 
     setLoading(true);
-
     const cartData = localStorage.getItem("cart");
 
     if (!cartData || cartData === "[]") {
@@ -66,7 +74,7 @@ const BillingTemplate = () => {
     }
 
     try {
-      setItems(JSON.parse(cartData));
+      setItems(cart);
       setShowBilling(true);
     } catch (error) {
       console.error("Cart JSON parsing error:", error);
@@ -75,7 +83,7 @@ const BillingTemplate = () => {
     }
 
     setLoading(false);
-  }, []);
+  }, [cart]);
 
   async function ProceedPayment() {
     console.log("The payment option is:", paymentOpt);
@@ -113,29 +121,74 @@ const BillingTemplate = () => {
                 </p>
               ) : (
                 items.map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 py-4">
-                    <img
-                      alt={item.title}
-                      src={item.image_link}
-                      height={80}
-                      width={80}
-                      className="w-20 h-20 rounded-xl object-cover border"
-                    />
+                  <div
+                    key={index}
+                    className="flex justify-between items-start py-4 gap-3"
+                  >
+                    {/* Item Left */}
+                    <div className="flex items-start gap-3">
+                      <img
+                        src={item.image_link}
+                        alt={item.title}
+                        className="w-20 h-20 rounded-xl object-cover border"
+                      />
 
-                    <div className="flex-1">
-                      <p className="font-semibold text-gray-900 text-sm md:text-base">
-                        {item.title}
-                      </p>
-                      <div>
-                        <p className="text-gray-500 text-xs md:text-sm">
-                          Quantity: 2
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900 text-sm md:text-base">
+                          {item.title.substring(0, 35) + "..."}
                         </p>
+
+                        <div className="flex justify-start items-end mt-1 gap-1">
+                          <p className="text-red-600 animate-pulse font-semibold text-sm">
+                            ₹{item.price}
+                          </p>
+                          <p className="line-through text-gray-900 text-xs">
+                            ₹{item.price}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
-                    <p className="font-semibold text-gray-900 text-sm md:text-base">
-                      ₹{item.price}
-                    </p>
+                    {/* Quantity / Remove */}
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="text-center">
+                        <div className="flex items-center gap-1 border rounded-lg bg-gray-200">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              dispatch(decreaseQuantity(item.id));
+                            }}
+                            className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                          >
+                            -
+                          </button>
+
+                          <span className="font-semibold text-xs w-[15px] text-gray-900">
+                            {item.quantity || 1}
+                          </span>
+
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              dispatch(increaseQuantity(item.id));
+                            }}
+                            className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(removeFromCart(item.id));
+                        }}
+                        className="bg-gray-500 px-4 py-1.5 rounded-md text-xs font-semibold hover:bg-red-600 transition"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
@@ -347,6 +400,7 @@ const BillingTemplate = () => {
           </div>
         )}
 
+        {/* Go Back / Go to Homepage Route */}
         {!showBilling && (
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col divide-y">
