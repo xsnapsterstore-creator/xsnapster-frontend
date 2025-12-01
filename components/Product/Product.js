@@ -4,15 +4,14 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import Select from "react-select";
 
 const Product = ({ product, category_name }) => {
   const dispatch = useDispatch();
   const sizeOptions = [
-    { value: "A4", saleprice: "349", actualprice: "599" },
-    { value: "A3", saleprice: "449", actualprice: "699" },
-    { value: "A2", saleprice: "549", actualprice: "799" },
-    { value: "Poster", saleprice: "69", actualprice: "199" },
+    { value: "A4 (8.3 x 11.7 inches)", saleprice: "349", actualprice: "599" },
+    { value: "A3 (11.7 x 16.5 inches)", saleprice: "449", actualprice: "699" },
+    { value: "A2 (16.5 x 23.4 inches)", saleprice: "549", actualprice: "799" },
+    { value: "Poster (16.5 x 23.4 inches)", saleprice: "69", actualprice: "199" },
   ];
   const [added, setAdded] = useState(false);
   const [sizeOpt, setSizeOpt] = useState(sizeOptions[0]);
@@ -59,14 +58,14 @@ const Product = ({ product, category_name }) => {
         </h1>
 
         {/* Price Section */}
-        <div className="w-full mt-2 flex justify-between items-center">
+        <div className="w-full mt-2 flex justify-start gap-3 items-center">
           <div>
             <select
               value={sizeOpt.value}
               onChange={(e) =>
                 setSizeOpt(sizeOptions.find((s) => s.value === e.target.value))
               }
-              className="border rounded-md px-1 py-1"
+              className="border w-[70px] md:w-[85px] rounded-md px-1 py-1"
             >
               {sizeOptions.map((size) => (
                 <option key={size.value} value={size.value}>
@@ -79,17 +78,17 @@ const Product = ({ product, category_name }) => {
           {sizeOpt && (
             <div className="flex flex-col items-start justify-start">
               <p className="text-red-600 font-bold text-base">
-                {sizeOpt.saleprice} Rs.
+              ₹{sizeOpt.saleprice}
               </p>
-              <p className="line-through text-gray-400 text-xs">
-                {sizeOpt.actualprice} Rs.
+              <p className="line-through text-gray-700 text-xs">
+              ₹{sizeOpt.actualprice}
               </p>
             </div>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between lg:gap-6 mt-2 w-full">
+        <div className="flex items-center justify-between lg:gap-6 m-2 w-full">
           <Button
             color="primary"
             size="small"

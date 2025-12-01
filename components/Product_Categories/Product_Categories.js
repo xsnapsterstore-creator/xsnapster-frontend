@@ -5,14 +5,11 @@ import { motion } from "framer-motion";
 const Product_Categories = ({ categProd }) => {
 
   return (
-    <div className="m-3">
-      <div className="m-1">
+    <div className="m-2">
+      <div className="">
         <h2 className="text-[30px] font-bold tracking-wide text-center">
           #TRENDINGNOW!
         </h2>
-        <p className="text-center text-[20px] tracking-wide font-semibold uppercase">
-          New Arrival
-        </p>
       </div>
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
@@ -21,7 +18,7 @@ const Product_Categories = ({ categProd }) => {
             key={category.category_id}
           >
             {/* Category Title */}
-            <h2 className="text-[20px]  text-center font-semibold mb-4">
+            <h2 className="text-[20px]  text-center font-semibold mb-3">
               {category.category_name}
             </h2>
 
@@ -39,7 +36,7 @@ const Product_Categories = ({ categProd }) => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-2 md:flex gap-5">
+              <div className="grid grid-cols-2 md:flex gap-3">
                 {category.products.map((prod) => (
                   <Product key={prod.id} product={prod} category_name={category.category_name} />
                 ))}
