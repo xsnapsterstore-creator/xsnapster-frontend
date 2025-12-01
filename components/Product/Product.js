@@ -48,7 +48,7 @@ const Product = ({ product, category_name }) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-3 flex flex-col items-center">
+      <div className="p-2 flex flex-col items-center">
         <h1
           onClick={() => {
             window.location.href = `/categories/${category}/${subcategory}/${product.id}`;
@@ -66,7 +66,7 @@ const Product = ({ product, category_name }) => {
               onChange={(e) =>
                 setSizeOpt(sizeOptions.find((s) => s.value === e.target.value))
               }
-              className="border rounded-md px-1 py-2"
+              className="border rounded-md px-1 py-1"
             >
               {sizeOptions.map((size) => (
                 <option key={size.value} value={size.value}>

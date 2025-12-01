@@ -62,7 +62,6 @@ const BillingTemplate = () => {
   // Load cart items from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     setLoading(true);
     const cartData = localStorage.getItem("cart");
 
