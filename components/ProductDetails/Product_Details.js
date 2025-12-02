@@ -17,6 +17,8 @@ export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState(null);
+  const [sizeOpt, setSizeOpt] = useState(prod.dimensions[0]);
+  const selectedPricing = prod.dimension_pricing[sizeOpt];
 
   const product = {
     id: prod.id,
@@ -146,8 +148,9 @@ export default function ProductDetailsPage({ prod }) {
             <span
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-2 w-2 rounded-full cursor-pointer ${index === currentIndex ? "bg-blue-600" : "bg-gray-400"
-                }`}
+              className={`h-2 w-2 rounded-full cursor-pointer ${
+                index === currentIndex ? "bg-blue-600" : "bg-gray-400"
+              }`}
             />
           ))}
         </div>
@@ -167,7 +170,6 @@ export default function ProductDetailsPage({ prod }) {
           />
         </div>
       )}
-
 
       {/* Product Info */}
       <div>
@@ -189,12 +191,17 @@ export default function ProductDetailsPage({ prod }) {
 
         <div className="mt-2">
           <div className="flex items-baseline gap-4">
+            {/* Sale Price */}
             <p className="text-3xl font-semibold text-green-600 mt-2">
-              ₹{prod.price}
+              ₹{selectedPricing.discounted_price ?? selectedPricing.price}
             </p>
-            <p className="text-gray-500 line-through">
-              {prod.discounted_price}
-            </p>
+
+            {/* Strike-through original price only if discount exists */}
+            {selectedPricing.discounted_price && (
+              <p className="text-gray-500 line-through">
+                ₹{selectedPricing.price}
+              </p>
+            )}
           </div>
           <div className="text-gray-500 text-xs">
             <p>Taxes included. Shipping calculated at checkout</p>
@@ -207,14 +214,15 @@ export default function ProductDetailsPage({ prod }) {
           </label>
 
           <select
-            id="size"
-            name="size"
-            className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:border-black cursor-pointer bg-white"
+            value={sizeOpt}
+            onChange={(e) => setSizeOpt(e.target.value)}
+            className="border w-[100px] md:w-[145px] rounded-md px-1 py-1"
           >
-            <option value="A4">A4 (8.3 x 11.7 inch)</option>
-            <option value="A3">A3 (11.7 x 16.5 inch)</option>
-            <option value="A2">13 x 19 inch</option>
-            <option value="poster">Only Poster</option>
+            {product.dimensions.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
           </select>
         </div>
 
