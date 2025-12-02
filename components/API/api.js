@@ -21,7 +21,7 @@ export const verifyOTP = async (email, otp) => {
     headers: {
       "Content-Type": "application/json",
     },
-    // credentials: "include",
+    credentials: "include",
     body: JSON.stringify({ identifier: email, otp }),
   });
 
