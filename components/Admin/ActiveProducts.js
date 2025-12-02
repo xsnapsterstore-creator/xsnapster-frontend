@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
+  deleteProduct,
   fetchCategories,
   fetchSubCategories,
   fetchSubCategoriesProduct,
@@ -80,7 +81,9 @@ const ActiveProducts = () => {
   }, [subCategory]);
 
   async function handleDelete(id) {
-    console.log("This is the Product ID:", id);
+    const res = await deleteProduct(id);
+    const data = await res.json();
+    alert(data.message)
   }
 
   return (
@@ -204,6 +207,7 @@ const ActiveProducts = () => {
                   <p className="text-sm text-gray-500 mt-1">
                     Product ID: {prod.id}
                   </p>
+                  <p className="text-sm text-gray-500">View Count: {prod.view_count}</p>
                 </div>
 
                 {/* Description */}

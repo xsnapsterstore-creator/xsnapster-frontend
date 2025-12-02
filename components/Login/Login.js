@@ -14,11 +14,11 @@ export default function AuthPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // Simplified states
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState("email"); // email | otp
   const [loading, setLoading] = useState(false);
+  const [reSending, setReSending] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" }); // success | error | info
 
   // --- SEND OR RESEND OTP ---
@@ -42,6 +42,26 @@ export default function AuthPage() {
     setLoading(false);
   };
 
+  const handleResendOTP = async () => {
+    if (!email.trim()) {
+      setStep("email")
+      return setMsg({ type: "error", text: "Email is missing" });
+    }
+  
+    setReSending(true)
+    setMsg({ type: "", text: "" });
+  
+    const res = await requestOTP(email);
+  
+    if (res.status === 200) {
+      setMsg({ type: "success", text: "OTP Resent Successfully" });
+    } else {
+      setMsg({ type: "error", text: res.message });
+    }
+  
+    setReSending(false);
+  };
+  
   // --- VERIFY OTP ---
   const handleVerifyOTP = async () => {
     if (!otp.trim()) {
@@ -52,7 +72,7 @@ export default function AuthPage() {
     setMsg({ type: "", text: "" });
 
     const res = await verifyOTP(email, otp);
-    const data = await res.json().catch(() => ({}));
+    const data = await res.json();
 
     if (res.ok) {
       // Save User Data
@@ -185,10 +205,10 @@ export default function AuthPage() {
           </button>
 
           <button
-            onClick={handleSendOTP}
+            onClick={handleResendOTP}
             className="mt-2 w-full bg-gray-500 text-white py-3 rounded-xl font-medium hover:bg-gray-700 transition"
           >
-            Resend OTP
+            {reSending ? "Sending..." : "Resend OTP"}
           </button>
         </motion.div>
       )}

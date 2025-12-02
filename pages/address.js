@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import pincodeData from "./../components/Data/pincodes.json";
 import EditIcon from "@mui/icons-material/Edit";
+import { fetchUserAddress } from "@/components/API/api";
 
-export default function AddressForm({ UserAddress }) {
+export default function AddressForm() {
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -21,6 +22,8 @@ export default function AddressForm({ UserAddress }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [UserAddress, setUserAddress] = useState([]);
   const [invalidPincode, setInvalidPincode] = useState(false);
 
   // 📌 Form heading (Dynamic)
@@ -100,6 +103,16 @@ export default function AddressForm({ UserAddress }) {
       console.log("This is POST API call:", form);
     }
   };
+
+  useEffect(() => {
+    async function user() {
+      const token = localStorage.getItem("access_token");
+      setUserAddress((await fetchUserAddress(token)) || []);
+    }
+    console.log("This is the current data:", UserAddress)
+    setLoading(false)
+    user();
+  }, []);
 
   // 📌 Auto show form if no addresses exist
   useEffect(() => {
@@ -334,39 +347,4 @@ export default function AddressForm({ UserAddress }) {
       )}
     </motion.div>
   );
-}
-
-export async function getServerSideProps() {
-  const user_address = [
-    {
-      address_id: "123trgfnhmju7654refs",
-      user_name: "Avinash Chaurasia",
-      user_contact: "6388846231",
-      country: "India",
-      state: "Uttar Pradesh",
-      city: "Deoria",
-      pincode: "274001",
-      street: "Ram Gulam Tola",
-      house_no: "52/24",
-      landmark: "East of Subhash Vidyalaya",
-    },
-    {
-      address_id: "1203948ryfhsjeu",
-      user_name: "Aameen Chaurasia",
-      user_contact: "7309156321",
-      country: "India",
-      state: "Haryana",
-      city: "Gurgaon",
-      pincode: "122010",
-      street: "U-Block, Sikanderpur",
-      house_no: "U-52/24",
-      landmark: "Yadav Properties",
-    },
-  ];
-
-  return {
-    props: {
-      UserAddress: user_address || [],
-    },
-  };
 }

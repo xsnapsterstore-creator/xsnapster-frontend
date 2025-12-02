@@ -7,14 +7,9 @@ import { useState } from "react";
 
 const Product = ({ product, category_name }) => {
   const dispatch = useDispatch();
-  const sizeOptions = [
-    { value: "A4 (8.3 x 11.7 inches)", saleprice: "349", actualprice: "599" },
-    { value: "A3 (11.7 x 16.5 inches)", saleprice: "449", actualprice: "699" },
-    { value: "A2 (16.5 x 23.4 inches)", saleprice: "549", actualprice: "799" },
-    { value: "Poster (16.5 x 23.4 inches)", saleprice: "69", actualprice: "199" },
-  ];
   const [added, setAdded] = useState(false);
-  const [sizeOpt, setSizeOpt] = useState(sizeOptions[0]);
+  const [sizeOpt, setSizeOpt] = useState(product.dimensions[0]);
+  const selectedPricing = product.dimension_pricing[sizeOpt];
 
   const category = category_name
     ? category_name.trim().replace(/\s+/g, "-").toLowerCase()
@@ -61,30 +56,32 @@ const Product = ({ product, category_name }) => {
         <div className="w-full mt-2 flex justify-start gap-3 items-center">
           <div>
             <select
-              value={sizeOpt.value}
-              onChange={(e) =>
-                setSizeOpt(sizeOptions.find((s) => s.value === e.target.value))
-              }
+              value={sizeOpt}
+              onChange={(e) => setSizeOpt(e.target.value)}
               className="border w-[70px] md:w-[85px] rounded-md px-1 py-1"
             >
-              {sizeOptions.map((size) => (
-                <option key={size.value} value={size.value}>
-                  {size.value}
+              {product.dimensions.map((size) => (
+                <option key={size} value={size}>
+                  {size}
                 </option>
               ))}
             </select>
           </div>
 
-          {sizeOpt && (
-            <div className="flex flex-col items-start justify-start">
-              <p className="text-red-600 font-bold text-base">
-              ₹{sizeOpt.saleprice}
-              </p>
+          {/* Price Section */}
+          <div className="flex flex-col items-start justify-start">
+            {/* Sale Price */}
+            <p className="text-red-600 font-bold text-base">
+              ₹{selectedPricing.discounted_price ?? selectedPricing.price}
+            </p>
+
+            {/* Strike-through original price only if discount exists */}
+            {selectedPricing.discounted_price && (
               <p className="line-through text-gray-700 text-xs">
-              ₹{sizeOpt.actualprice}
+                ₹{selectedPricing.price}
               </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Action Buttons */}
