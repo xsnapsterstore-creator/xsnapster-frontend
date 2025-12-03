@@ -11,6 +11,9 @@ const AddProduct = () => {
   const [subCategory, setSubCategory] = useState("");
   const [prodTitle, setProdTitle] = useState("");
   const [prodPrice, setProdPrice] = useState(0);
+  const [prodDiscountedPrice, setProdDiscountedPrice] = useState(0);
+  const [selectedSize, setSelectedSize] = useState("");
+  const [prodSize, setProdSize] = useState([]);
   const [prodDescription, setProdDescription] = useState("");
   const [prodOneLiner, setProdOneLiner] = useState("");
   const [loading, setLoading] = useState(false);
@@ -75,6 +78,12 @@ const AddProduct = () => {
     });
   };
 
+  const addSize = () => {
+    if (selectedSize && !prodSize.includes(selectedSize)) {
+      setProdSize((prev) => [...prev, selectedSize]);
+    }
+  };
+
   async function ProdSubmit(e) {
     e.preventDefault();
     if (
@@ -84,6 +93,7 @@ const AddProduct = () => {
       !prodDescription ||
       !prodOneLiner ||
       !prodPrice ||
+      !prodDiscountedPrice ||
       !prodImage[0] ||
       !prodImage[1] ||
       !prodImage[2] ||
@@ -102,7 +112,9 @@ const AddProduct = () => {
       category_id: Number(category),
       subcategory_id: Number(subCategory),
       price: Number(prodPrice),
+      discounted_price: Number(prodDiscountedPrice),
       images: prodImage,
+      dimensions: prodSize,
     };
 
     try {
@@ -112,8 +124,8 @@ const AddProduct = () => {
         setProdTitle("");
         setProdOneLiner("");
         setProdDescription("");
-        setProdPrice(0)
-
+        setProdPrice(0);
+        setProdDiscountedPrice(0);
       } else {
         alert("Error in Product uploading");
       }
@@ -157,10 +169,11 @@ const AddProduct = () => {
               >
                 Product Title
               </label>
-              <input
+              <textarea
                 onChange={(e) => setProdTitle(e.target.value)}
                 className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                 required
+                rows="4"
                 type="text"
                 id="product_title"
               />
@@ -322,6 +335,68 @@ const AddProduct = () => {
                 type="number"
                 id="product_price"
               />
+            </motion.div>
+
+            {/* Product Discounted Price */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-sky-100 shadow-md p-5 rounded-xl"
+            >
+              <label
+                htmlFor="product_discounted_price"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
+                Product Discounted Price (₹)
+              </label>
+              <input
+                onChange={(e) => setProdDiscountedPrice(e.target.value)}
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                required
+                type="number"
+                id="product_discounted_price"
+              />
+            </motion.div>
+
+            {/* Product Sizes */}
+            <motion.div className="bg-sky-100 shadow-md p-5 rounded-xl">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Product Sizes
+              </label>
+
+              <div className="flex gap-3">
+                <select
+                  value={selectedSize}
+                  onChange={(e) => setSelectedSize(e.target.value)}
+                  className="border w-full rounded-md px-1 py-1"
+                >
+                  <option value="">Select Size</option>
+                  {["A4", "A3", "A2", "Poster"].map((size) => (
+                    <option key={size} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+
+                <button
+                  type="button"
+                  onClick={addSize}
+                  className="bg-sky-500 text-white px-3 rounded-md"
+                >
+                  Add
+                </button>
+              </div>
+
+              {/* Display Selected Sizes */}
+              <div className="mt-3 flex gap-2 flex-wrap">
+                {prodSize.map((size, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-sky-200 text-sm rounded-full"
+                  >
+                    {size}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </div>
 

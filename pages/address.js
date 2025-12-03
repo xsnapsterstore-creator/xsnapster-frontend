@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import pincodeData from "./../components/Data/pincodes.json";
 import EditIcon from "@mui/icons-material/Edit";
-import { fetchUserAddress } from "@/components/API/api";
+import { addUserAddress, fetchUserAddress } from "@/components/API/api";
+import { useRouter } from "next/router";
 
 export default function AddressForm() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -14,6 +16,7 @@ export default function AddressForm() {
     pincode: "",
     city: "",
     state: "",
+    address_type: "",
   });
 
   const [selectedId, setSelectedId] = useState(null);
@@ -23,8 +26,20 @@ export default function AddressForm() {
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
   const [loading, setLoading] = useState(true);
-  const [UserAddress, setUserAddress] = useState([]);
+  const [UserAddress, setUserAddress] = useState([{
+    "name": "John Doe",
+    "address_line": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "zip_code": "10001",
+    "is_default": false,
+    "address_type": "Home",
+    "phone_number": "+1 555 123 4567",
+    "id": 0,
+    "user_id": "string"
+  }]);
   const [invalidPincode, setInvalidPincode] = useState(false);
+  const [defaultAddress, setDefaultAddress] = useState(true);
 
   // 📌 Form heading (Dynamic)
   const formHeading =
@@ -95,22 +110,32 @@ export default function AddressForm() {
   };
 
   // 📌 On Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (selectedId) {
       console.log("This is the PUT API call:", form);
     } else {
-      console.log("This is POST API call:", form);
+      setDefaultAddress(true);
+      const res = await addUserAddress(form, defaultAddress);
+      if (res.status === 200) {
+        alert("Address added successfully");
+      } else {
+        alert("Failed to add address");
+      }
     }
   };
 
   useEffect(() => {
     async function user() {
       const token = localStorage.getItem("access_token");
-      setUserAddress((await fetchUserAddress(token)) || []);
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+      // setUserAddress((await fetchUserAddress(token)) || []);
     }
-    console.log("This is the current data:", UserAddress)
-    setLoading(false)
+    console.log("This is the current data:", UserAddress);
+    setLoading(false);
     user();
   }, []);
 
@@ -138,14 +163,14 @@ export default function AddressForm() {
           <div className="space-y-4">
             {UserAddress.map((address) => (
               <div
-                key={address.address_id}
+                key={address.id}
                 onClick={() => {
-                  setSelectedId(address.address_id);
+                  setSelectedId(address.id);
                   setShowForm(false);
                 }}
                 className={`border bg-white rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
-                    selectedId === address.address_id
+                    selectedId === address.id
                       ? "border-black ring-1 ring-black"
                       : "border-gray-200"
                   }
@@ -153,18 +178,16 @@ export default function AddressForm() {
               >
                 <div>
                   <p className="font-semibold text-gray-900 mb-1">
-                    {address.user_name}
+                    {address.name}
                   </p>
                   <p className="font-semibold text-sm text-gray-900 mb-1">
-                    {address.user_contact}
+                    {address.phone_number}
                   </p>
 
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    {address.house_no}, {address.street}, {address.landmark}
+                    {address.address_line}
                     <br />
-                    {address.city}, {address.state} ({address.pincode})
-                    <br />
-                    {address.country}
+                    {address.city}, {address.state} ({address.zip_code})
                   </p>
                 </div>
 
@@ -275,6 +298,16 @@ export default function AddressForm() {
             </div>
 
             {/* Address fields */}
+            <div>
+              <label className="text-sm font-medium">Address Type</label>
+              <input
+                name="address_type"
+                value={form.address_type}
+                onChange={handleChange}
+                className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+              />
+            </div>
+
             <div>
               <label className="text-sm font-medium">House / Flat</label>
               <input

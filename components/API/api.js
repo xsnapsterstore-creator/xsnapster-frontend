@@ -116,6 +116,10 @@ export const addProduct = async (data) => {
   formData.append("category_id", Number(data.category_id));
   formData.append("subcategory_id", Number(data.subcategory_id));
   formData.append("price", Number(data.price));
+  formData.append("discounted_price", Number(data.discounted_price));
+  data.dimensions.forEach((size) => {
+    formData.append("dimensions", size);
+  });
   data.images.forEach((img) => {
     formData.append("images", img);
   });
@@ -130,67 +134,78 @@ export const addProduct = async (data) => {
 //            Secure API's
 //----------------------------------------------
 
-//Refresh Token
+// Refresh Token
 export async function refreshAccessToken() {
-  const refreshToken = localStorage.getItem("access_token");
   console.log("Step 6");
-
-  if (!refreshToken) return null;
-  console.log("Step 7");
 
   try {
     const res = await fetch(`${API_URL}/auth/refresh`, {
       method: "POST",
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${refreshToken}`,
-      },
+      credentials: "include", // <-- IMPORTANT (send refresh_token cookie)
     });
+
     console.log("Step 8");
 
-    if (!res.ok) return null;
-    console.log("Step 9");
+    if (!res.ok) {
+      console.log("Refresh failed:", res.status);
+      return null;
+    }
 
     const data = await res.json();
     console.log("This is the data:", data);
-    localStorage.setItem("access_token", data.access_token);
-    console.log("Step 10");
 
-    return data.access_token;
+    if (data?.access_token) {
+      localStorage.setItem("access_token", data.access_token);
+      console.log("Step 10 ─ New access token saved");
+      return data.access_token;
+    }
+
+    return null;
   } catch (err) {
+    console.log("Refresh error:", err);
     return null;
   }
 }
 
-// Secure API's
+// Secure Fetch API
 export async function secureFetch(url, options = {}) {
-  let accessToken = localStorage.getItem("access_token");
   console.log("Step 2");
+
+  let accessToken = localStorage.getItem("access_token");
+
+  // Build request headers
   const headers = {
     ...options.headers,
     Authorization: `Bearer ${accessToken}`,
   };
 
   console.log("Step 3");
-  // First try
+
+  // First API request
   let res = await fetch(`${API_URL}${url}`, {
     ...options,
     headers,
+    // credentials: "include", // <-- FIXED
   });
+  const temp = await res.json();
+  console.log("This is the temp data:", temp);
 
   console.log("Step 4");
-  if (res.status !== 401) return res; // valid response
-  console.log("Step 5");
 
-  // Token expired → refresh
+  if (res.status !== 401) return res; // Access token is valid
+
+  console.log("Step 5 ─ Access token expired");
+
+  // Try to refresh token
   const newToken = await refreshAccessToken();
   console.log("Step 11");
 
   if (!newToken) {
-    console.log("❌ User must login again");
+    console.log("❌ User must login again (no new token)");
     return null;
   }
-  console.log("Step 12");
+
+  console.log("Step 12 ─ Retrying request with new token");
 
   // Retry request with new token
   return await fetch(`${API_URL}${url}`, {
@@ -199,14 +214,48 @@ export async function secureFetch(url, options = {}) {
       ...options.headers,
       Authorization: `Bearer ${newToken}`,
     },
+    // credentials: "include",
   });
 }
 
-//Fetch User's Address
+// Fetch User's Address
 export const fetchUserAddress = async () => {
   console.log("Step 1");
+
   const res = await secureFetch("/addresses/", { method: "GET" });
 
   if (!res) return null;
-  return res.json();
+  return res;
+};
+
+// Add User's Address
+export const addUserAddress = async (data, defaultAddress) => {
+  const formData = {
+    name: data.name,
+    address_line:
+      data.house + "," + " " + data.landmark + "," + " " + data.street,
+    city: data.city,
+    state: data.state,
+    zip_code: data.pincode,
+    is_default: defaultAddress,
+    address_type: data.address_type,
+    phone_number: data.phone,
+  };
+  console.log("This is the data:", formData);
+  const res = await secureFetch("/addresses/", {
+    method: "POST",
+    body: {
+      name: data.name,
+      address_line:
+        data.house + "," + " " + data.landmark + "," + " " + data.street,
+      city: data.city,
+      state: data.state,
+      zip_code: data.pincode,
+      is_default: defaultAddress,
+      address_type: data.address_type,
+      phone_number: data.phone,
+    },
+  });
+  if (!res) return null;
+  return res;
 };
