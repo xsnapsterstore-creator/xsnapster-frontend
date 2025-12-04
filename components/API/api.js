@@ -131,7 +131,7 @@ export const addProduct = async (data) => {
 };
 
 // ---------------------------------------------
-//            Secure API's
+//        Secure API's (Protected Routes)
 //----------------------------------------------
 
 // Refresh Token
@@ -187,9 +187,6 @@ export async function secureFetch(url, options = {}) {
     headers,
     // credentials: "include", // <-- FIXED
   });
-  const temp = await res.json();
-  console.log("This is the temp data:", temp);
-
   console.log("Step 4");
 
   if (res.status !== 401) return res; // Access token is valid
@@ -225,7 +222,7 @@ export const fetchUserAddress = async () => {
   const res = await secureFetch("/addresses/", { method: "GET" });
 
   if (!res) return null;
-  return res;
+  return res.json();
 };
 
 // Add User's Address
@@ -241,21 +238,36 @@ export const addUserAddress = async (data, defaultAddress) => {
     address_type: data.address_type,
     phone_number: data.phone,
   };
-  console.log("This is the data:", formData);
-  const res = await secureFetch("/addresses/", {
-    method: "POST",
-    body: {
-      name: data.name,
-      address_line:
-        data.house + "," + " " + data.landmark + "," + " " + data.street,
-      city: data.city,
-      state: data.state,
-      zip_code: data.pincode,
-      is_default: defaultAddress,
-      address_type: data.address_type,
-      phone_number: data.phone,
-    },
-  });
-  if (!res) return null;
-  return res;
+  try {
+    const res = await secureFetch("/addresses/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res;
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+
+//Delete User's Address
+export const deleteUserAddress = async (data) => {
+  try {
+    const res = await secureFetch(`/addresses/${data}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res;
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
 };

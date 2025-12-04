@@ -2,8 +2,14 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import pincodeData from "./../components/Data/pincodes.json";
 import EditIcon from "@mui/icons-material/Edit";
-import { addUserAddress, fetchUserAddress } from "@/components/API/api";
+import {
+  addUserAddress,
+  deleteUserAddress,
+  fetchUserAddress,
+} from "@/components/API/api";
 import { useRouter } from "next/router";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Image from "next/image";
 
 export default function AddressForm() {
   const router = useRouter();
@@ -26,20 +32,13 @@ export default function AddressForm() {
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
   const [loading, setLoading] = useState(true);
-  const [UserAddress, setUserAddress] = useState([{
-    "name": "John Doe",
-    "address_line": "123 Main Street",
-    "city": "New York",
-    "state": "NY",
-    "zip_code": "10001",
-    "is_default": false,
-    "address_type": "Home",
-    "phone_number": "+1 555 123 4567",
-    "id": 0,
-    "user_id": "string"
-  }]);
+  const [UserAddress, setUserAddress] = useState([]);
   const [invalidPincode, setInvalidPincode] = useState(false);
   const [defaultAddress, setDefaultAddress] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState({
+    open: false,
+    id: null,
+  });
 
   // 📌 Form heading (Dynamic)
   const formHeading =
@@ -84,16 +83,20 @@ export default function AddressForm() {
   const handleEdit = (address) => {
     setSelectedId(address.address_id);
     setShowForm(true);
+    const add = "4th Floor, U-52/24, Yadav Properties, U-Block, Sikanderpur";
+
+    const parts = add.split(",");
 
     setForm({
-      name: address.user_name,
-      phone: address.user_contact,
-      house: address.house_no,
-      street: address.street,
-      landmark: address.landmark,
-      pincode: address.pincode,
+      name: address.name,
+      phone: address.phone_number,
+      house: parts[0],
+      street: parts[1],
+      landmark: parts[2],
+      pincode: address.zip_code,
       city: address.city,
       state: address.state,
+      address_type: address.address_type,
     });
 
     setPincode(address.pincode);
@@ -101,48 +104,70 @@ export default function AddressForm() {
     setState(address.state);
   };
 
+  // 📌 Handle Edit Address
+  const handleDelete = async (id) => {
+    const res = await deleteUserAddress(id);
+    if (res && res.ok) {
+      alert("Address deleted successfully");
+      setUserAddress((prev) => prev.filter((addr) => addr.address_id !== id));
+    } else {
+      alert("Failed to delete address");
+    }
+    router.reload();
+  };
+
+  // 📌 Just Save and Continue Existing Address
   const handleSaveContinue = () => {
     const selectedAddress = UserAddress.find(
       (addr) => addr.address_id === selectedId
     );
 
-    console.log("Existing Address API Just continue:", selectedAddress);
+    console.log("Existing Address API Just continue:", selectedId);
   };
 
   // 📌 On Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (selectedId) {
       console.log("This is the PUT API call:", form);
+      return;
+    }
+
+    // Compute default address logic using a local variable
+    let isDefault = UserAddress.length === 0 ? true : false;
+    console.log("This is current situation:", isDefault);
+    const res = await addUserAddress(form, isDefault);
+    if (res && res.ok) {
+      const newAddress = await res.json();
+      alert("Address added successfully");
+      setUserAddress((prev) => [...prev, newAddress]);
+      setShowForm(false)
     } else {
-      setDefaultAddress(true);
-      const res = await addUserAddress(form, defaultAddress);
-      if (res.status === 200) {
-        alert("Address added successfully");
-      } else {
-        alert("Failed to add address");
-      }
+      alert("Failed to add address");
     }
   };
 
   useEffect(() => {
-    async function user() {
+    async function loadUserAddress() {
       const token = localStorage.getItem("access_token");
       if (!token) {
         router.push("/login");
         return;
       }
-      // setUserAddress((await fetchUserAddress(token)) || []);
+
+      const res = await fetchUserAddress(token);
+      setUserAddress(res || []);
+      setLoading(false);
     }
-    console.log("This is the current data:", UserAddress);
-    setLoading(false);
-    user();
+
+    loadUserAddress();
   }, []);
 
   // 📌 Auto show form if no addresses exist
   useEffect(() => {
     if (UserAddress.length === 0) {
-      setShowForm(true);
+      setShowForm(false);
     }
   }, [UserAddress]);
 
@@ -154,69 +179,133 @@ export default function AddressForm() {
       className="min-h-screen pt-[115px] pb-10 px-4"
     >
       {/*   Existing Addresses Section */}
-      {UserAddress.length > 0 && (
-        <div className="max-w-2xl mx-auto mb-6">
-          <h2 className="text-xl font-bold mb-3 text-gray-800">
-            Your Addresses
-          </h2>
+      {loading ? (
+        <div className="h-[70vh] flex items-center justify-center">
+          <div className="relative">
+            <div className="fixed inset-0 flex items-center justify-center z-10">
+              <Image
+                src={"/loading.webp"}
+                alt="Loading..."
+                width={100}
+                height={100}
+                unoptimized
+                className="opacity-25"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        UserAddress.length > 0 && (
+          <div className="max-w-2xl mx-auto mb-6">
+            <h2 className="text-xl font-bold mb-3 text-gray-800">
+              Your Addresses
+            </h2>
 
-          <div className="space-y-4">
-            {UserAddress.map((address) => (
-              <div
-                key={address.id}
-                onClick={() => {
-                  setSelectedId(address.id);
-                  setShowForm(false);
-                }}
-                className={`border bg-white rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
+            <div className="space-y-4">
+              {UserAddress.map((address) => (
+                <div
+                  key={address.id}
+                  onClick={() => {
+                    setSelectedId(address.id);
+                    setShowForm(false);
+                  }}
+                  className={`border bg-white rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
                     selectedId === address.id
                       ? "border-black ring-1 ring-black"
                       : "border-gray-200"
                   }
                 `}
-              >
-                <div>
-                  <p className="font-semibold text-gray-900 mb-1">
-                    {address.name}
-                  </p>
-                  <p className="font-semibold text-sm text-gray-900 mb-1">
-                    {address.phone_number}
-                  </p>
+                >
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1">
+                      {address.name}
+                    </p>
+                    <p className="font-semibold text-sm text-gray-900 mb-1">
+                      {address.phone_number}
+                    </p>
 
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {address.address_line}
-                    <br />
-                    {address.city}, {address.state} ({address.zip_code})
-                  </p>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {address.address_line}
+                      <br />
+                      {address.city}, {address.state} ({address.zip_code})
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    {/* Edit */}
+                    <button
+                      className="px-4 py-1 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEdit(address);
+                      }}
+                    >
+                      <EditIcon fontSize="small" />
+                    </button>
+
+                    {/* Delete */}
+                    <button
+                      className="px-4 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setConfirmDelete({ open: true, id: address.id });
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="flex flex-col gap-2">
-                  {/* Edit */}
-                  <button
-                    className="px-4 py-1 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEdit(address);
-                    }}
-                  >
-                    <EditIcon fontSize="small" />
-                  </button>
+            {/* Confirmation to Delete The Product */}
+            {confirmDelete.open && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+                <div className="bg-white p-6 rounded-lg shadow-xl w-80">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    Delete Product
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-5">
+                    Are you sure you want to delete this product? This action
+                    cannot be undone.
+                  </p>
+
+                  <div className="flex justify-end gap-3">
+                    <button
+                      className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                      onClick={() =>
+                        setConfirmDelete({ open: false, id: null })
+                      }
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                      onClick={() => {
+                        handleDelete(confirmDelete.id);
+                        setConfirmDelete({ open: false, id: null });
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
 
-          {/* Save & Continue (Only when selected) */}
-          {selectedId && !showForm && (
-            <button
-              onClick={handleSaveContinue}
-              className="w-full mt-5 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900"
-            >
-              Save & Continue
-            </button>
-          )}
-        </div>
+            {/* Save & Continue (Only when selected) */}
+            {selectedId && !showForm && (
+              <button
+                onClick={handleSaveContinue}
+                className="w-full mt-5 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900"
+              >
+                Save & Continue
+              </button>
+            )}
+          </div>
+        )
       )}
 
       {/*  Address Form */}
