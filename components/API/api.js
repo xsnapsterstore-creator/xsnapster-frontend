@@ -271,3 +271,54 @@ export const deleteUserAddress = async (data) => {
     console.error("Network/Parse Error:", e);
   }
 };
+
+//Delete User's Address
+export const updateUserAddress = async (data) => {
+  const formData = {
+    name: data.form.name,
+    address_line:
+      data.form.house +
+      "," +
+      " " +
+      data.form.landmark +
+      "," +
+      " " +
+      data.form.street,
+    city: data.form.city,
+    state: data.form.state,
+    zip_code: data.form.pincode,
+    is_default: data.data.is_default,
+    address_type: data.form.address_type,
+    phone_number: data.form.phone,
+  };
+  try {
+    const res = await secureFetch(`/addresses/${data.data.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res;
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+
+//Fetch User's Profile
+export const fetchUserProfile = async (data) => {
+  try {
+    const res = await secureFetch(`/user/profile`, {
+      method: "GET",
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res.json();
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};

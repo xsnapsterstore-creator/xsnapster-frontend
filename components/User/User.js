@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import pincodeData from "./../../components/Data/pincodes.json";
+import { fetchUserProfile } from "../API/api";
 
-const User = ({ user_data }) => {
+const User = () => {
   const [openOrder, setOpenOrder] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [invalidPincode, setInvalidPincode] = useState(false);
@@ -11,6 +12,7 @@ const User = ({ user_data }) => {
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userData, SetUserData] = useState({});
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -21,13 +23,6 @@ const User = ({ user_data }) => {
     city: "",
     state: "",
   });
-  const isEmptyUser =
-    !user_data ||
-    !user_data.user_name ||
-    !user_data.user_email ||
-    !user_data.user_contact ||
-    !user_data.user_address ||
-    Object.keys(user_data.user_address).length === 0;
 
   useEffect(() => {
     const storedEmail = window.localStorage.getItem("userEmail");
@@ -35,18 +30,14 @@ const User = ({ user_data }) => {
   }, []);
 
   const [formData, setFormData] = useState({
-    name: user_data.user_name || "",
-    email: user_data.user_email || "",
-    contact: user_data.user_contact || "",
-    address: {
-      house_no: user_data.user_address?.house_no || "",
-      street: user_data.user_address?.street || "",
-      landmark: user_data.user_address?.landmark || "",
-      city: user_data.user_address?.city || "",
-      state: user_data.user_address?.state || "",
-      country: user_data.user_address?.country || "",
-      pincode: user_data.user_address?.pincode || "",
-    },
+    name: "",
+    address_line: "",
+    city: "",
+    state: "",
+    zip_code: "",
+    address_type: "",
+    phone_number: "",
+    user_id: "",
   });
 
   const handleChange = (e) => {
@@ -103,7 +94,33 @@ const User = ({ user_data }) => {
     console.log("Submitted Data:", form);
   }
 
-  if (isEmptyUser) {
+  useEffect(() => {
+    async function fetchUserDetails() {
+      const res = await fetchUserProfile();
+      console.log("This is the user data:", res);
+
+      const add = res.default_address.address_line;
+      const parts = add.split(",");
+      setFormData({
+        name: res.default_address.name,
+        address_line: res.default_address.address_line,
+        house: parts[0],
+        street: parts[2],
+        landmark: parts[1],
+        city: res.default_address.city,
+        state: res.default_address.state,
+        zip_code: res.default_address.zip_code,
+        address_type: res.default_address.address_line,
+        phone_number: res.default_address.phone_number,
+        user_id: res.default_address.user_id,
+      });
+
+      SetUserData(res);
+    }
+    fetchUserDetails();
+  }, []);
+
+  if (!userData.default_address) {
     return (
       <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
         <div className="max-w-3xl mx-auto">
@@ -259,7 +276,7 @@ const User = ({ user_data }) => {
           <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center md:items-start gap-5">
             {/* Avatar */}
             <div className="w-28 h-28 rounded-full bg-black text-white flex items-center justify-center text-4xl font-bold shadow-md">
-              {user_data.user_name.charAt(0)}
+              {userData.default_address.name.charAt(0)}
             </div>
 
             {/* User Info */}
@@ -276,34 +293,32 @@ const User = ({ user_data }) => {
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <p className="text-gray-500 text-xs">Full Name</p>
                   <p className="font-semibold text-gray-900">
-                    {user_data.user_name}
+                    {userData.default_address.name}
                   </p>
                 </div>
 
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <p className="text-gray-500 text-xs">Email Address</p>
                   <p className="font-semibold text-gray-900 break-all">
-                    {user_data.user_email}
+                    {userData.email}
                   </p>
                 </div>
 
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <p className="text-gray-500 text-xs">Phone Number</p>
                   <p className="font-semibold text-gray-900">
-                    {user_data.user_contact}
+                    {userData.default_address.phone_number}
                   </p>
                 </div>
 
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <p className="text-gray-500 text-xs">Address</p>
                   <span className="font-semibold text-gray-900">
-                    {user_data.user_address.house_no},{" "}
-                    {user_data.user_address.landmark},{" "}
-                    {user_data.user_address.street},{" "}
-                    {user_data.user_address.city},{" "}
-                    {user_data.user_address.state},{" "}
-                    {user_data.user_address.country} (
-                    {user_data.user_address.pincode})
+                    {userData.default_address.address_line},{" "}
+                    {userData.default_address.city},{" "}
+                    {userData.default_address.state},{" "}
+                    {userData.default_address.country} (
+                    {userData.default_address.zip_code})
                   </span>
                 </div>
 
@@ -323,7 +338,7 @@ const User = ({ user_data }) => {
                     isEditing ? "max-h-[1200px] mt-6" : "max-h-0"
                   }`}
                 >
-                  <form className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-4">
+                  <form className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3">
                     {/* Name */}
                     <div>
                       <label className="text-xs text-gray-500">Full Name</label>
@@ -344,14 +359,46 @@ const User = ({ user_data }) => {
                       <input
                         type="text"
                         name="contact"
-                        value={formData.contact}
+                        value={formData.phone_number}
                         onChange={handleChange}
                         className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                       />
                     </div>
 
-                    {/* Address Fields */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-gray-500">Pincode</label>
+                        <input
+                          type="text"
+                          name="address.pincode"
+                          value={formData.zip_code}
+                          onChange={handleChange}
+                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500">City</label>
+                        <input
+                          type="text"
+                          name="address.city"
+                          value={formData.city}
+                          onChange={handleChange}
+                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-gray-500">State</label>
+                        <input
+                          type="text"
+                          name="address.state"
+                          value={formData.state}
+                          onChange={handleChange}
+                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                        />
+                      </div>
                       <div>
                         <label className="text-xs text-gray-500">
                           House No.
@@ -359,18 +406,21 @@ const User = ({ user_data }) => {
                         <input
                           type="text"
                           name="address.house_no"
-                          value={formData.address.house_no}
+                          value={formData.house}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                         />
                       </div>
+                    </div>
 
+                    {/* Address Fields */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-xs text-gray-500">Street</label>
                         <input
                           type="text"
                           name="address.street"
-                          value={formData.address.street}
+                          value={formData.street}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                         />
@@ -383,51 +433,7 @@ const User = ({ user_data }) => {
                         <input
                           type="text"
                           name="address.landmark"
-                          value={formData.address.landmark}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-xs text-gray-500">City</label>
-                        <input
-                          type="text"
-                          name="address.city"
-                          value={formData.address.city}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-xs text-gray-500">State</label>
-                        <input
-                          type="text"
-                          name="address.state"
-                          value={formData.address.state}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-xs text-gray-500">Country</label>
-                        <input
-                          type="text"
-                          name="address.country"
-                          value={formData.address.country}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-xs text-gray-500">Pincode</label>
-                        <input
-                          type="text"
-                          name="address.pincode"
-                          value={formData.address.pincode}
+                          value={formData.landmark}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                         />
@@ -453,7 +459,7 @@ const User = ({ user_data }) => {
               Order History
             </h2>
 
-            {user_data.orders.length === 0 ? (
+            {userData.orders.length === 0 ? (
               // EMPTY UI
               <div className="bg-white rounded-2xl shadow-md p-8 flex flex-col items-center text-center border border-gray-200">
                 <div className="w-24 h-24 bg-gray-100 flex items-center justify-center rounded-full">
@@ -484,7 +490,7 @@ const User = ({ user_data }) => {
               </div>
             ) : (
               <div className="space-y-4">
-                {user_data.orders.map((order) => {
+                {userData.orders.map((order) => {
                   const isOpen = openOrder === order.order_id;
 
                   return (

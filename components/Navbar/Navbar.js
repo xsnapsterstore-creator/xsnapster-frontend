@@ -15,6 +15,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../API/api";
 import { useRouter } from "next/navigation";
 import { setUserDetails } from "../store/cartSlice";
+import SearchIcon from "@mui/icons-material/Search";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import TransgenderIcon from '@mui/icons-material/Transgender';
+import { Button } from "@mui/material";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -28,6 +35,10 @@ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [mobileSearchTerm, setMobileSearchTerm] = useState("");
+  const [isGenderOpen, setIsGenderOpen] = useState(false);
+
   let toggle = false;
   const router = useRouter();
 
@@ -38,6 +49,9 @@ const Navbar = () => {
   const toggleHelpCenter = () => {
     setIsHelpCenterOpen(!isHelpCenterOpen);
     setIsCategoriesOpen(false);
+  };
+  const toggleGender = () => {
+    setIsGenderOpen((prev) => !prev);
   };
   const toggleCart = () => setIsCartOpen(!isCartOpen);
   const [isMounted, setIsMounted] = useState(false);
@@ -95,7 +109,7 @@ const Navbar = () => {
     } else {
       router.replace("/login");
     }
-    if(toggle){
+    if (toggle) {
       toggleSidebar();
     }
   }
@@ -108,23 +122,65 @@ const Navbar = () => {
         }`}
       >
         {/* For Mobile View */}
-        <div className="flex lg:hidden justify-between items-center h-[65px]">
-          <div className="pl-5">
-            <MenuIcon onClick={toggleSidebar} className="cursor-pointer" />
-          </div>
-          <div>
+        <div className="flex lg:hidden justify-between items-center h-[55px]">
+          <div className="pl-2 flex justify-center items-center gap-2">
             <Link href={"/"}>
-              <div className="flex items-center gap-[2px] md:text-[25px] text-[20px] font-semibold">
-                <Image src="/logo.svg" alt="xsnapster" width={27} height={27} />
+              <div className="flex items-center gap-[2px] text-[21px]">
+                <Image src="/logo.svg" alt="xsnapster" width={45} height={45} />
                 <div className="flex items-center">
-                  <p className="text-black">
+                  <p className="text-black font-semibold">
                     <bold className="text-red-500">X</bold>SNAPSTER
                   </p>
                 </div>
               </div>
             </Link>
+            <div className="relative" onClick={toggleGender}>
+              {/* Trigger */}
+              <div className="flex justify-center items-center cursor-pointer">
+                <Image src="/gender.svg" width={25} height={25} alt="gender" />
+                {isGenderOpen ? (
+                  <KeyboardArrowUpIcon fontSize="small" />
+                ) : (
+                  <KeyboardArrowDownIcon fontSize="small" />
+                )}
+              </div>
+
+              {/* Dropdown */}
+              <div
+                className={`
+      absolute left-1/2 -translate-x-1/2 top-[110%]
+      bg-gray-800 shadow-lg border text-white border-gray-200
+      rounded-lg overflow-hidden text-[14px] w-[110px]
+      transform transition-all duration-300 z-50
+      ${
+        isGenderOpen
+          ? "max-h-[300px] opacity-100 visible"
+          : "max-h-0 opacity-0 invisible"
+      }
+    `}
+              >
+                <div className="flex flex-col p-3 space-y-2">
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>For Him</span><MaleIcon />
+                  </button>
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>For Her</span><FemaleIcon />
+                  </button>
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>Others</span><TransgenderIcon />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="pr-5">
+          <div className="pr-2 flex justify-center items-center gap-4">
+            <div className="">
+              <SearchIcon
+                onClick={() => setShowMobileSearch((prev) => !prev)}
+                className="cursor-pointer"
+                aria-label="Toggle search"
+              />
+            </div>
             <div className="relative inline-block">
               <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs">
                 {cart.length}
@@ -133,6 +189,9 @@ const Navbar = () => {
                 onClick={() => setIsCartOpen(true)}
                 className="cursor-pointer"
               />
+            </div>
+            <div className="">
+              <MenuIcon onClick={toggleSidebar} className="cursor-pointer" />
             </div>
           </div>
         </div>
@@ -288,8 +347,9 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* Premium Links  */}
         <div className="bg-black">
-          <ul className="text-white py-[8px] pl-5 pr-2 text-[14px] md:text-[15px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
+          <ul className="text-white py-[5px] pl-5 pr-2 text-[13px] md:text-[15px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
             <li className="text-red-600 animate-pulse font-semibold">
               • OnlyFrames
             </li>
@@ -303,6 +363,39 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+
+      {/* Search Bar */}
+      {showMobileSearch && (
+        <div
+          className="lg:hidden px-3 pt-25 absolute bg-white w-full
+      transition-all duration-300 ease-out
+      animate-slide-down flex justify-center gap-3"
+        >
+          <input
+            value={mobileSearchTerm}
+            onChange={(e) => setMobileSearchTerm(e.target.value)}
+            placeholder="Search products"
+            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                // handle search submit here (e.g., navigate or call search)
+              }
+            }}
+          />
+          <Button
+            sx={{
+              fontSize: "14px",
+              bgcolor: "black",
+              padding: "2px 2px",
+            }}
+            variant="contained"
+            className="w-full rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition"
+          >
+            Search
+          </Button>
+        </div>
+      )}
 
       {isOpen && (
         <div
@@ -334,7 +427,7 @@ const Navbar = () => {
         <div className="flex flex-col h-[calc(100%-120px)]">
           <div className="flex-1 text-[17px] scrollbar-hide overflow-y-auto p-4 text-white space-y-5">
             <div
-              onClick={(e) => CheckLogin(toggle=true)}
+              onClick={(e) => CheckLogin((toggle = true))}
               className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-3"
             >
               <PersonIcon />
@@ -425,7 +518,6 @@ const Navbar = () => {
       </div>
 
       {/* Cart Component */}
-
       {isCartOpen && (
         <div className="fixed inset-0 bg-black/40 z-40" onClick={toggleCart} />
       )}

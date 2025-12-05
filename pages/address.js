@@ -6,6 +6,7 @@ import {
   addUserAddress,
   deleteUserAddress,
   fetchUserAddress,
+  updateUserAddress,
 } from "@/components/API/api";
 import { useRouter } from "next/router";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -33,8 +34,8 @@ export default function AddressForm() {
   const [pincode, setPincode] = useState("");
   const [loading, setLoading] = useState(true);
   const [UserAddress, setUserAddress] = useState([]);
+  const [index, setIndex] = useState(0);
   const [invalidPincode, setInvalidPincode] = useState(false);
-  const [defaultAddress, setDefaultAddress] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState({
     open: false,
     id: null,
@@ -80,28 +81,29 @@ export default function AddressForm() {
   };
 
   // 📌 Handle Edit Address
-  const handleEdit = (address) => {
-    setSelectedId(address.address_id);
+  const handleEdit = (data) => {
+    setSelectedId(data.address.id);
     setShowForm(true);
-    const add = "4th Floor, U-52/24, Yadav Properties, U-Block, Sikanderpur";
+    setIndex(data.index);
 
+    const add = data.address.address_line;
     const parts = add.split(",");
 
     setForm({
-      name: address.name,
-      phone: address.phone_number,
+      name: data.address.name,
+      phone: data.address.phone_number,
       house: parts[0],
       street: parts[1],
       landmark: parts[2],
-      pincode: address.zip_code,
-      city: address.city,
-      state: address.state,
-      address_type: address.address_type,
+      pincode: data.address.zip_code,
+      city: data.address.city,
+      state: data.address.state,
+      address_type: data.address.address_type,
     });
 
-    setPincode(address.pincode);
-    setCity(address.city);
-    setState(address.state);
+    setPincode(data.address.pincode);
+    setCity(data.address.city);
+    setState(data.address.state);
   };
 
   // 📌 Handle Edit Address
@@ -130,19 +132,29 @@ export default function AddressForm() {
     e.preventDefault();
 
     if (selectedId) {
-      console.log("This is the PUT API call:", form);
+      const data = UserAddress[index];
+      const res = await updateUserAddress({ form, data });
+      const response = await res.json();
+      if (res.ok) {
+        alert("Address Updated Successfully");
+        router.reload();
+      } else {
+        alert("Address Updation Failed");
+      }
       return;
     }
 
     // Compute default address logic using a local variable
-    let isDefault = UserAddress.length === 0 ? true : false;
-    console.log("This is current situation:", isDefault);
+    const isDefault = !Array.isArray(UserAddress) || UserAddress.length === 0;
     const res = await addUserAddress(form, isDefault);
     if (res && res.ok) {
       const newAddress = await res.json();
       alert("Address added successfully");
-      setUserAddress((prev) => [...prev, newAddress]);
-      setShowForm(false)
+      setUserAddress((prev) => [
+        ...(Array.isArray(prev) ? prev : []),
+        newAddress,
+      ]);
+      setShowForm(false);
     } else {
       alert("Failed to add address");
     }
@@ -202,7 +214,7 @@ export default function AddressForm() {
             </h2>
 
             <div className="space-y-4">
-              {UserAddress.map((address) => (
+              {UserAddress.map((address, index) => (
                 <div
                   key={address.id}
                   onClick={() => {
@@ -238,7 +250,7 @@ export default function AddressForm() {
                       className="px-4 py-1 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleEdit(address);
+                        handleEdit({ address, index });
                       }}
                     >
                       <EditIcon fontSize="small" />
@@ -352,7 +364,7 @@ export default function AddressForm() {
                 )}
                 <input
                   name="pincode"
-                  value={pincode}
+                  value={form.pincode}
                   onChange={handlePincodeChange}
                   className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
                   placeholder="110001"

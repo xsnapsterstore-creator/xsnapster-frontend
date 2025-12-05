@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useSwipeable } from "react-swipeable";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { ArrowDownwardRounded } from "@mui/icons-material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -17,6 +16,14 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { Button } from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import XIcon from "@mui/icons-material/X";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import Link from "next/link";
 
 export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
@@ -88,7 +95,7 @@ export default function ProductDetailsPage({ prod }) {
     {
       img: "/premium.webp",
       head: "Premium Quality Frames",
-      para: "Fiber wood or natural wood frames for durability and protection",
+      para: "Fiber wood frames for durability and protection",
     },
     {
       img: "/vibrant.webp",
@@ -103,7 +110,7 @@ export default function ProductDetailsPage({ prod }) {
     {
       img: "/protective.webp",
       head: "Protective Features",
-      para: "Easy to clean shatterproof acrylic glass in front. (For paper print frames)",
+      para: "Easy to clean shatterproof acrylic glass in front",
     },
   ];
   const today = new Date();
@@ -162,9 +169,48 @@ export default function ProductDetailsPage({ prod }) {
     trackMouse: true, // allows mouse dragging too
   });
 
+  const categSlug = prod.category.toLowerCase().replace(/\s+/g, "-");
+  const subCategSlug = prod.subcategory.toLowerCase().replace(/\s+/g, "-");
+  const shareUrl = `https://xsnapster.vercel.app/categories/${categSlug}/${subCategSlug}/${prod.id}`;
+
   return (
     <div>
-      <div className="pt-[20px] max-w-6xl lg:flex lg:justify-start lg:items-start lg:gap-5 mx-auto px-4">
+      {/* Product Routing */}
+      <div className="pt-[10px]">
+        <div className="m-3 flex justify-start items-center gap-1">
+          <Link
+            href={"/"}
+            className="text-[13px] hover:text-red-600 hover:cursor-pointer"
+          >
+            Home
+          </Link>
+          <span>/</span>
+          <Link
+            href={"/categories"}
+            className="text-[13px] hover:text-red-600 hover:cursor-pointer"
+          >
+            Categories
+          </Link>
+          <span>/</span>
+          <Link
+            href={`/categories/${categSlug}`}
+            className="text-[13px] hover:text-red-600 hover:cursor-pointer"
+          >
+            {prod.category}
+          </Link>
+          <span>/</span>
+          <Link href={`/categories/${categSlug}/${subCategSlug}`} className="text-[13px] hover:text-red-600 hover:cursor-pointer">
+            {prod.subcategory}
+          </Link>
+          <span>/</span>
+          <button className="text-[13px] hover:text-red-600 hover:cursor-pointer">
+            {prod.title.substring(0, 10) + "..."}
+          </button>
+        </div>
+      </div>
+
+      {/* Product Image / Description / Quality Field */}
+      <div className="pt-[5px] max-w-6xl lg:flex lg:justify-start lg:items-start lg:gap-5 mx-auto px-3">
         {/* Image Slider */}
         <div
           {...handlers}
@@ -214,6 +260,90 @@ export default function ProductDetailsPage({ prod }) {
           >
             <ArrowForwardIosIcon />
           </button>
+
+          {/* Social Media Share */}
+          <div className="m-2">
+            <div className="flex justify-center items-center gap-3">
+              {/* FACEBOOK */}
+              <Link
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon fontSize="small" />
+              </Link>
+
+              {/* WHATSAPP */}
+              <Link
+                href={`https://wa.me/?text=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppIcon fontSize="small" />
+              </Link>
+
+              {/* INSTAGRAM (No direct URL share — must open the app manually) */}
+              <Link
+                href={`https://www.instagram.com/create/story/`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  // Still copy the URL for them to paste
+                  navigator.clipboard.writeText(shareUrl);
+                }}
+              >
+                <InstagramIcon fontSize="small" />
+              </Link>
+
+              {/* TWITTER / X */}
+              <Link
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <XIcon fontSize="small" />
+              </Link>
+
+              {/* PINTEREST */}
+              <Link
+                href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <PinterestIcon fontSize="small" />
+              </Link>
+
+              {/* LINKEDIN */}
+              <Link
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon fontSize="small" />
+              </Link>
+
+              {/* TELEGRAM */}
+              <Link
+                href={`https://t.me/share/url?url=${encodeURIComponent(
+                  shareUrl
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TelegramIcon fontSize="small" />
+              </Link>
+            </div>
+          </div>
 
           {/* Dots */}
           <div className="flex justify-center gap-2 mt-3">
@@ -378,11 +508,11 @@ export default function ProductDetailsPage({ prod }) {
           </div>
 
           {/* Product Feature */}
-          <div>
+          <div className="">
             <div className="mt-5">
               <h2 className="font-bold">Product Features</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-1 items-center justify-center">
+            <div className="grid grid-cols-2 gap-3 mt-1 items-center justify-center border-b pb-3">
               {prodQuality.map((prod, index) => (
                 <div key={index} className="">
                   <div className="flex items-center gap-2">
@@ -447,9 +577,9 @@ export default function ProductDetailsPage({ prod }) {
                 {/* Replacement info */}
                 <div className="relative bg-gradient-to-r from-gray-900 to-black border border-yellow-500 rounded-[12px] flex justify-between items-center px-4 py-2 shadow-md transform transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
                   <p className="text-white text-[13px]">
-                    Free 7 Days{" "}
+                    Cash On Delivery{" "}
                     <span className="text-amber-400 font-semibold">
-                      Replacement
+                      Available
                     </span>
                   </p>
                 </div>
@@ -473,7 +603,7 @@ export default function ProductDetailsPage({ prod }) {
         </div>
       </div> */}
 
-          <div className="flex flex-col md:flex-row gap-2 justify-center mt-4">
+          <div className="flex flex-col md:flex-row gap-2 justify-center mt-4 pb-2">
             <div>
               <div className="flex justify-between items-center mt-3">
                 <div className="h-[110px] w-[100px]">
@@ -519,10 +649,11 @@ export default function ProductDetailsPage({ prod }) {
         </div>
       </div>
 
+      {/* Product Specs */}
       <div className="max-w-6xl mx-auto px-4 md:mt-10 border-t">
         {/* Product Specs */}
         <div>
-          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-center justify-center">
+          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-start justify-center">
             {prodSpecs.map((prod, index) => (
               <div
                 key={index}
@@ -536,7 +667,7 @@ export default function ProductDetailsPage({ prod }) {
                     height={80}
                   />
                 </div>
-                <div className="flex flex-col justify-center gap-2 w-[250px] lg:w-[350px]">
+                <div className="flex flex-col justify-center gap-1 w-[250px] lg:w-[350px]">
                   <h3 className="font-semibold text-gray-800 text-md">
                     {prod.head}
                   </h3>
@@ -554,15 +685,14 @@ export default function ProductDetailsPage({ prod }) {
           </div>
           <div className="mt-2">
             <div>
-              <ul className="list-disc ml-5 text-[14px] md:text-[17px]">
-                <li>Three 16.5 by 23.4 (A2) inch prints</li>
+              <ul className="list-disc ml-5 text-[14px] md:text-[15px]">
                 <li>
                   200 GSM Art Board Matte Paper / 350 GSM Poly-cotton inkjet
                   canvas
                 </li>
                 <li>
-                  Width : 0.75-inch (For A2) / 0.5 inch (A3,
-                  A4) wide fiberwood frames for edge
+                  Width : 0.75-inch (For A2) / 0.5 inch (A3, A4) wide fiberwood
+                  frames for edge
                 </li>
                 <li>Style & Depth : Box Frame (Starting from 0.75 inch)</li>
                 <li>
