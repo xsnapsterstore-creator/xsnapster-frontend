@@ -97,14 +97,14 @@ const User = () => {
   }
 
   async function logOut() {
-    const res = await logOutUserProfile();
-    const response = await res.json();
-    if (res.ok) {
+    const res = await logOutUserProfile(); // this is already JSON
+
+    if (res?.status === "success" || res?.ok) {
       alert("Log Out Successfully");
-      await localStorage.removeItem("access_token");
-      await localStorage.removeItem("token_type");
-      await localStorage.removeItem("userEmail");
-      await localStorage.removeItem("userID");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token_type");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userID");
     } else {
       alert("Something Went Wrong");
     }
