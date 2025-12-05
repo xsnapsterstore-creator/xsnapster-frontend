@@ -308,10 +308,26 @@ export const updateUserAddress = async (data) => {
 };
 
 //Fetch User's Profile
-export const fetchUserProfile = async (data) => {
+export const fetchUserProfile = async () => {
   try {
     const res = await secureFetch(`/user/profile`, {
       method: "GET",
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res.json();
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+
+//Logou User's Profile
+export const logOutUserProfile = async () => {
+  try {
+    const res = await secureFetch(`/auth/logout`, {
+      method: "POST",
     });
     if (!res.ok) {
       const err = await res.json();

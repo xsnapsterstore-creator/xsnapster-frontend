@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import pincodeData from "./../../components/Data/pincodes.json";
-import { fetchUserProfile } from "../API/api";
+import { fetchUserProfile, logOutUserProfile } from "../API/api";
+import { useRouter } from "next/router";
 
 const User = () => {
+  const router = useRouter();
   const [openOrder, setOpenOrder] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [invalidPincode, setInvalidPincode] = useState(false);
@@ -94,11 +96,28 @@ const User = () => {
     console.log("Submitted Data:", form);
   }
 
+  async function logOut() {
+    const res = await logOutUserProfile();
+    const response = await res.json();
+    if (res.ok) {
+      alert("Log Out Successfully");
+      await localStorage.removeItem("access_token");
+      await localStorage.removeItem("token_type");
+      await localStorage.removeItem("userEmail");
+      await localStorage.removeItem("userID");
+    } else {
+      alert("Something Went Wrong");
+    }
+  }
+
   useEffect(() => {
     async function fetchUserDetails() {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        router.push("/login");
+        return;
+      }
       const res = await fetchUserProfile();
-      console.log("This is the user data:", res);
-
       const add = res.default_address.address_line;
       const parts = add.split(",");
       setFormData({
@@ -323,12 +342,18 @@ const User = () => {
                 </div>
 
                 {/* Edit Button */}
-                <div className="mt-6">
+                <div className="mt-6 flex justify-center items-center gap-5">
                   <button
                     onClick={toggleEdit}
                     className="w-full py-3 cursor-pointer bg-black text-white rounded-xl font-medium text-sm active:scale-95 transition"
                   >
                     {isEditing ? "Close Editor" : "Edit Profile"}
+                  </button>
+                  <button
+                    onClick={logOut}
+                    className="w-full py-3 cursor-pointer bg-black text-white rounded-xl font-medium text-sm active:scale-95 transition"
+                  >
+                    Log Out
                   </button>
                 </div>
 
