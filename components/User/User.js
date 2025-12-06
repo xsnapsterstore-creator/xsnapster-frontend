@@ -6,6 +6,7 @@ import {
   addUserAddress,
   fetchUserProfile,
   logOutUserProfile,
+  updateUserAddress,
 } from "../API/api";
 import { useRouter } from "next/router";
 
@@ -52,7 +53,7 @@ const User = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value, is_default: true }));
   };
 
   const toggleEdit = () => setIsEditing(!isEditing);
@@ -111,7 +112,20 @@ const User = () => {
 
   async function handleEditDetails(e) {
     e.preventDefault();
-    console.log("This is the Old User update his details:", formData);
+    const data = {
+      form: formData,
+      data: {
+        id: userData.default_address.id,
+      },
+    };
+    // console.log("This is the Old User update his details:", data);
+    const res = await updateUserAddress(data)
+    if (res.ok) {
+      alert("Address Updated Successfully");
+      router.reload();
+    } else {
+      alert("Address Updation Failed");
+    }
   }
 
   async function logOut() {
@@ -431,7 +445,7 @@ const User = () => {
                       </label>
                       <input
                         type="text"
-                        name="contact"
+                        name="phone"
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -480,7 +494,7 @@ const User = () => {
                         </label>
                         <input
                           type="text"
-                          name="house_no"
+                          name="house"
                           value={formData.house}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
