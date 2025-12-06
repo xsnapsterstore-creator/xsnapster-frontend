@@ -39,6 +39,7 @@ export default function AddressForm() {
   const [confirmDelete, setConfirmDelete] = useState({
     open: false,
     id: null,
+    default: false
   });
 
   // 📌 Form heading (Dynamic)
@@ -107,8 +108,12 @@ export default function AddressForm() {
   };
 
   // 📌 Handle Edit Address
-  const handleDelete = async (id) => {
-    const res = await deleteUserAddress(id);
+  const handleDelete = async (data) => {
+    if(data.default){
+      alert("Default address can not be deleted")
+      return;
+    }
+    const res = await deleteUserAddress(data.id);
     if (res && res.ok) {
       alert("Address deleted successfully");
       setUserAddress((prev) => prev.filter((addr) => addr.address_id !== id));
@@ -261,7 +266,7 @@ export default function AddressForm() {
                       className="px-4 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setConfirmDelete({ open: true, id: address.id });
+                        setConfirmDelete({ open: true, id: address.id, default: address.is_default });
                       }}
                     >
                       <DeleteIcon fontSize="small" />
@@ -296,8 +301,8 @@ export default function AddressForm() {
                     <button
                       className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
                       onClick={() => {
-                        handleDelete(confirmDelete.id);
-                        setConfirmDelete({ open: false, id: null });
+                        handleDelete(confirmDelete);
+                        setConfirmDelete({ open: false, id: null, default: false });
                       }}
                     >
                       Delete

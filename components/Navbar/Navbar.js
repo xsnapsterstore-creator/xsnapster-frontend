@@ -122,7 +122,7 @@ const Navbar = () => {
         }`}
       >
         {/* For Mobile View */}
-        <div className="flex lg:hidden justify-between items-center h-[55px]">
+        <div className="flex lg:hidden justify-between items-center h-[65px]">
           <div className="pl-2 flex justify-center items-center gap-2">
             <Link href={"/"}>
               <div className="flex items-center gap-[2px] text-[21px]">
@@ -176,6 +176,7 @@ const Navbar = () => {
           <div className="pr-2 flex justify-center items-center gap-4">
             <div className="">
               <SearchIcon
+              fontSize="medium"
                 onClick={() => setShowMobileSearch((prev) => !prev)}
                 className="cursor-pointer"
                 aria-label="Toggle search"
@@ -191,7 +192,7 @@ const Navbar = () => {
               />
             </div>
             <div className="">
-              <MenuIcon onClick={toggleSidebar} className="cursor-pointer" />
+              <MenuIcon fontSize="medium" onClick={toggleSidebar} className="cursor-pointer" />
             </div>
           </div>
         </div>

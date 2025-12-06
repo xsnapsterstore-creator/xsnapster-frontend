@@ -2,7 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import pincodeData from "./../../components/Data/pincodes.json";
-import { fetchUserProfile, logOutUserProfile } from "../API/api";
+import {
+  addUserAddress,
+  fetchUserProfile,
+  logOutUserProfile,
+} from "../API/api";
 import { useRouter } from "next/router";
 
 const User = () => {
@@ -24,6 +28,8 @@ const User = () => {
     pincode: "",
     city: "",
     state: "",
+    is_default: true,
+    address_type: "",
   });
 
   useEffect(() => {
@@ -33,27 +39,20 @@ const User = () => {
 
   const [formData, setFormData] = useState({
     name: "",
-    address_line: "",
+    phone: "",
+    house: "",
+    street: "",
+    landmark: "",
+    pincode: "",
     city: "",
     state: "",
-    zip_code: "",
+    is_default: true,
     address_type: "",
-    phone_number: "",
-    user_id: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name.startsWith("address.")) {
-      const key = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        address: { ...prev.address, [key]: value },
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const toggleEdit = () => setIsEditing(!isEditing);
@@ -69,6 +68,7 @@ const User = () => {
     setInvalidPincode(false);
 
     setForm((prev) => ({ ...prev, pincode: pin }));
+    setFormData((prev) => ({ ...prev, pincode: pin }));
 
     if (pin.length === 6) {
       const match = pincodeData.pincodes.find(
@@ -83,6 +83,11 @@ const User = () => {
           city: match.districtName,
           state: match.stateName,
         }));
+        setFormData((prev) => ({
+          ...prev,
+          city: match.districtName,
+          state: match.stateName,
+        }));
       } else {
         setInvalidPincode(true);
         setCity("");
@@ -93,20 +98,43 @@ const User = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Submitted Data:", form);
+    const res = await addUserAddress(form, form.is_default);
+    if (res && res.ok) {
+      const newAddress = await res.json();
+      alert("Address added successfully");
+      router.reload();
+    } else {
+      alert("Failed to add address");
+    }
+    console.log("This is the New User:", form);
+  }
+
+  async function handleEditDetails(e) {
+    e.preventDefault();
+    console.log("This is the Old User update his details:", formData);
   }
 
   async function logOut() {
-    const res = await logOutUserProfile(); // this is already JSON
+    const result = await logOutUserProfile();
+    if (!result) {
+      alert("Network Error");
+      return;
+    }
 
-    if (res?.status === "success" || res?.ok) {
+    const { res, data } = result;
+    console.log("This is the logout response:", res, data);
+
+    if (res.ok || data?.status === "success") {
       alert("Log Out Successfully");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userID");
+      Promise.resolve().then(() => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("token_type");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userID");
+      });
+      router.reload();
     } else {
-      alert("Something Went Wrong");
+      alert(`Logout Failed: ${data?.message || "Something went wrong"}`);
     }
   }
 
@@ -118,23 +146,24 @@ const User = () => {
         return;
       }
       const res = await fetchUserProfile();
-      const add = res.default_address.address_line;
-      const parts = add.split(",");
-      setFormData({
-        name: res.default_address.name,
-        address_line: res.default_address.address_line,
-        house: parts[0],
-        street: parts[2],
-        landmark: parts[1],
-        city: res.default_address.city,
-        state: res.default_address.state,
-        zip_code: res.default_address.zip_code,
-        address_type: res.default_address.address_line,
-        phone_number: res.default_address.phone_number,
-        user_id: res.default_address.user_id,
-      });
-
-      SetUserData(res);
+      if (res.default_address) {
+        const add = res.default_address.address_line;
+        const parts = add.split(",");
+        setFormData({
+          name: res.default_address.name,
+          address_line: res.default_address.address_line,
+          house: parts[0],
+          street: parts[2],
+          landmark: parts[1],
+          city: res.default_address.city,
+          state: res.default_address.state,
+          pincode: res.default_address.zip_code,
+          address_type: res.default_address.address_type,
+          phone: res.default_address.phone_number,
+          user_id: res.default_address.user_id,
+        });
+        SetUserData(res);
+      }
     }
     fetchUserDetails();
   }, []);
@@ -229,6 +258,22 @@ const User = () => {
             </div>
 
             {/* Address fields */}
+            <div>
+              <label className="text-xs text-gray-500">Address Type</label>
+              <input
+                type="text"
+                name="address_type"
+                value={form.address_type}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    address_type: e.target.value,
+                  }))
+                }
+                className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+              />
+            </div>
+
             <div>
               <label className="text-sm font-medium">House / Flat</label>
               <input
@@ -363,7 +408,10 @@ const User = () => {
                     isEditing ? "max-h-[1200px] mt-6" : "max-h-0"
                   }`}
                 >
-                  <form className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3">
+                  <form
+                    onSubmit={handleEditDetails}
+                    className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3"
+                  >
                     {/* Name */}
                     <div>
                       <label className="text-xs text-gray-500">Full Name</label>
@@ -384,20 +432,21 @@ const User = () => {
                       <input
                         type="text"
                         name="contact"
-                        value={formData.phone_number}
+                        value={formData.phone}
                         onChange={handleChange}
                         className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                       />
                     </div>
 
+                    {/* Pincode + City */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className="text-xs text-gray-500">Pincode</label>
                         <input
                           type="text"
-                          name="address.pincode"
-                          value={formData.zip_code}
-                          onChange={handleChange}
+                          name="pincode"
+                          value={formData.pincode}
+                          onChange={handlePincodeChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
                         />
                       </div>
@@ -405,7 +454,7 @@ const User = () => {
                         <label className="text-xs text-gray-500">City</label>
                         <input
                           type="text"
-                          name="address.city"
+                          name="city"
                           value={formData.city}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -413,12 +462,13 @@ const User = () => {
                       </div>
                     </div>
 
+                    {/* State + House */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className="text-xs text-gray-500">State</label>
                         <input
                           type="text"
-                          name="address.state"
+                          name="state"
                           value={formData.state}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -430,7 +480,7 @@ const User = () => {
                         </label>
                         <input
                           type="text"
-                          name="address.house_no"
+                          name="house_no"
                           value={formData.house}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -438,13 +488,27 @@ const User = () => {
                       </div>
                     </div>
 
-                    {/* Address Fields */}
+                    {/* Address Type */}
+                    <div>
+                      <label className="text-xs text-gray-500">
+                        Address Type
+                      </label>
+                      <input
+                        type="text"
+                        name="address_type"
+                        value={formData.address_type}
+                        onChange={handleChange}
+                        className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                      />
+                    </div>
+
+                    {/* Street + landmark */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-xs text-gray-500">Street</label>
                         <input
                           type="text"
-                          name="address.street"
+                          name="street"
                           value={formData.street}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -457,7 +521,7 @@ const User = () => {
                         </label>
                         <input
                           type="text"
-                          name="address.landmark"
+                          name="landmark"
                           value={formData.landmark}
                           onChange={handleChange}
                           className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
@@ -502,7 +566,7 @@ const User = () => {
                 </h3>
 
                 <p className="text-gray-500 text-sm mt-2">
-                  You haven’t placed any orders yet. Start shopping and explore
+                  You have not placed any orders yet. Start shopping and explore
                   our collections!
                 </p>
 

@@ -185,7 +185,7 @@ export async function secureFetch(url, options = {}) {
   let res = await fetch(`${API_URL}${url}`, {
     ...options,
     headers,
-    // credentials: "include", // <-- FIXED
+    credentials: "include", // <-- FIXED
   });
   console.log("Step 4");
 
@@ -211,7 +211,7 @@ export async function secureFetch(url, options = {}) {
       ...options.headers,
       Authorization: `Bearer ${newToken}`,
     },
-    // credentials: "include",
+    credentials: "include",
   });
 }
 
@@ -333,7 +333,10 @@ export const logOutUserProfile = async () => {
       const err = await res.json();
       console.error("💥 Server Validation Error:", err);
     }
-    return res.json();
+    const data = await res.json().catch(() => null);
+    console.log("Logout response status:", res.status);
+    console.log("Logout response data:", data);
+    return { res, data };
   } catch (e) {
     console.error("Network/Parse Error:", e);
   }
