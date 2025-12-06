@@ -125,7 +125,7 @@ const Navbar = () => {
         <div className="flex lg:hidden justify-between items-center h-[65px]">
           <div className="pl-2 flex justify-center items-center gap-2">
             <Link href={"/"}>
-              <div className="flex items-center gap-[2px] text-[21px]">
+              <div className="flex items-center gap-[2px] text-[24px]">
                 <Image src="/logo.svg" alt="xsnapster" width={45} height={45} />
                 <div className="flex items-center">
                   <p className="text-black font-semibold">
