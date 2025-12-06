@@ -2,6 +2,7 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
 
+
 // Request OTP Api
 export const requestOTP = async (email) => {
   const res = await fetch(`${API_URL}/auth/request-otp`, {
@@ -199,6 +200,13 @@ export async function secureFetch(url, options = {}) {
 
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
+    const log = await logOutUserProfile();
+    Promise.resolve().then(() => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token_type");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userID");
+    });
     return null;
   }
 

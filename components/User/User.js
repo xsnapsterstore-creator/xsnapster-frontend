@@ -160,6 +160,11 @@ const User = () => {
         return;
       }
       const res = await fetchUserProfile();
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+      console.log('This is current response',res)
       if (res.default_address) {
         const add = res.default_address.address_line;
         const parts = add.split(",");
