@@ -68,9 +68,17 @@ export const fetchCategories = async () => {
   return res;
 };
 
-//Fetch Sub-Categories API
+//Fetch Sub-Categories by Category ID API
 export const fetchSubCategories = async (id) => {
   const res = await fetch(`${API_URL}/subcategory/${id}`, {
+    method: "GET",
+  });
+  return res;
+};
+
+//Fetch All Sub0Categories API
+export const fetchAllSubCategories = async () => {
+  const res = await fetch(`${API_URL}/subcategory/`, {
     method: "GET",
   });
   return res;

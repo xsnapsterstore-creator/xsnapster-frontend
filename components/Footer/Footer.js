@@ -3,10 +3,24 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { fetchAllSubCategories } from "../API/api";
 
 const Footer = () => {
+  const [subCategData, setSubCategData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    async function fetchFooter() {
+      const res = await fetchAllSubCategories();
+      const data = await res.json();
+      setSubCategData(data);
+      setLoading(false);
+    }
+    fetchFooter();
+  }, []);
   return (
     <div>
+      {/* For Mobile Screen */}
       <div className="lg:hidden block">
         <div className="wave-container">
           <div>
@@ -44,6 +58,35 @@ const Footer = () => {
         </div>
         <div className="text-white bg-[#121212]">
           <div className="pt-10 pl-5 p-5">
+            <div className="flex items-center justify-center w-full border-b pb-5">
+              {loading ? (
+                // 🔄 Loading State (Skeleton Chips)
+                <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="px-8 py-2 h-6 rounded-lg bg-neutral-800 animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : (
+                // ✅ Loaded State
+                <div>
+                  <p className="text-center text-xl m-4">Explore Categories</p>
+                  <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                    {subCategData.map((tag, i) => (
+                      <div
+                        key={i}
+                        className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
+                      >
+                        {tag.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="text-center pt-5">
               <h3 className="text-[15px] tracking-wide font-semibold">
                 About Us
@@ -166,6 +209,7 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* For Desktop Screen */}
       <div className="hidden lg:block">
         {/* Wave Divider */}
         <div className="wave-container">
@@ -193,9 +237,39 @@ const Footer = () => {
 
         {/* Footer Container */}
         <footer className="bg-[#121212] text-gray-300 py-16 px-10 lg:px-24">
+          {/* Categories Data */}
+          <div className="flex items-center justify-center w-full border-b pb-5">
+            {loading ? (
+              // 🔄 Loading State (Skeleton Chips)
+              <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="px-8 py-2 h-6 rounded-lg bg-neutral-800 animate-pulse"
+                  />
+                ))}
+              </div>
+            ) : (
+              // ✅ Loaded State
+              <div>
+                <p className="text-center text-xl m-4">Explore Categories</p>
+                <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                  {subCategData.map((tag, i) => (
+                    <div
+                      key={i}
+                      className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
+                    >
+                      {tag.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* About */}
           <div>
-            <h4 className="text-lg font-semibold mb-1">About Us</h4>
+            <h4 className="text-lg font-semibold mb-1 mt-5">About Us</h4>
             <p className="text-sm leading-6 text-gray-400">
               Welcome to <span className="text-red-500 font-semibold">x</span>
               snapster.store — where creativity meets artistry in the form of
