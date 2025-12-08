@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Category_Story = ({ category }) => {
+  const router = useRouter();
   return (
-    <div className="pt-[95px]">
-      <div className="mt-3 ml-3">
+    <div className="pt-[85px]">
+      <div className="mt-3 ml-2">
         <p className="text-sm font-medium text-gray-700">
           Buy with <bold className="text-red-500">x</bold>Snapster
           <bold className="text-red-500">Live</bold> Sale Now !
@@ -15,7 +17,7 @@ const Category_Story = ({ category }) => {
           {category.map((item) => (
             <div
               onClick={() => {
-                window.location.href = `/categories/${item.slug}`;
+                router.push(`/categories/${item.slug}`);
               }}
               key={item.id}
               className="flex flex-col w-[110px] h-[150px] items-center flex-shrink-0 snap-start cursor-pointer"

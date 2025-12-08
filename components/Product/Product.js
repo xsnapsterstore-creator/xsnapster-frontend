@@ -4,12 +4,28 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Product = ({ product, category_name }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
   const [sizeOpt, setSizeOpt] = useState(product.dimensions[0]);
   const selectedPricing = product.dimension_pricing[sizeOpt];
+  const pro = {
+    category: product.category,
+    dimensions: sizeOpt,
+    discounted_price: selectedPricing.price,
+    price: product.price,
+    id: product.id,
+    image_link: product.image_link,
+    one_liner: product.one_liner,
+    quantity: 1,
+    slug: product.slug,
+    subcategory: product.subcategory,
+    title: product.title,
+    view_count: product.view_count,
+  };
 
   const category = category_name
     ? category_name.trim().replace(/\s+/g, "-").toLowerCase()
@@ -17,6 +33,15 @@ const Product = ({ product, category_name }) => {
   const subcategory = product?.subcategory
     ? product.subcategory.trim().replace(/\s+/g, "-").toLowerCase()
     : "";
+
+  async function BuyNow(id) {
+    let access_token = localStorage.getItem("access_token");
+    if (!access_token) {
+      router.push("/login");
+      return;
+    }
+    console.log("THis is Prod ID:", pro);
+  }
 
   return (
     <div className="relative cursor-pointer bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[165px] lg:w-[200px] m-auto">
@@ -28,7 +53,7 @@ const Product = ({ product, category_name }) => {
       {/* Product Image */}
       <div
         onClick={() => {
-          window.location.href = `/categories/${category}/${subcategory}/${product.id}`;
+          router.push(`/categories/${category}/${subcategory}/${product.id}`);
         }}
         className="overflow-hidden rounded-t-2xl"
       >
@@ -45,7 +70,7 @@ const Product = ({ product, category_name }) => {
       <div className="p-2 flex flex-col items-center">
         <h1
           onClick={() => {
-            window.location.href = `/categories/${category}/${subcategory}/${product.id}`;
+            router.push(`/categories/${category}/${subcategory}/${product.id}`);
           }}
           className="text-[12px] md:text-sm font-medium text-gray-800 line-clamp-2 h-[36px]"
         >
@@ -92,7 +117,7 @@ const Product = ({ product, category_name }) => {
             variant="contained"
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(addToCart(product));
+              dispatch(addToCart(pro));
               setAdded(true);
               setTimeout(() => setAdded(false), 1200); // reset after 1.2s
             }}
@@ -116,6 +141,10 @@ const Product = ({ product, category_name }) => {
               padding: "8px 11px",
             }}
             className="cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              BuyNow(product.id);
+            }}
           >
             Buy Now
           </Button>

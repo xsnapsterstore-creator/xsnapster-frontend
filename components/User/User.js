@@ -140,12 +140,6 @@ const User = () => {
 
     if (res.ok || data?.status === "success") {
       alert("Log Out Successfully");
-      Promise.resolve().then(() => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("token_type");
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userID");
-      });
       router.reload();
     } else {
       alert(`Logout Failed: ${data?.message || "Something went wrong"}`);

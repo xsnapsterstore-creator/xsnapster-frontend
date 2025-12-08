@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const Product_Categories = ({ categProd }) => {
 
   return (
-    <div className="m-2">
+    <div className="">
       <div className="">
         <h2 className="text-[30px] font-bold tracking-wide text-center">
           #TRENDINGNOW!

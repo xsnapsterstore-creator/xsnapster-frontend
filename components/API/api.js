@@ -2,7 +2,6 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
 
-
 // Request OTP Api
 export const requestOTP = async (email) => {
   const res = await fetch(`${API_URL}/auth/request-otp`, {
@@ -209,12 +208,6 @@ export async function secureFetch(url, options = {}) {
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
     const log = await logOutUserProfile();
-    Promise.resolve().then(() => {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userID");
-    });
     return null;
   }
 
@@ -339,11 +332,13 @@ export const fetchUserProfile = async () => {
   }
 };
 
-//Logou User's Profile
+//Logout User's Profile
 export const logOutUserProfile = async () => {
+  let accessToken = localStorage.getItem("access_token");
   try {
-    const res = await secureFetch(`/auth/logout`, {
+    const res = await fetch("/auth/logout", {
       method: "POST",
+      credentials: "include",
     });
     if (!res.ok) {
       const err = await res.json();
@@ -352,6 +347,12 @@ export const logOutUserProfile = async () => {
     const data = await res.json().catch(() => null);
     console.log("Logout response status:", res.status);
     console.log("Logout response data:", data);
+    Promise.resolve().then(() => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token_type");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userID");
+    });
     return { res, data };
   } catch (e) {
     console.error("Network/Parse Error:", e);

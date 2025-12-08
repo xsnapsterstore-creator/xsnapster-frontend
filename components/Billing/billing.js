@@ -155,7 +155,12 @@ const BillingTemplate = () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              dispatch(decreaseQuantity(item.id));
+                              dispatch(
+                                decreaseQuantity({
+                                  id: item.id,
+                                  dimensions: item.dimensions,
+                                })
+                              );
                             }}
                             className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
                           >
@@ -169,7 +174,12 @@ const BillingTemplate = () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              dispatch(increaseQuantity(item.id));
+                              dispatch(
+                                increaseQuantity({
+                                  id: item.id,
+                                  dimensions: item.dimensions,
+                                })
+                              );
                             }}
                             className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
                           >
@@ -181,7 +191,12 @@ const BillingTemplate = () => {
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(removeFromCart(item.id));
+                          dispatch(
+                            removeFromCart({
+                              id: item.id,
+                              dimensions: item.dimensions,
+                            })
+                          );
                         }}
                         className="bg-gray-500 px-4 py-1.5 rounded-md text-xs font-semibold hover:bg-red-600 transition"
                       >
