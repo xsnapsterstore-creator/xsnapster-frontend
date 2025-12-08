@@ -102,11 +102,12 @@ const Cart = ({ isOpen, onClose }) => {
                   <h3 className="text-sm font-medium line-clamp-2 text-gray-100">
                     {item.title}
                   </h3>
-                  <div className="flex items-end gap-2 mt-1">
+                  <div className="flex items-end gap-1 mt-1">
                     <p className="text-green-400 font-semibold text-sm animate-pulse">
                       ₹{item.price}
                     </p>
                     <p className="line-through text-gray-500 text-xs">₹699</p>
+                    <span className="text-[12px] pl-4">{item.dimensions}</span>
                   </div>
                 </div>
               </div>

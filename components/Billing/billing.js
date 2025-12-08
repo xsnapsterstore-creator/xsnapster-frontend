@@ -144,6 +144,7 @@ const BillingTemplate = () => {
                           <p className="line-through text-gray-900 text-xs">
                             ₹{item.price}
                           </p>
+                          <span className="text-[13px] font-semibold pl-4">{item.dimensions}</span>
                         </div>
                       </div>
                     </div>
