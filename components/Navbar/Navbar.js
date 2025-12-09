@@ -18,10 +18,11 @@ import { setUserDetails } from "../store/cartSlice";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import MaleIcon from '@mui/icons-material/Male';
-import FemaleIcon from '@mui/icons-material/Female';
-import TransgenderIcon from '@mui/icons-material/Transgender';
+import MaleIcon from "@mui/icons-material/Male";
+import FemaleIcon from "@mui/icons-material/Female";
+import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Button } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,6 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isHelpCenterOpen, setIsHelpCenterOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -56,6 +56,27 @@ const Navbar = () => {
   const toggleCart = () => setIsCartOpen(!isCartOpen);
   const [isMounted, setIsMounted] = useState(false);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["Categories"],
+    queryFn: async () => {
+      const res = await fetchCategories();
+      return res.json();
+    },
+
+    // ⏳ Cache the data for 10 minutes (600000 ms)
+    staleTime: 600_000,
+
+    // 💾 Keep the data in memory for 10 minutes even if component unmounts
+    gcTime: 600_000,
+
+    // ♻️ Automatically refetch after 10 minutes (same as staleTime)
+    refetchInterval: 600_000,
+
+    // 👇 Prevent refetching on mount if cached data exists
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
   useEffect(() => {
     dispatch(setUserDetails());
   }, []);
@@ -74,15 +95,6 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const res = async () => {
-      const data = await fetchCategories();
-      const categ_data = await data.json();
-      setCategories(categ_data);
-    };
-    res();
   }, []);
 
   useEffect(() => {
@@ -161,13 +173,16 @@ const Navbar = () => {
               >
                 <div className="flex flex-col p-3 space-y-2">
                   <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
-                    <span>For Him</span><MaleIcon />
+                    <span>For Him</span>
+                    <MaleIcon />
                   </button>
                   <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
-                    <span>For Her</span><FemaleIcon />
+                    <span>For Her</span>
+                    <FemaleIcon />
                   </button>
                   <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
-                    <span>Others</span><TransgenderIcon />
+                    <span>Others</span>
+                    <TransgenderIcon />
                   </button>
                 </div>
               </div>
@@ -176,7 +191,7 @@ const Navbar = () => {
           <div className="pr-2 flex justify-center items-center gap-4">
             <div className="">
               <SearchIcon
-              fontSize="medium"
+                fontSize="medium"
                 onClick={() => setShowMobileSearch((prev) => !prev)}
                 className="cursor-pointer"
                 aria-label="Toggle search"
@@ -192,7 +207,11 @@ const Navbar = () => {
               />
             </div>
             <div className="">
-              <MenuIcon fontSize="medium" onClick={toggleSidebar} className="cursor-pointer" />
+              <MenuIcon
+                fontSize="medium"
+                onClick={toggleSidebar}
+                className="cursor-pointer"
+              />
             </div>
           </div>
         </div>
@@ -236,20 +255,27 @@ const Navbar = () => {
                         : "max-h-0 opacity-0 invisible"
                     }`}
                   >
-                    <div className="flex flex-col p-4 space-y-3">
-                      {categories.map((item) => (
-                        <a
-                          href={`/categories/${item.slug}`}
-                          key={item.name}
-                          className="flex items-end justify-between hover:text-red-500 transition-all duration-200"
-                        >
-                          <p className="text-[15px]">{item.name}</p>
-                          <p className="text-[10px] text-red-600 animate-pulse">
-                            {item.one_liner}
-                          </p>
-                        </a>
-                      ))}
-                    </div>
+                    {isLoading ? (
+                      // 🔄 Loading State (Skeleton Chips)
+                      <div className="text-center text-xl p-4">
+                        <p>Loading...</p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col p-4 space-y-3">
+                        {data?.map((item) => (
+                          <a
+                            href={`/categories/${item.slug}`}
+                            key={item.name}
+                            className="flex items-end justify-between hover:text-red-500 transition-all duration-200"
+                          >
+                            <p className="text-[15px]">{item.name}</p>
+                            <p className="text-[10px] text-red-600 animate-pulse">
+                              {item.one_liner}
+                            </p>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </li>
 
@@ -458,7 +484,7 @@ const Navbar = () => {
                     isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
                   } ml-4 flex flex-col space-y-5`}
                 >
-                  {categories.map((item) => (
+                  {data?.map((item) => (
                     <a
                       onClick={toggleSidebar}
                       href={`/categories/${item.slug}`}

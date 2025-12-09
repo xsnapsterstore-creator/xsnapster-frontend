@@ -15,15 +15,8 @@ import StraightenIcon from "@mui/icons-material/Straighten";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
-import { Button } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import XIcon from "@mui/icons-material/X";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "next/link";
+import ProductDescription from "../Product/ProductDescription";
 
 export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
@@ -32,6 +25,8 @@ export default function ProductDetailsPage({ prod }) {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [sizeOpt, setSizeOpt] = useState(prod.dimensions[0]);
   const selectedPricing = prod.dimension_pricing[sizeOpt];
+  const [openIndex, setOpenIndex] = useState(null);
+  const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
 
   const product = {
     id: prod.id,
@@ -43,9 +38,9 @@ export default function ProductDetailsPage({ prod }) {
     category: prod.category,
     subcategory: prod.subcategory,
     is_active: prod.is_active,
-    dimensions: prod.dimensions,
+    dimensions: sizeOpt,
     price: prod.price,
-    discounted_price: prod.discounted_price,
+    discounted_price: selectedPricing.price,
   };
 
   const prodQuality = [
@@ -171,7 +166,15 @@ export default function ProductDetailsPage({ prod }) {
 
   const categSlug = prod.category.toLowerCase().replace(/\s+/g, "-");
   const subCategSlug = prod.subcategory.toLowerCase().replace(/\s+/g, "-");
-  const shareUrl = `https://xsnapster.vercel.app/categories/${categSlug}/${subCategSlug}/${prod.id}`;
+  const shareUrl = `https://xsnapster.store/categories/${categSlug}/${subCategSlug}/${prod.id}`;
+
+  const handleShare = () => {
+    navigator.share({
+      title: prod.title,
+      text: `Check out this ${prod.title} on XSNAPSTER!`,
+      url: shareUrl,
+    });
+  };
 
   return (
     <div>
@@ -199,7 +202,10 @@ export default function ProductDetailsPage({ prod }) {
             {prod.category}
           </Link>
           <span>/</span>
-          <Link href={`/categories/${categSlug}/${subCategSlug}`} className="text-[13px] hover:text-red-600 hover:cursor-pointer">
+          <Link
+            href={`/categories/${categSlug}/${subCategSlug}`}
+            className="text-[13px] hover:text-red-600 hover:cursor-pointer"
+          >
             {prod.subcategory}
           </Link>
           <span>/</span>
@@ -210,7 +216,7 @@ export default function ProductDetailsPage({ prod }) {
       </div>
 
       {/* Product Image / Description / Quality Field */}
-      <div className="pt-[5px] max-w-6xl lg:flex lg:justify-start lg:items-start lg:gap-5 mx-auto px-3">
+      <div className="pt-[2px] max-w-6xl lg:flex lg:justify-start lg:items-start lg:gap-5 mx-auto px-3">
         {/* Image Slider */}
         <div
           {...handlers}
@@ -240,7 +246,7 @@ export default function ProductDetailsPage({ prod }) {
                     width={600}
                     height={400}
                     onClick={() => setFullscreenImage(src)}
-                    className="object-cover cursor-pointer w-full h-[400px] md:h-[600px]"
+                    className="object-cover cursor-pointer w-full h-[450px] md:h-[600px]"
                   />
                 </div>
               ))}
@@ -260,90 +266,6 @@ export default function ProductDetailsPage({ prod }) {
           >
             <ArrowForwardIosIcon />
           </button>
-
-          {/* Social Media Share */}
-          <div className="m-2">
-            <div className="flex justify-center items-center gap-3">
-              {/* FACEBOOK */}
-              <Link
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FacebookIcon fontSize="small" />
-              </Link>
-
-              {/* WHATSAPP */}
-              <Link
-                href={`https://wa.me/?text=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <WhatsAppIcon fontSize="small" />
-              </Link>
-
-              {/* INSTAGRAM (No direct URL share — must open the app manually) */}
-              <Link
-                href={`https://www.instagram.com/create/story/`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  // Still copy the URL for them to paste
-                  navigator.clipboard.writeText(shareUrl);
-                }}
-              >
-                <InstagramIcon fontSize="small" />
-              </Link>
-
-              {/* TWITTER / X */}
-              <Link
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <XIcon fontSize="small" />
-              </Link>
-
-              {/* PINTEREST */}
-              <Link
-                href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <PinterestIcon fontSize="small" />
-              </Link>
-
-              {/* LINKEDIN */}
-              <Link
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkedInIcon fontSize="small" />
-              </Link>
-
-              {/* TELEGRAM */}
-              <Link
-                href={`https://t.me/share/url?url=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <TelegramIcon fontSize="small" />
-              </Link>
-            </div>
-          </div>
 
           {/* Dots */}
           <div className="flex justify-center gap-2 mt-3">
@@ -375,45 +297,59 @@ export default function ProductDetailsPage({ prod }) {
         )}
 
         {/* Product Info */}
-        <div className="lg:h-screen lg:overflow-y-auto scrollbar-hide">
+        <div className="lg:h-screen lg:w-full lg:overflow-y-auto scrollbar-hide">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="mt-4 md:mt-0 text-left">
-              <h1 className="text-[25px] font-semibold">{prod.title}</h1>
-              <h2 className="text-[18px] animate-pulse text-red-600 italic">
-                {prod.one_liner}
-              </h2>
-              <p className="text-gray-600 text-justify text-[15px] mt-1 max-w-2xl">
-                {prod.description}
-              </p>
+            <div className="m-2 md:mt-0 text-left">
+              <h1 className="text-[14px] md:text-[17px] text-gray-700 tracking-wide">
+                {prod.title}
+              </h1>
             </div>
           </motion.div>
 
-          <div className="mt-2">
-            <div className="flex items-baseline gap-4">
-              {/* Sale Price */}
-              <p className="text-3xl font-semibold text-green-600 mt-2">
-                ₹{selectedPricing.discounted_price ?? selectedPricing.price}
-              </p>
+          <div className="m-2">
+            <div className="flex justify-between items-baseline gap-4">
+              <div className="flex flex-col justify-start items-start">
+                <div className="flex items-end gap-2 justify-center">
+                  {/* Sale Price */}
+                  <p className="text-[20px] md:text-[25px] font-semibold text-green-600">
+                    ₹{selectedPricing.discounted_price ?? selectedPricing.price}
+                  </p>
 
-              {/* Strike-through original price only if discount exists */}
-              {selectedPricing.discounted_price && (
-                <p className="text-gray-500 line-through">
-                  ₹{selectedPricing.price}
-                </p>
-              )}
-            </div>
-            <div className="text-gray-500 text-xs">
-              <p>Taxes included. Shipping calculated at checkout</p>
+                  {/* Strike-through original price only if discount exists */}
+                  {selectedPricing.discounted_price && (
+                    <p className="text-gray-500 text-[13px] md:text-[15px] line-through">
+                      ₹{selectedPricing.price}
+                    </p>
+                  )}
+                </div>
+                <div className="text-gray-500 text-[10px] md:text-[12px]">
+                  <p>Price incl. of all taxes</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <span
+                  onClick={handleShare}
+                  className="text-[12px] text-gray-700 underline font-semibold"
+                >
+                  Share
+                </span>
+                <h2 className="text-[11px] animate-pulse text-red-600 italic">
+                  {prod.one_liner}
+                </h2>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-5 border-b pb-3">
-            <label htmlFor="size" className="font-semibold text-gray-800">
-              Size
+          <div className="flex justify-between items-end mt-3 m-2 border-b pb-3">
+            <label
+              htmlFor="size"
+              className="font-semibold text-[15px] text-gray-800"
+            >
+              Please select a size.
             </label>
 
             <select
@@ -421,7 +357,7 @@ export default function ProductDetailsPage({ prod }) {
               onChange={(e) => setSizeOpt(e.target.value)}
               className="border w-[100px] md:w-[145px] rounded-md px-1 py-1"
             >
-              {product.dimensions.map((size) => (
+              {prod.dimensions.map((size) => (
                 <option key={size} value={size}>
                   {size}
                 </option>
@@ -430,12 +366,12 @@ export default function ProductDetailsPage({ prod }) {
           </div>
 
           {/* Add to Cart & Buy Now Buttons */}
-          <div className="flex flex-col gap-5 mt-4 border-b pb-6">
+          <div className="flex flex-col gap-5 m-2 mt-5 border-b pb-6">
             {/* Quantity + Add to Cart + Buy Now */}
             <div className="flex flex-col gap-2">
               {/* Quantity Selector */}
               <div className="flex justify-between gap-2">
-                <div className="flex items-center gap-4 px-3 py-2 bg-gray-100 rounded-lg shadow-sm border">
+                <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg shadow-sm border">
                   <button
                     className="text-xl font-bold text-gray-700 hover:text-black transition"
                     onClick={(e) => {
@@ -470,8 +406,8 @@ export default function ProductDetailsPage({ prod }) {
                   }}
                   className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
                     added
-                      ? "bg-green-500 text-white"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                      ? "bg-black text-white"
+                      : "bg-red-500 hover:bg-red-700 text-white"
                   }`}
                 >
                   {added ? "Added to Cart" : "Add To Cart"}
@@ -481,17 +417,15 @@ export default function ProductDetailsPage({ prod }) {
               {/* Buy Now Button */}
               <div className="">
                 {/* Buy Now */}
-                <Button
-                  sx={{
-                    fontSize: "17px",
-                    bgcolor: "black",
-                    padding: "8px 8px",
-                  }}
-                  variant="contained"
-                  className="w-full rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition"
+                <button
+                  className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
+                    added
+                      ? "bg-black text-white"
+                      : "bg-gray-700 hover:bg-red-900 text-white"
+                  }`}
                 >
                   Buy Now
-                </Button>
+                </button>
               </div>
             </div>
 
@@ -507,84 +441,8 @@ export default function ProductDetailsPage({ prod }) {
             </div>
           </div>
 
-          {/* Product Feature */}
-          <div className="">
-            <div className="mt-5">
-              <h2 className="font-bold">Product Features</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-3 mt-1 items-center justify-center border-b pb-3">
-              {prodQuality.map((prod, index) => (
-                <div key={index} className="">
-                  <div className="flex items-center gap-2">
-                    <div>{prod.img}</div>
-                    <h3 className="font-semibold text-gray-800 text-sm">
-                      {prod.head}
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 text-xs ml-8">{prod.para}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Offer Section */}
-          <div className="flex justify-between mt-5 border-b pb-3">
-            <div>
-              <div>
-                <p className="font-semibold">Frame Mega Deals</p>
-              </div>
-              <div className="mt-3 space-y-3 font-medium text-white">
-                {/* Offer 1 */}
-                <div className="relative bg-gradient-to-r from-gray-900 to-black border border-yellow-500 rounded-[12px] flex justify-between items-center px-4 py-2 shadow-md transform transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
-                  <p className="text-white text-[13px]">
-                    Buy 3 Frames →{" "}
-                    <span className="text-red-600 text-[15px] animate-pulse font-semibold">
-                      Get 1 Frame Free
-                    </span>
-                  </p>
-                  {/* Ticket cutouts */}
-                  <div className="absolute -left-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                  <div className="absolute -right-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                </div>
-
-                {/* Offer 2 (Most Popular) */}
-                <div className="relative bg-gradient-to-r from-gray-900 to-black border border-yellow-500 rounded-[12px] flex justify-between items-center px-4 py-2 shadow-md transform transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
-                  <p className="text-white text-[13px]">
-                    Buy 4 Frames →{" "}
-                    <span className="text-red-600 text-[15px] animate-pulse font-semibold">
-                      Get 2 Frames Free
-                    </span>
-                  </p>
-                  <span className="bg-white text-black text-[8px] ml-2 px-2 py-[2px] rounded font-semibold">
-                    Most Popular
-                  </span>
-                  <div className="absolute -left-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                  <div className="absolute -right-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                </div>
-
-                {/* Offer 3 */}
-                <div className="relative bg-gradient-to-r from-gray-900 to-black border border-yellow-500 rounded-[12px] flex justify-between items-center px-4 py-2 shadow-md transform transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
-                  <p className="text-white text-[13px]">
-                    Buy 5 Frames →{" "}
-                    <span className="text-red-600 text-[15px] animate-pulse font-semibold">
-                      Get 3 Frames Free
-                    </span>
-                  </p>
-                  <div className="absolute -left-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                  <div className="absolute -right-[6px] w-[12px] h-[12px] bg-white rounded-full top-1/2 -translate-y-1/2"></div>
-                </div>
-
-                {/* Replacement info */}
-                <div className="relative bg-gradient-to-r from-gray-900 to-black border border-yellow-500 rounded-[12px] flex justify-between items-center px-4 py-2 shadow-md transform transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
-                  <p className="text-white text-[13px]">
-                    Cash On Delivery{" "}
-                    <span className="text-amber-400 font-semibold">
-                      Available
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="mt-5">
+            <ProductDescription prodDesc={prod.description} />
           </div>
 
           {/* <div className="flex flex-col justify-center mt-5 rounded-2xl p-3 bg-gray-400">
@@ -644,65 +502,6 @@ export default function ProductDetailsPage({ prod }) {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Product Specs */}
-      <div className="max-w-6xl mx-auto px-4 md:mt-10 border-t">
-        {/* Product Specs */}
-        <div>
-          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-start justify-center">
-            {prodSpecs.map((prod, index) => (
-              <div
-                key={index}
-                className="flex justify-start items-center h-[80px] gap-3"
-              >
-                <div>
-                  <Image
-                    className="md:w-[80px] w-[70px]"
-                    src={prod.img}
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <div className="flex flex-col justify-center gap-1 w-[250px] lg:w-[350px]">
-                  <h3 className="font-semibold text-gray-800 text-md">
-                    {prod.head}
-                  </h3>
-                  <p className="text-gray-600 text-xs">{prod.para}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Details */}
-        <div className="mt-5">
-          <div>
-            <h2 className="font-bold">Specification</h2>
-          </div>
-          <div className="mt-2">
-            <div>
-              <ul className="list-disc ml-5 text-[14px] md:text-[15px]">
-                <li>
-                  200 GSM Art Board Matte Paper / 350 GSM Poly-cotton inkjet
-                  canvas
-                </li>
-                <li>
-                  Width : 0.75-inch (For A2) / 0.5 inch (A3, A4) wide fiberwood
-                  frames for edge
-                </li>
-                <li>Style & Depth : Box Frame (Starting from 0.75 inch)</li>
-                <li>
-                  2-mm thick acrylic glass for strength and maximum shatter
-                  resistance
-                </li>
-                <li>Strong MDF Back board for long life and support</li>
-                <li>Comes with hanging equipment attached</li>
-                <li>Made in India ❤️</li>
-              </ul>
             </div>
           </div>
         </div>

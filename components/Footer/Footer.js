@@ -3,21 +3,30 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { fetchAllSubCategories } from "../API/api";
+import { useQuery } from "@tanstack/react-query";
 
 const Footer = () => {
-  const [subCategData, setSubCategData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    async function fetchFooter() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["subCategories"],
+    queryFn: async () => {
       const res = await fetchAllSubCategories();
-      const data = await res.json();
-      setSubCategData(data);
-      setLoading(false);
-    }
-    fetchFooter();
-  }, []);
+      return res.json();
+    },
+
+    // ⏳ Cache the data for 10 minutes (600000 ms)
+    staleTime: 600_000,
+
+    // 💾 Keep the data in memory for 10 minutes even if component unmounts
+    gcTime: 600_000,
+
+    // ♻️ Automatically refetch after 10 minutes (same as staleTime)
+    refetchInterval: 600_000,
+
+    // 👇 Prevent refetching on mount if cached data exists
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
   return (
     <div>
       {/* For Mobile Screen */}
@@ -59,7 +68,7 @@ const Footer = () => {
         <div className="text-white bg-[#121212]">
           <div className="pt-10 pl-5 p-5">
             <div className="flex items-center justify-center w-full border-b pb-5">
-              {loading ? (
+              {isLoading ? (
                 // 🔄 Loading State (Skeleton Chips)
                 <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
                   {Array.from({ length: 10 }).map((_, index) => (
@@ -74,7 +83,7 @@ const Footer = () => {
                 <div>
                   <p className="text-center text-xl m-4">Explore Categories</p>
                   <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
-                    {subCategData.map((tag, i) => (
+                    {data?.map((tag, i) => (
                       <div
                         key={i}
                         className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
@@ -239,7 +248,7 @@ const Footer = () => {
         <footer className="bg-[#121212] text-gray-300 py-16 px-10 lg:px-24">
           {/* Categories Data */}
           <div className="flex items-center justify-center w-full border-b pb-5">
-            {loading ? (
+            {isLoading ? (
               // 🔄 Loading State (Skeleton Chips)
               <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
                 {Array.from({ length: 10 }).map((_, index) => (
@@ -254,7 +263,7 @@ const Footer = () => {
               <div>
                 <p className="text-center text-xl m-4">Explore Categories</p>
                 <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
-                  {subCategData.map((tag, i) => (
+                  {data?.map((tag, i) => (
                     <div
                       key={i}
                       className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
