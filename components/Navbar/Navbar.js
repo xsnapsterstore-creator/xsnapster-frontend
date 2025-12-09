@@ -433,110 +433,114 @@ const Navbar = () => {
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-80 bg-[#404040] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-[65px] justify-between items-center p-4 border-b">
+        <div className="flex h-[65px] justify-between items-center rounded-2xl bg-neutral-900 m-3 p-2 border-b">
           <div className="flex items-center gap-[1px]">
             <Link
               href={"/"}
-              className="h-[27px] font-playfair font-display weight-700 text-[20px] text-white font-semibold"
+              className="h-[27px] font-playfair font-display weight-700 text-[20px] text-white/80 font-semibold pl-1"
             >
               <bold className="text-red-600">X</bold>SNAPSTER
             </Link>
           </div>
-          <button className="text-white" onClick={toggleSidebar}>
+          <button className="text-white pr-1" onClick={toggleSidebar}>
             <CloseIcon />
           </button>
         </div>
 
-        <div className="flex flex-col h-[calc(100%-120px)]">
-          <div className="flex-1 text-[17px] scrollbar-hide overflow-y-auto p-4 text-white space-y-5">
-            <div
-              onClick={(e) => CheckLogin((toggle = true))}
-              className="flex items-center bg-gray-300 p-3 text-black rounded-2xl gap-3"
-            >
-              <PersonIcon />
-              <p>
-                {user?.userEmail?.length > 13
-                  ? user.userEmail?.substring(0, 20) + "..."
-                  : user?.userEmail}
-              </p>
-            </div>
-            <div>
-              <div
-                className="flex items-center justify-between cursor-pointer"
-                onClick={toggleCategories}
-              >
-                <span>
-                  Categories
-                  <sup className="text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl">
-                    New
-                  </sup>
-                </span>
-                {isCategoriesOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              </div>
+        <div
+          onClick={(e) => CheckLogin((toggle = true))}
+          className="flex items-center h-[60px] p-2 m-3 text-white/60 text-[13px] bg-neutral-900 rounded-2xl gap-3"
+        >
+          <PersonIcon />
+          <p>
+            {user?.userEmail?.length > 13
+              ? user.userEmail?.substring(0, 20) + "..."
+              : user?.userEmail}
+          </p>
+        </div>
 
-              {isCategoriesOpen && (
-                <div
-                  className={`overflow-hidden text-[15px] transform transition-transform duration-300 ${
-                    isCategoriesOpen ? "max-h-96 mt-3" : "max-h-0"
-                  } ml-4 flex flex-col space-y-5`}
+        <div
+          onClick={toggleCategories}
+          className="text-white/60 bg-neutral-900 text-[13px] flex flex-col justify-center rounded-2xl m-3"
+        >
+          <div className="flex items-center justify-between cursor-pointer min-h-[60px] pl-3 pr-3">
+            <span>
+              Categories
+              <sup className="text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl">
+                New
+              </sup>
+            </span>
+            {isCategoriesOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </div>
+
+          {isCategoriesOpen && (
+            <div
+              className={`overflow-hidden text-[13px] transform transition-transform duration-300 ${
+                isCategoriesOpen ? "max-h-96 mt-1" : "max-h-0"
+              } m-4 flex flex-col space-y-5`}
+            >
+              {data?.map((item) => (
+                <a
+                  onClick={toggleSidebar}
+                  href={`/categories/${item.slug}`}
+                  key={item.id}
+                  className="flex items-end justify-between border-b pb-3"
                 >
-                  {data?.map((item) => (
-                    <a
-                      onClick={toggleSidebar}
-                      href={`/categories/${item.slug}`}
-                      key={item.id}
-                      className="flex items-end justify-between"
-                    >
-                      <p>{item.name}</p>
-                      <p className="text-[10px] text-red-500 animate-pulse">
-                        {item.one_liner}
-                      </p>
-                    </a>
-                  ))}
-                </div>
-              )}
+                  <p>{item.name}</p>
+                  <p className="text-[10px] text-red-500 animate-pulse">
+                    {item.one_liner}
+                  </p>
+                </a>
+              ))}
             </div>
-            <div className="flex items-center justify-between">
-              <Link onClick={toggleSidebar} href="/who-is-behind-the-camera">
-                Who's Behind the Camera?
-              </Link>
-            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <div className="flex-1 text-[13px] scrollbar-hide overflow-y-auto p-3 text-white/60 bg-neutral-900 rounded-2xl m-3">
+            <Link
+              className="flex items-center justify-between h-[50px] border-b"
+              onClick={toggleSidebar}
+              href="/who-is-behind-the-camera"
+            >
+              Who's Behind the Camera?
+            </Link>
             <Link
               href={"/reviews"}
               onClick={toggleSidebar}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between h-[50px] border-b"
             >
               <p>Reviews</p>
             </Link>
             <Link
               href={"/track-order"}
               onClick={toggleSidebar}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between h-[50px] border-b"
             >
               <p>Track Order</p>
             </Link>
             <Link
               href={"/help-center"}
               onClick={toggleSidebar}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between h-[50px] border-b"
             >
               <p>Help Center</p>
             </Link>
             <Link
               href="/faqs"
               onClick={toggleSidebar}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between h-[50px] border-b"
             >
               <p>FAQ's</p>
             </Link>
             <Link
               href={"/contact-us"}
               onClick={toggleSidebar}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between h-[50px] border-b"
             >
               <p>Contact Us</p>
             </Link>
