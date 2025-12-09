@@ -173,7 +173,7 @@ export default function ProductDetailsPage({ prod }) {
     if (navigator.share) {
       const message = `💥 Check out this Premium Aesthetic Frame from XSNAPSTER !
   
-  🖼️ Product: ${prod.title}
+  🖼️ : ${prod.title}
   
   👇 View it here:
   ${shareUrl}`;
@@ -181,7 +181,6 @@ export default function ProductDetailsPage({ prod }) {
       navigator.share({
         title: prod.title,
         text: message,
-        url: shareUrl, // optional, some apps auto-add it
       });
     } else {
       alert("Sharing is not supported on this device.");
@@ -319,7 +318,7 @@ export default function ProductDetailsPage({ prod }) {
               <h1 className="text-[14px] md:text-[17px] text-gray-700 tracking-wide">
                 {prod.title}
               </h1>
-              <h2 className="text-[10px] animate-pulse text-red-600 mt-2">
+              <h2 className="text-[11px] animate-pulse text-red-600 mt-2">
                 {prod.one_liner}
               </h2>
             </div>

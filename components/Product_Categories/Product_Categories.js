@@ -14,7 +14,7 @@ const Product_Categories = ({ categProd }) => {
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
           <div
-            className={`bg-red-50 p-2 shadow rounded-xl m-2`}
+            className={`bg-gray-50 p-2 shadow rounded-xl m-2`}
             key={category.id}
           >
             {/* Category Title */}
