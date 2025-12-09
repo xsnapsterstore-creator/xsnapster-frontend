@@ -14,8 +14,8 @@ const Product_Categories = ({ categProd }) => {
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
           <div
-            className={`${category.categoryColor} p-2 shadow rounded-xl`}
-            key={category.category_id}
+            className={`bg-red-50 p-2 shadow rounded-xl m-2`}
+            key={category.id}
           >
             {/* Category Title */}
             <h2 className="text-[20px]  text-center font-semibold mb-3">
@@ -42,7 +42,7 @@ const Product_Categories = ({ categProd }) => {
                 ))}
               </div>
             </motion.div>
-            <div className="flex justify-center items-center mt-5">
+            <div className="flex justify-center items-center mt-5 mb-5">
               <button
                 onClick={() =>
                   (window.location.href = `/categories/${category.category_name

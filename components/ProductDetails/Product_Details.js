@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 import Link from "next/link";
 import ProductDescription from "../Product/ProductDescription";
+import ShareIcon from "@mui/icons-material/Share";
 
 export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
@@ -169,11 +170,22 @@ export default function ProductDetailsPage({ prod }) {
   const shareUrl = `https://xsnapster.store/categories/${categSlug}/${subCategSlug}/${prod.id}`;
 
   const handleShare = () => {
-    navigator.share({
-      title: prod.title,
-      text: `Check out this ${prod.title} on XSNAPSTER!`,
-      url: shareUrl,
-    });
+    if (navigator.share) {
+      const message = `💥 Check out this Premium Aesthetic Frame from XSNAPSTER !
+  
+  🖼️ Product: ${prod.title}
+  
+  👇 View it here:
+  ${shareUrl}`;
+
+      navigator.share({
+        title: prod.title,
+        text: message,
+        url: shareUrl, // optional, some apps auto-add it
+      });
+    } else {
+      alert("Sharing is not supported on this device.");
+    }
   };
 
   return (
@@ -307,11 +319,14 @@ export default function ProductDetailsPage({ prod }) {
               <h1 className="text-[14px] md:text-[17px] text-gray-700 tracking-wide">
                 {prod.title}
               </h1>
+              <h2 className="text-[10px] animate-pulse text-red-600 mt-2">
+                {prod.one_liner}
+              </h2>
             </div>
           </motion.div>
 
           <div className="m-2">
-            <div className="flex justify-between items-baseline gap-4">
+            <div className="flex justify-between items-end gap-4">
               <div className="flex flex-col justify-start items-start">
                 <div className="flex items-end gap-2 justify-center">
                   {/* Sale Price */}
@@ -331,15 +346,15 @@ export default function ProductDetailsPage({ prod }) {
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <span
+                <div
+                  className="flex items-center gap-0.5 cursor-pointer"
                   onClick={handleShare}
-                  className="text-[12px] text-gray-700 underline font-semibold"
                 >
-                  Share
-                </span>
-                <h2 className="text-[11px] animate-pulse text-red-600 italic">
-                  {prod.one_liner}
-                </h2>
+                  <ShareIcon sx={{ fontSize: "14px" }} fontSize="small" />
+                  <span className="text-[14px] text-gray-700 underline font-semibold">
+                    Share
+                  </span>
+                </div>
               </div>
             </div>
           </div>

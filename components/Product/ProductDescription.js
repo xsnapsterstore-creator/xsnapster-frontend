@@ -317,11 +317,8 @@ const ProductDescription = ({ prodDesc }) => {
               transition={{ duration: 0.4 }}
               className="mt-3 overflow-hidden"
             >
-              <div className="mt-5">
-                <div>
-                  <h2 className="font-bold">Specification</h2>
-                </div>
-                <div className="mt-2">
+              <div className="">
+                <div className="">
                   <div>
                     <ul className="list-disc ml-5 text-[14px] md:text-[15px]">
                       <li>
