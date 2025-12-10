@@ -15,8 +15,8 @@ const Product = ({ product, category_name }) => {
   const pro = {
     category: product.category,
     dimensions: sizeOpt,
-    discounted_price: selectedPricing.price,
-    price: product.price,
+    discounted_price: selectedPricing.discounted_price,
+    price: selectedPricing.price,
     id: product.id,
     image_link: product.image_link,
     one_liner: product.one_liner,

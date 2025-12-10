@@ -124,14 +124,14 @@ export default function AddressForm() {
   };
 
   // 📌 Just Save and Continue Existing Address
-  const handleSaveContinue = () => {
+  const handleSaveContinue = async () => {
     if(!selectedId){
       alert("Select Address and Proceed")
     }
     const selectedAddress = UserAddress.find(
       (addr) => addr.address_id === selectedId
     );
-    console.log("Existing Address API Just continue:", selectedId);
+    await localStorage.setItem('address_id', selectedId)
     router.push('/billing')
   };
 

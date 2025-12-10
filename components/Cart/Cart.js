@@ -8,9 +8,11 @@ import {
   decreaseQuantity,
 } from "../store/cartSlice";
 import GppGoodIcon from "@mui/icons-material/GppGood";
+import { useRouter } from "next/router";
 
 const Cart = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const cart = useSelector((state) => state.cart.items);
 
   useEffect(() => {
@@ -28,7 +30,12 @@ const Cart = ({ isOpen, onClose }) => {
 
   const checkout = async () => {
     onClose();
-    window.location.href = "/login";
+    const token = localStorage.getItem("access_token");
+    if(token){
+      router.push('/address')
+    }else{
+      router.push('/login')
+    }
   };
 
   async function GoToProd(id, category, subcategory) {
@@ -42,8 +49,9 @@ const Cart = ({ isOpen, onClose }) => {
     window.location.href = `/categories/${categ}/${subcateg}/${id}`;
   }
 
-  const tot = cart.map((item) => item.price);
-  const total = tot.reduce((sum, item) => sum + item, 0);
+  const total = Math.floor(
+    cart.reduce((sum, item) => sum + item.discounted_price * item.quantity, 0)
+  );
 
   return (
     <div
@@ -104,10 +112,12 @@ const Cart = ({ isOpen, onClose }) => {
                   </h3>
                   <div className="flex items-end gap-1 mt-1">
                     <p className="text-green-400 font-semibold text-sm animate-pulse">
+                      ₹{item.discounted_price}
+                    </p>
+                    <p className="line-through text-gray-500 text-xs">
                       ₹{item.price}
                     </p>
-                    <p className="line-through text-gray-500 text-xs">₹699</p>
-                    <span className="text-[12px] pl-4">{item.dimensions}</span>
+                    <span className="text-[10px] pl-3">{item.dimensions}</span>
                   </div>
                 </div>
               </div>

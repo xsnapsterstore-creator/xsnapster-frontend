@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,6 +10,8 @@ import {
   decreaseQuantity,
   removeFromCart,
 } from "../store/cartSlice";
+import { useQuery } from "@tanstack/react-query";
+import { UserOrder, fetchUserAddress } from "../API/api";
 
 const BillingTemplate = () => {
   const router = useRouter();
@@ -20,6 +22,8 @@ const BillingTemplate = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showBilling, setShowBilling] = useState(false);
+  const [deliveryCharge, setDeliveryCharge] = useState("Free");
+  const [order, setOrder] = useState([]);
   const paymentOptions = [
     { value: "", label: "Select a payment method", isDisabled: true },
     { value: "cod", label: "💵 Cash on Delivery" },
@@ -80,16 +84,60 @@ const BillingTemplate = () => {
       setItems([]);
       setShowBilling(false);
     }
-
     setLoading(false);
   }, [cart]);
 
+  // 🔢 Compute totals (memoized)
+  const total = useMemo(() => {
+    return Math.floor(
+      cart.reduce((sum, item) => sum + item.discounted_price * item.quantity, 0)
+    );
+  }, [cart]);
+
+  // 🚚 Delivery charge logic
+  useEffect(() => {
+    setDeliveryCharge(total > 500 ? 0 : 70);
+  }, [total]);
+
+  // 🧮 Grand total
+  const grandTotal = total + deliveryCharge;
+
   async function ProceedPayment() {
-    console.log("The payment option is:", paymentOpt);
+    if (paymentOpt === "cod") {
+      const payload = {
+        items: cart.map((item) => ({
+          product_id: item.id,
+          dimension: item.dimensions,
+          qty: item.quantity,
+        })),
+      };
+      const res = await UserOrder(payload);
+      const data = await res.json();
+      if(res.ok){
+        router.push('/order-placed');
+      }
+      console.log("This is COD Order Response:", res);
+    } else {
+      console.log("This is Online Payment:", paymentOpt);
+    }
   }
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["Address"],
+    queryFn: async () => {
+      const res = await fetchUserAddress();
+      return res;
+    },
+
+    staleTime: 600_000,
+    gcTime: 600_000,
+    refetchInterval: 600_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 pb-24">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* ---------------- LEFT SECTION ---------------- */}
         <div className="lg:col-span-2 flex flex-col gap-5">
@@ -139,12 +187,14 @@ const BillingTemplate = () => {
 
                         <div className="flex justify-start items-end mt-1 gap-1">
                           <p className="text-red-600 animate-pulse font-semibold text-sm">
-                            ₹{item.price}
+                            ₹{item.discounted_price}
                           </p>
                           <p className="line-through text-gray-900 text-xs">
                             ₹{item.price}
                           </p>
-                          <span className="text-[13px] font-semibold pl-4">{item.dimensions}</span>
+                          <span className="text-[11px] pl-3">
+                            {item.dimensions}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -217,13 +267,23 @@ const BillingTemplate = () => {
                 Delivery Address
               </h2>
 
-              <div className="text-gray-700 text-sm leading-relaxed">
-                Avinash Chaurasia
-                <br />
-                U-52/24, U-Block, Sikanderpur, Gurgaon, Haryana India (122010)
-                <br />
-                Mobile: 9876543210
-              </div>
+              {isLoading ? (
+                // 🔄 Loading State (Skeleton Chips)
+                <div className="text-center text-sm p-4">
+                  <p>Loading...</p>
+                </div>
+              ) : (
+                <div className="text-gray-700 text-sm leading-relaxed">
+                  {data?.[0]?.name}
+                  <br />
+                  {data?.[0]?.address_line}, {data?.[0]?.city},{" "}
+                  {data?.[0]?.state}, {data?.[0]?.zip_code}
+                  <br />
+                  Mobile: {data?.[0]?.phone_number}
+                  <br />
+                  Address Type: {data?.[0]?.address_type}
+                </div>
+              )}
 
               <button
                 onClick={() => router.push("/address")}
@@ -247,37 +307,15 @@ const BillingTemplate = () => {
                 {/* Subtotal */}
                 <div className="flex justify-between text-gray-700">
                   <span>Subtotal</span>
-                  <span>₹799</span>
+                  <span>₹{total}</span>
                 </div>
 
                 {/* Delivery Charges */}
                 <div className="flex justify-between text-gray-700">
                   <span>Delivery Charges</span>
-                  <span className="text-green-600 font-medium">Free</span>
-                </div>
-
-                {/* Promo Code */}
-                <div className="mt-5">
-                  <label className="text-sm font-medium text-gray-700">
-                    Have a Promo Code?
-                  </label>
-
-                  <div className="flex mt-2 gap-2">
-                    <input
-                      type="text"
-                      placeholder="Enter promo code"
-                      className="flex-1 px-3 py-2 border rounded-lg text-sm outline-none"
-                    />
-                    <button className="px-4 py-2 bg-black text-white rounded-lg text-sm active:scale-95 transition">
-                      Apply
-                    </button>
-                  </div>
-                </div>
-
-                {/* Discount */}
-                <div className="flex justify-between text-gray-700">
-                  <span>Discount</span>
-                  <span className="text-green-600">- ₹100</span>
+                  <span className="text-green-600 font-medium">
+                    ₹{deliveryCharge}
+                  </span>
                 </div>
 
                 <hr className="my-4" />
@@ -285,7 +323,7 @@ const BillingTemplate = () => {
                 {/* Total */}
                 <div className="flex justify-between text-gray-900 font-semibold text-lg">
                   <span>Total Amount</span>
-                  <span>₹699</span>
+                  <span>₹{grandTotal}</span>
                 </div>
               </div>
 
@@ -309,78 +347,9 @@ const BillingTemplate = () => {
                     options={paymentOptions}
                     styles={customStyles}
                     placeholder="Select a payment method"
-                    className="mt-2"
+                    className="mt-2 mb-5"
                     classNamePrefix="react-select"
                   />
-                </div>
-
-                {/* Dynamic Fields */}
-                <div className="mt-4">
-                  {/* COD */}
-                  {paymentOpt === "cod" && (
-                    <p className="text-gray-700 text-sm bg-gray-100 p-3 rounded-lg border">
-                      You can pay when your order arrives at your doorstep.
-                    </p>
-                  )}
-
-                  {/* UPI */}
-                  {paymentOpt === "upi" && (
-                    <div className="space-y-2 bg-gray-50 border p-4 rounded-xl">
-                      <label className="text-xs text-gray-600">
-                        Enter UPI ID
-                      </label>
-                      <div className="flex justify-between items-center gap-2">
-                        <input
-                          type="text"
-                          placeholder="example@upi"
-                          className="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
-                        />
-                        <button className="py-2 px-2 cursor-pointer bg-black text-white rounded-xl text-sm font-medium active:scale-95 transition">
-                          Check
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Debit Card */}
-                  {paymentOpt === "debit" && (
-                    <div className="space-y-3 bg-gray-50 border p-4 rounded-xl">
-                      <input
-                        className="w-full border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
-                        placeholder="Card Number"
-                      />
-                      <div className="grid grid-cols-2 gap-3">
-                        <input
-                          className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
-                          placeholder="MM/YY"
-                        />
-                        <input
-                          className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-blue-500"
-                          placeholder="CVV"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Credit Card */}
-                  {paymentOpt === "credit" && (
-                    <div className="space-y-3 bg-gray-50 border p-4 rounded-xl">
-                      <input
-                        className="w-full border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
-                        placeholder="Card Number"
-                      />
-                      <div className="grid grid-cols-2 gap-3">
-                        <input
-                          className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
-                          placeholder="MM/YY"
-                        />
-                        <input
-                          className="border p-2.5 rounded-lg text-sm focus:ring-2 outline-none focus:ring-purple-500"
-                          placeholder="CVV"
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
 

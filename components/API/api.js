@@ -160,7 +160,6 @@ export async function refreshAccessToken() {
     }
 
     const data = await res.json();
-    console.log("This is the data:", data);
 
     if (data?.access_token) {
       localStorage.setItem("access_token", data.access_token);
@@ -353,6 +352,32 @@ export const logOutUserProfile = async () => {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userID");
     });
+    return { res, data };
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+
+// User's Order API
+export const UserOrder = async (items) => {
+  try {
+    const res = await secureFetch("/payments/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(items),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    const data = await res.json().catch(() => null);
+    console.log("This is the order status:", res.status);
+    console.log("This is the order status Data:", data);
+    if (res.ok) {
+      Promise.resolve().then(() => {
+        localStorage.removeItem("cart");
+      });
+    }
     return { res, data };
   } catch (e) {
     console.error("Network/Parse Error:", e);

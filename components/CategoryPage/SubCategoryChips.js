@@ -10,7 +10,7 @@ const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
     <div>
       <div>
         {SubCategory.length > 0 && (
-          <div className="hide-scrollbar mt-2 flex items-center gap-3 overflow-x-auto py-3">
+          <div className="hide-scrollbar mt-1 flex items-center gap-3 overflow-x-auto py-3">
             {SubCategory.map((cat) => {
               const isActive =
                 sub_category_name === cat.slug ||
@@ -21,7 +21,7 @@ const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
                   key={cat.id}
                   onClick={() => onSelect(cat)}
                   className={[
-                    "font-nunito rounded-[120px] h-[28px] text-[12px] flex justify-center items-center font-medium px-3 py-3 whitespace-nowrap border transition-all border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 hover:cursor-pointer",
+                    "font-nunito rounded-[120px] h-[28px] text-[12px] flex justify-center items-center font-medium px-3 py-4 whitespace-nowrap border transition-all border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 hover:cursor-pointer",
                     isActive
                       ? "bg-red-500 text-white border-red-500"
                       : "text-black bg-transparent border-default hover:bg-red-500 hover:border-red-500",

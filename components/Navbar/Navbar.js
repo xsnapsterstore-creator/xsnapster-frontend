@@ -126,6 +126,12 @@ const Navbar = () => {
     }
   }
 
+  async function searchItem(e) {
+    e.preventDefault();
+    console.log("This is search Item:", mobileSearchTerm);
+    setMobileSearchTerm("");
+  }
+
   return (
     <>
       <div
@@ -161,7 +167,7 @@ const Navbar = () => {
               <div
                 className={`
       absolute left-1/2 -translate-x-1/2 top-[110%]
-      bg-gray-800 shadow-lg border text-white border-gray-200
+      bg-[#333333] shadow-lg text-white
       rounded-lg overflow-hidden text-[14px] w-[110px]
       transform transition-all duration-300 z-50
       ${
@@ -191,7 +197,7 @@ const Navbar = () => {
           <div className="pr-2 flex justify-center items-center gap-4">
             <div className="">
               <SearchIcon
-                fontSize="medium"
+                sx={{ fontSize: "30px" }}
                 onClick={() => setShowMobileSearch((prev) => !prev)}
                 className="cursor-pointer"
                 aria-label="Toggle search"
@@ -202,13 +208,14 @@ const Navbar = () => {
                 {cart.length}
               </span>
               <ShoppingCartIcon
+                sx={{ fontSize: "27px" }}
                 onClick={() => setIsCartOpen(true)}
                 className="cursor-pointer"
               />
             </div>
             <div className="">
               <MenuIcon
-                fontSize="medium"
+                sx={{ fontSize: "33px" }}
                 onClick={toggleSidebar}
                 className="cursor-pointer"
               />
@@ -218,7 +225,7 @@ const Navbar = () => {
 
         {/* For Desktop View */}
         <div className="lg:flex hidden justify-between items-center h-[65px]">
-          <div className="pl-7">
+          <div className="pl-7 flex items-center gap-2">
             <a href={"/"}>
               <div className="flex items-center gap-[2px] md:text-[25px] text-[20px] font-semibold">
                 <Image src="/logo.svg" alt="xsnapster" width={30} height={30} />
@@ -229,6 +236,47 @@ const Navbar = () => {
                 </div>
               </div>
             </a>
+            <div className="relative" onClick={toggleGender}>
+              {/* Trigger */}
+              <div className="flex justify-center items-center cursor-pointer">
+                <Image src="/gender.svg" width={25} height={25} alt="gender" />
+                {isGenderOpen ? (
+                  <KeyboardArrowUpIcon fontSize="small" />
+                ) : (
+                  <KeyboardArrowDownIcon fontSize="small" />
+                )}
+              </div>
+
+              {/* Dropdown */}
+              <div
+                className={`
+      absolute left-1/2 -translate-x-1/2 top-[110%]
+      bg-[#333333] shadow-lg text-white
+      rounded-lg overflow-hidden text-[14px] w-[110px]
+      transform transition-all duration-300 z-50
+      ${
+        isGenderOpen
+          ? "max-h-[300px] opacity-100 visible"
+          : "max-h-0 opacity-0 invisible"
+      }
+    `}
+              >
+                <div className="flex flex-col p-3 space-y-2">
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>For Him</span>
+                    <MaleIcon />
+                  </button>
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>For Her</span>
+                    <FemaleIcon />
+                  </button>
+                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                    <span>Others</span>
+                    <TransgenderIcon />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div>
@@ -239,7 +287,7 @@ const Navbar = () => {
                   className="cursor-pointer relative"
                   onClick={toggleCategories}
                 >
-                  <span className="flex items-center">
+                  <span className="flex text-[14px] hover:text-red-500 items-center">
                     Categories
                     <sup className="text-red-600 text-[10px] animate-pulse p-[4px] rounded-xl">
                       New
@@ -268,7 +316,7 @@ const Navbar = () => {
                             key={item.name}
                             className="flex items-end justify-between hover:text-red-500 transition-all duration-200"
                           >
-                            <p className="text-[15px]">{item.name}</p>
+                            <p className="text-[13px]">{item.name}</p>
                             <p className="text-[10px] text-red-600 animate-pulse">
                               {item.one_liner}
                             </p>
@@ -285,7 +333,7 @@ const Navbar = () => {
                   className="cursor-pointer relative"
                   onClick={toggleHelpCenter}
                 >
-                  <span className="flex items-center gap-1">
+                  <span className="flex text-[14px] hover:text-red-500 items-center gap-1">
                     Help Center
                     {isHelpCenterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                   </span>
@@ -325,7 +373,7 @@ const Navbar = () => {
                           <Link
                             onClick={toggleHelpCenter}
                             href={item.link}
-                            className="text-[15px]"
+                            className="text-[13px]"
                           >
                             {item.name}
                           </Link>
@@ -334,14 +382,16 @@ const Navbar = () => {
                     </div>
                   </div>
                 </li>
-                <li>Track Order</li>
 
                 <li>
-                  <form type="submit" action="submit">
+                  <form onSubmit={searchItem} type="submit" action="submit">
                     <input
-                      className="w-[200px] h-[30px] border rounded-md px-2 focus:outline-none"
                       type="text"
-                      placeholder="Search"
+                      value={mobileSearchTerm}
+                      onChange={(e) => setMobileSearchTerm(e.target.value)}
+                      placeholder="Search products"
+                      className="border rounded-md px-2 w-[180px] h-[30px] py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      autoFocus
                     />
                   </form>
                 </li>
@@ -394,30 +444,35 @@ const Navbar = () => {
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className="lg:hidden px-3 pt-25 absolute bg-white w-full
+          className="lg:hidden px-3 pt-26 absolute bg-white w-full
       transition-all duration-300 ease-out
-      animate-slide-down flex justify-center gap-3"
+      animate-slide-down flex itme justify-center gap-3 p-2"
         >
-          <input
-            value={mobileSearchTerm}
-            onChange={(e) => setMobileSearchTerm(e.target.value)}
-            placeholder="Search products"
-            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
-            autoFocus
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                // handle search submit here (e.g., navigate or call search)
-              }
-            }}
-          />
+          <form onSubmit={searchItem} type="submit" action="submit">
+            <input
+              value={mobileSearchTerm}
+              onChange={(e) => setMobileSearchTerm(e.target.value)}
+              placeholder="Search products"
+              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  // handle search submit here (e.g., navigate or call search)
+                }
+              }}
+            />
+          </form>
           <Button
+            onClick={(e) => {
+              searchItem(e);
+            }}
             sx={{
               fontSize: "14px",
               bgcolor: "black",
               padding: "2px 2px",
             }}
             variant="contained"
-            className="w-full rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition"
+            className="w-[95px] rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition"
           >
             Search
           </Button>
@@ -433,11 +488,11 @@ const Navbar = () => {
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-[#404040] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-80 bg-[#333333] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-[65px] justify-between items-center rounded-2xl bg-neutral-900 m-3 p-2 border-b">
+        <div className="flex h-[65px] justify-between items-center rounded-2xl bg-[#212121] m-3 p-2 border-b">
           <div className="flex items-center gap-[1px]">
             <Link
               href={"/"}
@@ -453,7 +508,7 @@ const Navbar = () => {
 
         <div
           onClick={(e) => CheckLogin((toggle = true))}
-          className="flex items-center h-[60px] p-2 m-3 text-white/60 text-[13px] bg-neutral-900 rounded-2xl gap-3"
+          className="flex items-center h-[60px] p-2 pl-4 m-3 text-white/80 text-[13px] bg-[#212121] rounded-2xl gap-2"
         >
           <PersonIcon />
           <p>
@@ -465,9 +520,9 @@ const Navbar = () => {
 
         <div
           onClick={toggleCategories}
-          className="text-white/60 bg-neutral-900 text-[13px] flex flex-col justify-center rounded-2xl m-3"
+          className="text-white/80 bg-[#212121] text-[13px] flex flex-col justify-center rounded-2xl m-3"
         >
-          <div className="flex items-center justify-between cursor-pointer min-h-[60px] pl-3 pr-3">
+          <div className="flex items-center justify-between cursor-pointer min-h-[60px] pl-5 pr-3">
             <span>
               Categories
               <sup className="text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl">
@@ -484,24 +539,24 @@ const Navbar = () => {
               } m-4 flex flex-col space-y-5`}
             >
               {data?.map((item) => (
-                <a
+                <Link
                   onClick={toggleSidebar}
                   href={`/categories/${item.slug}`}
                   key={item.id}
-                  className="flex items-end justify-between border-b pb-3"
+                  className="flex items-end justify-between border-b pb-3 pl-2"
                 >
                   <p>{item.name}</p>
                   <p className="text-[10px] text-red-500 animate-pulse">
                     {item.one_liner}
                   </p>
-                </a>
+                </Link>
               ))}
             </div>
           )}
         </div>
 
         <div className="flex flex-col">
-          <div className="flex-1 text-[13px] scrollbar-hide overflow-y-auto p-3 text-white/60 bg-neutral-900 rounded-2xl m-3">
+          <div className="flex-1 text-[13px] scrollbar-hide overflow-y-auto p-5 text-white/80 bg-[#212121] rounded-2xl m-3">
             <Link
               className="flex items-center justify-between h-[50px] border-b"
               onClick={toggleSidebar}

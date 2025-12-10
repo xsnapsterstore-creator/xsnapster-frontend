@@ -158,7 +158,7 @@ const User = () => {
         router.push("/login");
         return;
       }
-      console.log('This is current response',res)
+      console.log("This is user response:", res)
       if (res.default_address) {
         const add = res.default_address.address_line;
         const parts = add.split(",");

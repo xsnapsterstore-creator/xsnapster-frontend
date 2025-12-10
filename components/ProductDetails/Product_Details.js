@@ -40,8 +40,8 @@ export default function ProductDetailsPage({ prod }) {
     subcategory: prod.subcategory,
     is_active: prod.is_active,
     dimensions: sizeOpt,
-    price: prod.price,
-    discounted_price: selectedPricing.price,
+    price: selectedPricing.price,
+    discounted_price: selectedPricing.discounted_price,
   };
 
   const prodQuality = [
@@ -383,61 +383,27 @@ export default function ProductDetailsPage({ prod }) {
           <div className="flex flex-col gap-5 m-2 mt-5 border-b pb-6">
             {/* Quantity + Add to Cart + Buy Now */}
             <div className="flex flex-col gap-2">
-              {/* Quantity Selector */}
-              <div className="flex justify-between gap-2">
-                <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg shadow-sm border">
-                  <button
-                    className="text-xl font-bold text-gray-700 hover:text-black transition"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setProdQuantity((prev) => Math.max(1, prev - 1));
-                    }}
-                  >
-                    −
-                  </button>
-
-                  <span className="font-semibold text-xl text-gray-900 min-w-[30px] text-center">
-                    {prodQuantity}
-                  </span>
-
-                  <button
-                    className="text-xl font-bold text-gray-700 hover:text-black transition"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setProdQuantity((prev) => prev + 1);
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-                {/* Add to Cart */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(addToCart({ ...product, quantity: prodQuantity }));
-                    setAdded(true);
-                    setTimeout(() => setAdded(false), 1200);
-                  }}
-                  className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
-                    added
-                      ? "bg-black text-white"
-                      : "bg-red-500 hover:bg-red-700 text-white"
-                  }`}
-                >
-                  {added ? "Added to Cart" : "Add To Cart"}
-                </button>
-              </div>
+              {/* Add to Cart */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(addToCart({ ...product, quantity: prodQuantity }));
+                  setAdded(true);
+                  setTimeout(() => setAdded(false), 1200);
+                }}
+                className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
+                  added
+                    ? "bg-black text-white"
+                    : "bg-gray-900 hover:bg-gray-700 text-white"
+                }`}
+              >
+                {added ? "Added to Cart" : "Add To Cart"}
+              </button>
 
               {/* Buy Now Button */}
               <div className="">
                 {/* Buy Now */}
-                <button
-                  className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
-                    added
-                      ? "bg-black text-white"
-                      : "bg-gray-700 hover:bg-red-900 text-white"
-                  }`}
-                >
+                <button className="px-8 py-2 w-full rounded-lg shadow-md text-lg transition bg-gray-900 hover:bg-gray-700 text-white">
                   Buy Now
                 </button>
               </div>
