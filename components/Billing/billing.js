@@ -103,22 +103,42 @@ const BillingTemplate = () => {
   const grandTotal = total + deliveryCharge;
 
   async function ProceedPayment() {
-    if (paymentOpt === "cod") {
-      const payload = {
-        items: cart.map((item) => ({
-          product_id: item.id,
-          dimension: item.dimensions,
-          qty: item.quantity,
-        })),
-      };
-      const res = await UserOrder(payload);
-      const data = await res.json();
-      if(res.ok){
-        router.push('/order-placed');
+    try {
+      // Prevent checkout if cart is empty
+      if (!cart || cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
       }
-      console.log("This is COD Order Response:", res);
-    } else {
-      console.log("This is Online Payment:", paymentOpt);
+      if (paymentOpt === "cod") {
+        console.log("This is Online Payment:", paymentOpt);
+        const payload = {
+          items: cart.map((item) => ({
+            product_id: item.id,
+            dimension: item.dimensions, // <-- confirm this key name
+            qty: item.quantity,
+          })),
+        };
+
+        const res = await UserOrder(payload);
+
+        if (!res) {
+          alert("Network error. Please try again.");
+          return;
+        }
+
+        const data = res;
+
+        console.log("Parsed COD Response:", data);
+
+        if (res.ok) {
+          return router.push("/order-placed");
+        } else {
+          alert(data.message || "Failed to place order.");
+        }
+      }
+    } catch (error) {
+      console.error("❌ ProceedPayment Error:", error);
+      alert("Something went wrong while processing your order.");
     }
   }
 

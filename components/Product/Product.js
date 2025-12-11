@@ -72,18 +72,18 @@ const Product = ({ product, category_name }) => {
           onClick={() => {
             router.push(`/categories/${category}/${subcategory}/${product.id}`);
           }}
-          className="text-[12px] md:text-sm font-medium text-gray-800 line-clamp-2 h-[36px]"
+          className="text-[11px] md:text-[12px] font-medium text-gray-800 line-clamp-2 h-[36px]"
         >
           {product.title}
         </h1>
 
         {/* Price Section */}
-        <div className="w-full mt-2 flex justify-start gap-3 items-center">
+        <div className="w-full mt-2 flex justify-start gap-3 md:gap-2 lg:gap-3 items-center">
           <div>
             <select
               value={sizeOpt}
               onChange={(e) => setSizeOpt(e.target.value)}
-              className="border w-[70px] md:w-[85px] rounded-md px-1 py-1"
+              className="border w-[70px] md:w-[85px] rounded-md px-1 "
             >
               {product.dimensions.map((size) => (
                 <option key={size} value={size}>
@@ -94,15 +94,15 @@ const Product = ({ product, category_name }) => {
           </div>
 
           {/* Price Section */}
-          <div className="flex flex-col items-start justify-start">
+          <div className="flex items-end gap-1 justify-start">
             {/* Sale Price */}
-            <p className="text-red-600 font-bold text-base">
+            <p className="text-red-600 font-bold text-[14px] lg:text-[16px]">
               ₹{selectedPricing.discounted_price ?? selectedPricing.price}
             </p>
 
             {/* Strike-through original price only if discount exists */}
             {selectedPricing.discounted_price && (
-              <p className="line-through text-gray-700 text-xs">
+              <p className="line-through text-gray-700 text-[10px] lg:text-[12px]">
                 ₹{selectedPricing.price}
               </p>
             )}
@@ -122,8 +122,8 @@ const Product = ({ product, category_name }) => {
               setTimeout(() => setAdded(false), 1200); // reset after 1.2s
             }}
             sx={{
-              fontSize: "7px",
-              padding: "8px 9px",
+              fontSize: "9px",
+              padding: "8px 7px",
               transition: "all 0.25s ease",
               backgroundColor: added ? "#22c55e" : "", // temporary green color
             }}
@@ -137,8 +137,8 @@ const Product = ({ product, category_name }) => {
             size="small"
             variant="contained"
             sx={{
-              fontSize: "7px",
-              padding: "8px 11px",
+              fontSize: "9px",
+              padding: "8px 7px",
             }}
             className="cursor-pointer"
             onClick={(e) => {
