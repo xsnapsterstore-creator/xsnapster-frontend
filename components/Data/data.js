@@ -121,21 +121,23 @@ export const SubCategories = [
   { id: 8, name: "Supra", slug: "supra" },
 ];
 
-
-// For Category ID 
+// For Category ID
 export const CategoryID = {
   cars: 15,
   anime: 16,
-  marvel: 17,
-  gym:18,
-  movies:19,
-  "music-album":20
-}
+  gym: 18,
+  "bw-aesthetics": 31,
+  "for-her": 32,
+  "for-him": 33,
+  movies: 34,
+  sports: 35,
+  "music-album": 36,
+};
 
 export const CategoryTitle = {
   cars: "Fast & Curious",
   anime: "Hentai...But Not Really",
-  "black-and-white-aesthetics": "Fifty Shades of Frames",
+  "bw-aesthetics": "Fifty Shades of Frames",
   gym: "Hard & Heavy",
   sports: "Sweaty & Wild",
   "for-him": "Big Boys Collection",
@@ -148,7 +150,7 @@ export const CategoryTitle = {
 export const CategorySubtitle = {
   cars: "Because people come for speed... and curosity",
   anime: "Instant clickbait frames, not fantasies",
-  "black-and-white-aesthetics": "No whips, only frames in grayscale",
+  "bw-aesthetics": "No whips, only frames in grayscale",
   gym: "Weights? Or something else? You decide",
   sports: "Messi dripping, not what you imagined",
   "for-him": "Because size does matter... in Frames",
