@@ -13,20 +13,14 @@ const Footer = () => {
       const res = await fetchAllSubCategories();
       return res.json();
     },
-
-    // ⏳ Cache the data for 10 minutes (600000 ms)
     staleTime: 600_000,
-
-    // 💾 Keep the data in memory for 10 minutes even if component unmounts
     gcTime: 600_000,
-
-    // ♻️ Automatically refetch after 10 minutes (same as staleTime)
     refetchInterval: 600_000,
-
-    // 👇 Prevent refetching on mount if cached data exists
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  console.log("This is the data:", data);
   return (
     <div>
       {/* For Mobile Screen */}
@@ -84,12 +78,13 @@ const Footer = () => {
                   <p className="text-center text-xl m-4">Explore Categories</p>
                   <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
                     {data?.map((tag, i) => (
-                      <div
+                      <Link
+                        href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                         key={i}
                         className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
                       >
                         {tag.name}
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -264,12 +259,13 @@ const Footer = () => {
                 <p className="text-center text-xl m-4">Explore Categories</p>
                 <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
                   {data?.map((tag, i) => (
-                    <div
+                    <Link
+                      href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                       key={i}
                       className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
                     >
                       {tag.name}
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
