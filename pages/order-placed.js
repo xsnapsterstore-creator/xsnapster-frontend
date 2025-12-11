@@ -1,12 +1,29 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@mui/material";
 export default function OrderSuccess() {
-  let user = null;
-  if (typeof window !== "undefined") {
-    user = localStorage.getItem("userID");
-  }
+  const { data, isLoading } = useQuery({
+    queryKey: ["order_id"],
+    queryFn: async () => {
+      if (typeof window === "undefined") return null; // prevent SSR crash
+
+      const order = localStorage.getItem("order_id");
+      const user = localStorage.getItem("userID");
+      const data = {
+        order: order,
+        user: user,
+      };
+      return data;
+    },
+
+    staleTime: 600_000,
+    gcTime: 600_000,
+    refetchInterval: 600_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center px-4">
@@ -71,7 +88,11 @@ export default function OrderSuccess() {
           Thank you for your order. We are processing it and will notify you
           once it's ready for delivery.
           <br />
-          <span className="text-red-600 font-semibold animate-pulse">Your wall's about to glow up</span>
+          <span className="text-red-600 font-semibold animate-pulse">
+            Your wall's about to glow up
+          </span>
+          <br />
+          <span>Your Order ID: {data?.order}</span>
         </motion.p>
 
         {/* Divider Line */}
@@ -84,7 +105,16 @@ export default function OrderSuccess() {
 
         {/* Buttons */}
         <div className="flex flex-col gap-3">
-          <Link href={`/user/${user}`}>
+          <div
+            onClick={(e) => {
+              Promise.resolve().then(() => {
+                localStorage.removeItem("address_id");
+                localStorage.removeItem("order_id");
+                localStorage.removeItem("razorpay_id");
+              });
+              window.location.href = `/user/${data?.user}`;
+            }}
+          >
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}
@@ -92,9 +122,18 @@ export default function OrderSuccess() {
             >
               View My Orders
             </motion.button>
-          </Link>
+          </div>
 
-          <Link href="/">
+          <div
+            onClick={(e) => {
+              Promise.resolve().then(() => {
+                localStorage.removeItem("address_id");
+                localStorage.removeItem("order_id");
+                localStorage.removeItem("razorpay_id");
+              });
+              window.location.href = "/";
+            }}
+          >
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}
@@ -102,7 +141,7 @@ export default function OrderSuccess() {
             >
               Continue Shopping
             </motion.button>
-          </Link>
+          </div>
         </div>
       </motion.div>
     </div>

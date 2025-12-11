@@ -190,7 +190,7 @@ export default function ProductDetailsPage({ prod }) {
   return (
     <div>
       {/* Product Routing */}
-      <div className="pt-[10px]">
+      <div className="pt-[10px] max-w-6xl lg:flex lg:justify-start lg:items-start lg:gap-5 mx-auto ">
         <div className="m-3 flex justify-start items-center gap-1">
           <Link
             href={"/"}
@@ -267,13 +267,13 @@ export default function ProductDetailsPage({ prod }) {
           {/* Arrows */}
           <button
             onClick={handlePrev}
-            className="hidden md:block absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700/70 text-white px-3 py-2 rounded-r"
+            className="hidden cursor-pointer md:block absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700/70 text-white px-3 py-2 rounded-r"
           >
             <ArrowBackIosNewIcon />
           </button>
           <button
             onClick={handleNext}
-            className="hidden md:block absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700/70 text-white px-3 py-2 rounded-l"
+            className="hidden cursor-pointer md:block absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700/70 text-white px-3 py-2 rounded-l"
           >
             <ArrowForwardIosIcon />
           </button>
@@ -315,7 +315,7 @@ export default function ProductDetailsPage({ prod }) {
             transition={{ duration: 0.4 }}
           >
             <div className="m-2 md:mt-0 text-left">
-              <h1 className="text-[14px] md:text-[17px] text-gray-700 tracking-wide">
+              <h1 className="text-[14px] md:text-[16px] text-gray-700 tracking-wide">
                 {prod.title}
               </h1>
               <h2 className="text-[11px] animate-pulse text-red-600 mt-2">

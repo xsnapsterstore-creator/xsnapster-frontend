@@ -370,12 +370,6 @@ export const UserOrder = async (items) => {
       const err = await res.json();
       console.error("💥 Server Validation Error:", err);
     }
-    const data = await res.json().catch(() => null);
-    if (res.ok) {
-      Promise.resolve().then(() => {
-        localStorage.removeItem("cart");
-      });
-    }
     return res;
   } catch (e) {
     console.error("Network/Parse Error:", e);

@@ -126,12 +126,16 @@ const BillingTemplate = () => {
           return;
         }
 
-        const data = res;
-
-        console.log("Parsed COD Response:", data);
+        const data = await res.json();
+        console.log("This is response data:", data);
 
         if (res.ok) {
-          return router.push("/order-placed");
+          Promise.resolve().then(() => {
+            localStorage.removeItem("cart");
+            localStorage.setItem("order_id", data.order_id);
+            localStorage.setItem("razorpay_id", data.razorpay_order_id);
+          });
+          window.location.href = "/order-placed";
         } else {
           alert(data.message || "Failed to place order.");
         }
@@ -201,7 +205,7 @@ const BillingTemplate = () => {
                       />
 
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900 text-sm md:text-base">
+                        <p className="font-semibold text-gray-900 text-[12.5px] md:text-base">
                           {item.title.substring(0, 35) + "..."}
                         </p>
 

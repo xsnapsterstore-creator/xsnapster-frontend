@@ -87,15 +87,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white border border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        onClick={() => toggle(0)}
+        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
-        <button
-          onClick={() => toggle(0)}
-          className="flex justify-between items-center w-full text-left cursor-pointer"
-        >
+        <button className="flex justify-between items-center w-full text-left cursor-pointer">
           <motion.h3
-            className="text-[15px] lg:text-[20px] font-semibold text-gray-900"
+            className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Features
@@ -146,15 +144,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white border border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        onClick={() => toggle(1)}
+        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
-        <button
-          onClick={() => toggle(1)}
-          className="flex justify-between items-center w-full text-left cursor-pointer"
-        >
+        <button className="flex justify-between items-center w-full text-left cursor-pointer">
           <motion.h3
-            className="text-[15px] lg:text-[20px] font-semibold text-gray-900"
+            className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Details
@@ -214,15 +210,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white border border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        onClick={() => toggle(2)}
+        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
-        <button
-          onClick={() => toggle(2)}
-          className="flex justify-between items-center w-full text-left cursor-pointer"
-        >
+        <button className="flex justify-between items-center w-full text-left cursor-pointer">
           <motion.h3
-            className="text-[15px] lg:text-[20px] font-semibold text-gray-900"
+            className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Quality
@@ -283,15 +277,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white border border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        onClick={() => toggle(3)}
+        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
-        <button
-          onClick={() => toggle(3)}
-          className="flex justify-between items-center w-full text-left cursor-pointer"
-        >
+        <button className="flex justify-between items-center w-full text-left cursor-pointer">
           <motion.h3
-            className="text-[15px] lg:text-[20px] font-semibold text-gray-900"
+            className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Specification
@@ -320,7 +312,7 @@ const ProductDescription = ({ prodDesc }) => {
               <div className="">
                 <div className="">
                   <div>
-                    <ul className="list-disc ml-5 text-[14px] md:text-[15px]">
+                    <ul className="list-disc ml-5 text-[14px] text-gray-600">
                       <li>
                         200 GSM Art Board Matte Paper / 350 GSM Poly-cotton
                         inkjet canvas
