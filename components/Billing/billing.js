@@ -98,7 +98,6 @@ const BillingTemplate = () => {
   useEffect(() => {
     setDeliveryCharge(total > 500 ? 0 : 70);
   }, [total]);
-
   // 🧮 Grand total
   const grandTotal = total + deliveryCharge;
 
@@ -139,6 +138,8 @@ const BillingTemplate = () => {
         } else {
           alert(data.message || "Failed to place order.");
         }
+      }else{
+        
       }
     } catch (error) {
       console.error("❌ ProceedPayment Error:", error);

@@ -9,6 +9,7 @@ import {
   updateUserAddress,
 } from "../API/api";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 
 const User = () => {
   const router = useRouter();
@@ -119,7 +120,7 @@ const User = () => {
       },
     };
     // console.log("This is the Old User update his details:", data);
-    const res = await updateUserAddress(data)
+    const res = await updateUserAddress(data);
     if (res.ok) {
       alert("Address Updated Successfully");
       router.reload();
@@ -128,58 +129,104 @@ const User = () => {
     }
   }
 
-  async function logOut() {
-    const result = await logOutUserProfile();
-    if (!result) {
-      alert("Network Error");
-      return;
+  const logOut = () => {
+    // clear tokens + redirect
+    if (typeof window !== "undefined") {
+      Promise.resolve().then(() => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("token_type");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("userEmail");
+      });
+      // if refresh token is HTTP-only cookie, call backend logout endpoint optionally
     }
+    window.location.href = "/";
+  };
 
-    const { res, data } = result;
-    console.log("This is the logout response:", res, data);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["user-profile"],
+    queryFn: async () => {
+      const token = localStorage.getItem("access_token");
 
-    if (res.ok || data?.status === "success") {
-      alert("Log Out Successfully");
-      router.reload();
-    } else {
-      alert(`Logout Failed: ${data?.message || "Something went wrong"}`);
-    }
-  }
+      if (!token) {
+        router.push("/login");
+        return null;
+      }
+
+      const res = await fetchUserProfile();
+
+      if (!res) {
+        router.push("/login");
+        return null;
+      }
+
+      return res;
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
-    async function fetchUserDetails() {
-      const token = localStorage.getItem("access_token");
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-      const res = await fetchUserProfile();
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-      console.log("This is user response:", res)
-      if (res.default_address) {
-        const add = res.default_address.address_line;
-        const parts = add.split(",");
-        setFormData({
-          name: res.default_address.name,
-          address_line: res.default_address.address_line,
-          house: parts[0],
-          street: parts[2],
-          landmark: parts[1],
-          city: res.default_address.city,
-          state: res.default_address.state,
-          pincode: res.default_address.zip_code,
-          address_type: res.default_address.address_type,
-          phone: res.default_address.phone_number,
-          user_id: res.default_address.user_id,
-        });
-        SetUserData(res);
-      }
+    if (!data) return;
+
+    if (data.default_address) {
+      const add = data.default_address.address_line;
+      const parts = add.split(",");
+
+      setFormData({
+        name: data.default_address.name,
+        address_line: data.default_address.address_line,
+        house: parts[0] || "",
+        landmark: parts[1] || "",
+        street: parts[2] || "",
+        city: data.default_address.city,
+        state: data.default_address.state,
+        pincode: data.default_address.zip_code,
+        address_type: data.default_address.address_type,
+        phone: data.default_address.phone_number,
+        user_id: data.default_address.user_id,
+      });
+
+      SetUserData(data);
     }
-    fetchUserDetails();
-  }, []);
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+        <div className="max-w-3xl mx-auto">
+          <div className="animate-pulse space-y-4">
+            <div className="h-6 bg-gray-200 rounded w-1/3" />
+            <div className="h-48 bg-white rounded-xl shadow p-6" />
+            <div className="h-6 bg-gray-200 rounded w-1/4" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="h-20 bg-gray-100 rounded" />
+              <div className="h-20 bg-gray-100 rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-xl font-semibold">Could not load profile</h2>
+          <p className="text-gray-500 mt-2">
+            Something went wrong while fetching your profile. Try again later.
+          </p>
+          <button
+            onClick={() => queryClient.invalidateQueries(["user-profile"])}
+            className="mt-4 px-4 py-2 bg-black text-white rounded"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!userData.default_address) {
     return (
@@ -593,11 +640,11 @@ const User = () => {
             ) : (
               <div className="space-y-4">
                 {userData.orders.map((order) => {
-                  const isOpen = openOrder === order.order_id;
+                  const isOpen = openOrder === order.id;
 
                   return (
                     <div
-                      key={order.order_id}
+                      key={order.id}
                       className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm"
                     >
                       {/* Order Header */}
@@ -614,12 +661,12 @@ const User = () => {
                               : "bg-yellow-100 text-yellow-700"
                           }`}
                         >
-                          {order.order_status}
+                          {order.status}
                         </span>
                       </div>
 
                       <p className="font-semibold text-gray-900 mt-1">
-                        {order.order_id}
+                        {order.id}
                       </p>
 
                       {/* Order Details */}
@@ -628,24 +675,24 @@ const User = () => {
                           <span className="font-medium text-gray-800">
                             Date:
                           </span>{" "}
-                          {order.order_date}
+                          {order.created_at}
                         </p>
                         <p className="text-gray-600">
                           <span className="font-medium text-gray-800">
                             Items:
                           </span>{" "}
-                          {order.ordered_product.length}
+                          {order.total_items}
                         </p>
                       </div>
 
                       {/* Amount + CTA */}
                       <div className="mt-4 flex justify-between items-center">
                         <p className="font-semibold text-gray-900 text-lg">
-                          ₹{order.order_amount}
+                          ₹{order.paid_amount}
                         </p>
 
                         <button
-                          onClick={() => toggleOrder(order.order_id)}
+                          onClick={() => toggleOrder(order.id)}
                           className="text-blue-600 cursor-pointer text-sm font-medium hover:underline"
                         >
                           {isOpen ? "Hide Details" : "View Details"}
@@ -660,9 +707,9 @@ const User = () => {
                       >
                         {/* Product List */}
                         <div className="bg-gray-50 p-4 rounded-xl space-y-4">
-                          {order.ordered_product.map((product) => (
+                          {order.product_ids.map((product) => (
                             <div
-                              key={product.product_id}
+                              key={product}
                               className="flex items-center gap-4 border-b pb-3 last:border-none"
                             >
                               <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
@@ -677,10 +724,10 @@ const User = () => {
 
                               <div className="flex-1">
                                 <p className="font-semibold text-gray-800 text-sm">
-                                  {product.title}
+                                  {product}
                                 </p>
                                 <p className="text-gray-600 text-xs mt-1">
-                                  Price: ₹{product.price}
+                                  Price: ₹{product}
                                 </p>
                               </div>
                             </div>
@@ -688,7 +735,7 @@ const User = () => {
 
                           <div className="pt-2">
                             <p className="text-gray-700 font-semibold text-right">
-                              Total Amount: ₹{order.order_amount}
+                              Total Amount: ₹{order.total_cost}
                             </p>
                           </div>
                         </div>
