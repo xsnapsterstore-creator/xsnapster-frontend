@@ -26,7 +26,7 @@ export default function OrderSuccess() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center px-4">
+    <div className="pt-[85px] min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}

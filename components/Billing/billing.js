@@ -11,7 +11,7 @@ import {
   removeFromCart,
 } from "../store/cartSlice";
 import { useQuery } from "@tanstack/react-query";
-import { UserOrder, fetchUserAddress } from "../API/api";
+import { UserOrder, VerifyPayment, fetchUserAddress } from "../API/api";
 
 const BillingTemplate = () => {
   const router = useRouter();
@@ -138,8 +138,97 @@ const BillingTemplate = () => {
         } else {
           alert(data.message || "Failed to place order.");
         }
-      }else{
-        
+      } else {
+        console.log("This is Online Payment:", paymentOpt);
+
+        // Load Razorpay SDK
+        const loadRazorpay = () => {
+          return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+          });
+        };
+
+        // API: create order
+        const createOrder = async () => {
+          const payload = {
+            items: cart.map((item) => ({
+              product_id: item.id,
+              dimension: item.dimensions,
+              qty: item.quantity,
+            })),
+          };
+          const res = await UserOrder(payload);
+
+          if (!res) {
+            alert("Network error. Please try again.");
+            return;
+          }
+
+          return await res.json();
+        };
+
+        // API: verify payment
+        const verifyPayment = async (data) => {
+          const res = await VerifyPayment(data);
+          console.log("Step 1")
+
+          if (!res) {
+            alert("Network error. Please try again.");
+            return;
+          }
+          console.log("Step 2")
+
+          return res;
+        };
+
+        const startPayment = async () => {
+          const loaded = await loadRazorpay();
+          if (!loaded) {
+            alert("Failed to load Razorpay");
+            return;
+          }
+
+          const order = await createOrder();
+          console.log("ORDER FROM BACKEND:", order);
+
+          const options = {
+            key: "rzp_test_Rc3r0uTkowIjsF",
+            amount: order.amount * 100,
+            currency: "INR",
+            order_id: order.razorpay_order_id,
+            name: "Test Payment",
+            description: "Test Order",
+            handler: async function (response) {
+              const verifyRes = await VerifyPayment({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+              console.log("Step 3")
+              const data = await verifyRes.json();
+
+              console.log("VERIFY RESPONSE:", data);
+              console.log("Step 4")
+              alert(data.message);
+              if(verifyRes.ok){
+                Promise.resolve().then(() => {
+                  localStorage.removeItem("cart");
+                  localStorage.removeItem("address_id");
+                });
+                window.location.href = '/order-placed'
+              }
+            },
+          };
+
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+        };
+        // 👉 CALL THE PAYMENT WINDOW
+        await startPayment();
       }
     } catch (error) {
       console.error("❌ ProceedPayment Error:", error);

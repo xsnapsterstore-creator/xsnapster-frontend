@@ -19,8 +19,7 @@ const Footer = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-
-  console.log("This is the data:", data);
+  
   return (
     <div>
       {/* For Mobile Screen */}

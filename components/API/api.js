@@ -375,3 +375,21 @@ export const UserOrder = async (items) => {
     console.error("Network/Parse Error:", e);
   }
 };
+
+// User's Verify Payment API
+export const VerifyPayment = async (data) => {
+  try {
+    const res = await fetch("/payments/verify-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res;
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};

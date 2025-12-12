@@ -63,16 +63,9 @@ const Navbar = () => {
       return res.json();
     },
 
-    // ⏳ Cache the data for 10 minutes (600000 ms)
     staleTime: 600_000,
-
-    // 💾 Keep the data in memory for 10 minutes even if component unmounts
     gcTime: 600_000,
-
-    // ♻️ Automatically refetch after 10 minutes (same as staleTime)
     refetchInterval: 600_000,
-
-    // 👇 Prevent refetching on mount if cached data exists
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
@@ -194,7 +187,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="pr-2 flex justify-center items-center gap-4">
+          <div className="pr-2 flex justify-center items-center gap-3">
             <div className="">
               <SearchIcon
                 sx={{ fontSize: "30px" }}
@@ -346,7 +339,7 @@ const Navbar = () => {
                         : "max-h-0 opacity-0 invisible"
                     }`}
                   >
-                    <div className="flex flex-col p-4 space-y-3">
+                    <div className="flex flex-col p-4 space-y-2">
                       {[
                         {
                           name: "Who's Behind The Camera",
@@ -488,7 +481,7 @@ const Navbar = () => {
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-[#333333] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full overflow-auto w-80 bg-[#333333] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -534,8 +527,8 @@ const Navbar = () => {
 
           {isCategoriesOpen && (
             <div
-              className={`overflow-hidden text-[13px] transform transition-transform duration-300 ${
-                isCategoriesOpen ? "max-h-96 mt-1" : "max-h-0"
+              className={`overflow-auto text-[13px] transform transition-transform duration-300 ${
+                isCategoriesOpen ? "max-h-68 mt-1" : "max-h-0"
               } m-4 flex flex-col space-y-5`}
             >
               {data?.map((item) => (

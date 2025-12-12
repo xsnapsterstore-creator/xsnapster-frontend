@@ -13,7 +13,7 @@ const Category_Story = ({ category }) => {
         </p>
       </div>
       <div className="overflow-x-auto scrollbar-hide mt-3">
-        <div className="flex items-center gap-2 px-3 snap-x snap-mandatory">
+        <div className="flex items-center gap-1 px-3 snap-x snap-mandatory">
           {category.map((item) => (
             <div
               onClick={() => {
