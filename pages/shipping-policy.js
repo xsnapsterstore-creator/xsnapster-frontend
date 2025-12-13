@@ -8,7 +8,7 @@ const fadeInUp = {
 
 const ShippingPolicy = () => {
   return (
-    <div className="pt-[120px] pb-20 bg-gradient-to-br from-white via-gray-50 to-gray-100">
+    <div className="pt-[130px] pb-20 bg-gradient-to-br from-white via-gray-50 to-gray-100">
       <div className="max-w-5xl mx-auto px-8">
         {/* Header */}
         <motion.div
@@ -18,7 +18,7 @@ const ShippingPolicy = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-[35px] font-bold text-gray-800 mb-2">
             Shipping & Delivery Policy
           </h1>
           <p className="text-red-600 text-sm tracking-wide animate-pulse">

@@ -55,12 +55,12 @@ const Cart = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-80 bg-gray-900 shadow-lg z-50 transform transition-transform duration-300 ${
+      className={`fixed top-0 right-0 h-full w-80 bg-[#333333] shadow-lg z-50 transform transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       {/* Header */}
-      <div className="flex h-[65px] justify-between items-center text-white p-4 border-b">
+      <div className="flex h-[65px] justify-between items-center bg-[#212121] text-white p-4 border-b">
         <h2 className="text-lg font-bold">Your Walls's Wish List</h2>
         <button onClick={onClose} className="text-xl font-bold">
           ✕
@@ -74,7 +74,7 @@ const Cart = ({ isOpen, onClose }) => {
             Your Cart is Empty
           </h2>
           <p className="text-gray-400 mt-2 text-sm">
-            Looks like you haven’t added anything yet.
+            Looks like you haven't added anything yet.
           </p>
         </div>
       )}
@@ -84,7 +84,7 @@ const Cart = ({ isOpen, onClose }) => {
         {/* Cart Header */}
         <div className="p-4 border-b border-neutral-800 flex justify-between items-center">
           <h2 className="text-lg font-semibold">Your Cart</h2>
-          <p className="text-sm text-gray-400">{cart.length || 0} items</p>
+          <p className="text-sm text-gray-200">{cart.length || 0} items</p>
         </div>
 
         {/* Scrollable Items */}
@@ -95,7 +95,7 @@ const Cart = ({ isOpen, onClose }) => {
                 GoToProd(item.id, item.category, item.subcategory)
               }
               key={Math.random()}
-              className="flex  items-center justify-between cursor-pointer bg-neutral-600 hover:bg-neutral-800 transition-colors rounded-xl p-3 shadow-sm"
+              className="flex  items-center justify-between cursor-pointer bg-[#212121] hover:bg-neutral-800 transition-colors rounded-xl p-3 shadow-sm"
             >
               {/* Product Image */}
               <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ const Cart = ({ isOpen, onClose }) => {
                       })
                     );
                   }}
-                  className="bg-neutral-800 px-4 py-1.5 rounded-md text-xs hover:bg-red-600 transition"
+                  className="bg-neutral-600 px-4 py-1.5 rounded-md text-xs hover:bg-red-600 transition"
                 >
                   Remove
                 </button>
@@ -182,7 +182,7 @@ const Cart = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer / Checkout (sticky) */}
-        <div className="p-4 border-t border-neutral-800 bg-grey-900 backdrop-blur-md sticky bottom-0">
+        <div className="p-4 border-t border-neutral-800  backdrop-blur-md sticky bottom-0">
           <div className="flex gap-3 justify-between items-center mb-3">
             <GppGoodIcon fontSize="small" />
             <p className="text-xs">

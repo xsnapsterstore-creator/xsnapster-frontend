@@ -4,14 +4,14 @@ import EmailIcon from "@mui/icons-material/Email";
 
 const ContactUs = () => {
   return (
-    <div className="pt-[120px] pb-20 px-6 md:px-20 bg-gray-50">
+    <div className="pt-[130px] pb-20 px-6 md:px-20 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="text-center mb-12"
       >
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="text-[35px] font-bold text-gray-900">
           Contact Us
           <br />
           <span className="text-red-600 animate-pulse text-lg">Slide Into Our Inbox 💌</span>

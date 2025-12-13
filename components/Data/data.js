@@ -159,3 +159,24 @@ export const CategorySubtitle = {
   "music-album": "You'll still hang Drake next to your bed",
   marvel: "Not the kind of heroes you thought... they just save your walls",
 };
+
+export const OfferData = [
+  { id: 1, name: "Buy 3 Get 1 Free" },
+  { id: 2, name: "Buy 6 Get 2 Free" },
+  { id: 3, name: "Buy 9 Get 3 Free" },
+  { id: 4, name: "Buy 3 Get 1 Free" },
+  { id: 5, name: "Buy 6 Get 2 Free" },
+  { id: 6, name: "Buy 9 Get 3 Free" },
+  { id: 7, name: "Buy 3 Get 1 Free" },
+  { id: 8, name: "Buy 6 Get 2 Free" },
+  { id: 9, name: "Buy 9 Get 3 Free" },
+  { id: 10, name: "Buy 3 Get 1 Free" },
+  { id: 12, name: "Buy 6 Get 2 Free" },
+  { id: 13, name: "Buy 9 Get 3 Free" },
+  { id: 14, name: "Buy 3 Get 1 Free" },
+  { id: 15, name: "Buy 6 Get 2 Free" },
+  { id: 16, name: "Buy 9 Get 3 Free" },
+  { id: 17, name: "Buy 3 Get 1 Free" },
+  { id: 18, name: "Buy 6 Get 2 Free" },
+  { id: 19, name: "Buy 9 Get 3 Free" },
+];

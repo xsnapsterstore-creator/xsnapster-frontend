@@ -23,6 +23,8 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import Marquee from "react-fast-marquee";
+import { OfferData } from "../Data/data";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -171,18 +173,27 @@ const Navbar = () => {
     `}
               >
                 <div className="flex flex-col p-3 space-y-2">
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  <Link
+                    href={"/categories/for-him"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>For Him</span>
                     <MaleIcon />
-                  </button>
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  </Link>
+                  <Link
+                    href={"/categories/for-her"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>For Her</span>
                     <FemaleIcon />
-                  </button>
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  </Link>
+                  <Link
+                    href={"/categories/others"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>Others</span>
                     <TransgenderIcon />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -255,18 +266,27 @@ const Navbar = () => {
     `}
               >
                 <div className="flex flex-col p-3 space-y-2">
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  <Link
+                    href={"/categories/for-him"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>For Him</span>
                     <MaleIcon />
-                  </button>
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  </Link>
+                  <Link
+                    href={"/categories/for-her"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>For Her</span>
                     <FemaleIcon />
-                  </button>
-                  <button className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center">
+                  </Link>
+                  <Link
+                    href={"/categories/others"}
+                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                  >
                     <span>Others</span>
                     <TransgenderIcon />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -290,7 +310,7 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                    className={`absolute z-20 left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isCategoriesOpen
                         ? "max-h-[500px] mt-2 opacity-100 visible"
                         : "max-h-0 opacity-0 invisible"
@@ -333,7 +353,7 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                    className={`absolute z-20 left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isHelpCenterOpen
                         ? "max-h-[500px] mt-2 opacity-100 visible"
                         : "max-h-0 opacity-0 invisible"
@@ -390,15 +410,27 @@ const Navbar = () => {
                 </li>
 
                 <li
-                  onClick={(e) => CheckLogin(toggle)}
-                  className="px-2 py-1 bg-gray-200 rounded-lg hover:cursor-pointer flex items-center"
+                  onClick={() => CheckLogin(toggle)}
+                  className="
+    flex items-center gap-2
+    px-3 py-1
+    bg-white
+    border border-gray-200
+    rounded-md
+    cursor-pointer
+    transition-all duration-200
+    hover:bg-gray-50
+    hover:shadow-sm
+    active:bg-gray-100
+  "
                 >
-                  <PersonIcon />
-                  <button className="ml-1 hover:cursor-pointer">
+                  <PersonIcon className="text-gray-600 w-4 h-4" />
+
+                  <span className="text-sm font-medium text-gray-700">
                     {user?.userEmail?.length > 13
-                      ? user.userEmail?.substring(0, 9) + "..."
+                      ? user.userEmail.substring(0, 9) + "..."
                       : user?.userEmail}
-                  </button>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -419,7 +451,7 @@ const Navbar = () => {
 
         {/* Premium Links  */}
         <div className="bg-black">
-          <ul className="text-white py-[5px] pl-5 pr-2 text-[13px] md:text-[15px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
+          <ul className="text-white py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
             <li className="text-red-600 animate-pulse font-semibold">
               • OnlyFrames
             </li>
@@ -431,6 +463,36 @@ const Navbar = () => {
             <li>Frame Stars</li>
             <li>Most Watched Frames</li>
           </ul>
+        </div>
+
+        {/* Offer Scroller */}
+        <div id="skills" className="bg-[#333333]">
+          <div className="w-full p-1">
+            <Marquee
+              gradient={false}
+              speed={50}
+              pauseOnHover={true}
+              pauseOnClick={true}
+              delay={0}
+              play={true}
+              direction="left"
+            >
+              {OfferData.map((offer) => (
+                <div
+                  key={offer.id}
+                  className="min-w-fit transition-all duration-500 rounded-lg group relative"
+                >
+                  <div className="w-full">
+                    <div className="flex items-center justify-center gap-4">
+                      <p className="text-white text-[11px]">
+                        {offer.name}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
         </div>
       </div>
 

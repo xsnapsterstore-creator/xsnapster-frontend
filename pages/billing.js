@@ -3,7 +3,7 @@ import React from "react";
 
 const Billing = () => {
   return (
-    <div className="pt-[95px]">
+    <div className="pt-[115px]">
       <BillingTemplate />
     </div>
   );

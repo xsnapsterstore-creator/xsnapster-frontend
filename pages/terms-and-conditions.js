@@ -22,7 +22,7 @@ const TermsAndConditions = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h1 className="text-4xl font-bold tracking-tight text-gray-800">
+          <h1 className="text-[35px] font-bold tracking-tight text-gray-800">
             Terms & Conditions
           </h1>
           <p className="text-red-600 text-sm mt-2 font-medium animate-pulse">

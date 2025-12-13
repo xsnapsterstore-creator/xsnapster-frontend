@@ -8,7 +8,7 @@ const fadeInUp = {
 
 export default function AboutPage() {
   return (
-    <div className="pt-[120px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-gray-100 to-gray-200">
+    <div className="pt-[130px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-gray-100 to-gray-200">
       {/* Header */}
       <motion.div
         className="text-center mb-12"

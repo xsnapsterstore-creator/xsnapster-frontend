@@ -8,7 +8,7 @@ const ProductId = ({ product }) => {
   const { category_name, sub_category_name, product_id } = router.query;
 
   return (
-    <div className="pt-[80px]">
+    <div className="pt-[105px]">
       <div className="">
         <ProductDetailsPage prod={product} />
       </div>

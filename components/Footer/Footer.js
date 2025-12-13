@@ -19,7 +19,7 @@ const Footer = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  
+
   return (
     <div>
       {/* For Mobile Screen */}
@@ -80,7 +80,7 @@ const Footer = () => {
                       <Link
                         href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                         key={i}
-                        className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
+                        className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 hover:border-red-700 cursor-pointer hover:bg-red-700 text-[12px] transition-all"
                       >
                         {tag.name}
                       </Link>
@@ -256,12 +256,12 @@ const Footer = () => {
               // ✅ Loaded State
               <div>
                 <p className="text-center text-xl m-4">Explore Categories</p>
-                <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                <div className="flex flex-wrap gap-1 w-full max-w-3xl justify-center">
                   {data?.map((tag, i) => (
                     <Link
                       href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                       key={i}
-                      className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 cursor-pointer hover:bg-neutral-800 transition-all"
+                      className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 hover:border-red-700 cursor-pointer hover:bg-red-700 text-[12px] transition-all"
                     >
                       {tag.name}
                     </Link>

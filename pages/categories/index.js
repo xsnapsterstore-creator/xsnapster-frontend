@@ -2,10 +2,8 @@ import React from "react";
 import { fetchCategories } from "@/components/API/api";
 
 const Categories = ({ categories }) => {
-  console.log("This is category data:", categories)
-
   return (
-    <div className="pt-[95px] px-3 pb-3">
+    <div className="pt-[115px] px-3 pb-3">
       <h1 className="text-2xl font-semibold text-center mt-4 mb-4">
         Shop by Category
       </h1>
@@ -18,7 +16,7 @@ const Categories = ({ categories }) => {
               window.location.href = `/categories/${categProd.slug}`;
             }}
             key={index}
-            className={`bg-red-200 shadow-md rounded-2xl p-4 flex flex-col items-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-300`}
+            className={`bg-red-100 shadow-md rounded-2xl p-4 flex flex-col items-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-300`}
           >
             {/* Category Image */}
             <div className="w-[150px] h-[220px] flex items-center justify-center overflow-hidden rounded-xl">

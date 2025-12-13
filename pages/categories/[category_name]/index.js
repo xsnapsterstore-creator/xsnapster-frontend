@@ -9,7 +9,7 @@ const CategoryName = ({ sub_category, products }) => {
   const { category_name } = router.query;
 
   return (
-    <div className="pt-[80px]">
+    <div className="pt-[105px]">
       <div className="m-3">
         <CategoryPage
           category={category_name}

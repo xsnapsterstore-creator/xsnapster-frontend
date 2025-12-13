@@ -393,3 +393,20 @@ export const VerifyPayment = async (data) => {
     console.error("Network/Parse Error:", e);
   }
 };
+
+//Fetch User's Order
+export const fetchUserOrder = async () => {
+  try {
+    const res = await secureFetch(`/user/orders`, {
+      method: "GET",
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("💥 Server Validation Error:", err);
+    }
+    return res;
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+

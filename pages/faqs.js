@@ -42,7 +42,7 @@ const Faqs = () => {
   ];
 
   return (
-    <div className="pt-[120px] pb-20 px-6 lg:px-20 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
+    <div className="pt-[130px] pb-20 px-6 lg:px-20 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
       {/* Header */}
       <motion.div
         className="text-center mb-14"
@@ -50,7 +50,7 @@ const Faqs = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-[38px] font-extrabold text-gray-900 leading-tight">
+        <h1 className="text-[35px] font-extrabold text-gray-900 leading-tight">
           F.A.S. –{" "}
           <span className="text-red-600 animate-pulse">
             Frequently Asked Sarcasm
