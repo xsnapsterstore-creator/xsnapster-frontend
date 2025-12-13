@@ -377,7 +377,7 @@ export const UserOrder = async (items) => {
 };
 
 // User's Verify Payment API
-export const VerifyPayment = async (data) => {
+export const verifyPayment = async (data) => {
   try {
     const res = await fetch("/payments/verify-payment", {
       method: "POST",

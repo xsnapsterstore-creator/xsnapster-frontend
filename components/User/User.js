@@ -61,7 +61,7 @@ const User = () => {
 
   const toggleEdit = () => setIsEditing(!isEditing);
 
-    const toggleOrder = (id) => {
+  const toggleOrder = (id) => {
     setOpenOrder(openOrder === id ? null : id);
   };
 
@@ -140,6 +140,8 @@ const User = () => {
         localStorage.removeItem("token_type");
         localStorage.removeItem("userID");
         localStorage.removeItem("userEmail");
+        localStorage.removeItem("address_id");
+        localStorage.removeItem("cart");
       });
       // if refresh token is HTTP-only cookie, call backend logout endpoint optionally
     }
@@ -238,7 +240,7 @@ const User = () => {
 
   if (!userData.default_address) {
     return (
-      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+      <div className="pt-[135px] min-h-screen bg-gray-50 py-10 px-5">
         {loading ? (
           <div>
             <svg
@@ -445,7 +447,7 @@ const User = () => {
     );
   } else {
     return (
-      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+      <div className="pt-[130px] min-h-screen bg-gray-50 py-10 px-5">
         <div className="max-w-5xl mx-auto">
           {/* Profile Card */}
           <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center md:items-start gap-5">
@@ -702,7 +704,12 @@ const User = () => {
 
           {/* Order Button */}
           <div className="mt-10 flex justify-center">
-            <button onClick={GetOrders} className="bg-gray-500 p-3 rounded-2xl cursor-pointer">See Your Orders</button>
+            <button
+              onClick={GetOrders}
+              className="bg-gray-500 p-3 rounded-2xl cursor-pointer"
+            >
+              See Your Orders
+            </button>
           </div>
         </div>
       </div>

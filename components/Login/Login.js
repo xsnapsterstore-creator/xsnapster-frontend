@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import EmailIcon from "@mui/icons-material/Email";
 import Image from "next/image";
@@ -44,24 +44,24 @@ export default function AuthPage() {
 
   const handleResendOTP = async () => {
     if (!email.trim()) {
-      setStep("email")
+      setStep("email");
       return setMsg({ type: "error", text: "Email is missing" });
     }
-  
-    setReSending(true)
+
+    setReSending(true);
     setMsg({ type: "", text: "" });
-  
+
     const res = await requestOTP(email);
-  
+
     if (res.status === 200) {
       setMsg({ type: "success", text: "OTP Resent Successfully" });
     } else {
       setMsg({ type: "error", text: res.message });
     }
-  
+
     setReSending(false);
   };
-  
+
   // --- VERIFY OTP ---
   const handleVerifyOTP = async () => {
     if (!otp.trim()) {
@@ -99,6 +99,17 @@ export default function AuthPage() {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userID");
+
+    if (!userId) {
+      router.push("/login"); // or home page
+      return;
+    }
+
+    window.location.href = `/user/${userId}`;
+  }, [router]);
 
   // --- STYLES FOR MESSAGES ---
   const messageColor =

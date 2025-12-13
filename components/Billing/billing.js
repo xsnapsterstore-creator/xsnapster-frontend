@@ -11,7 +11,7 @@ import {
   removeFromCart,
 } from "../store/cartSlice";
 import { useQuery } from "@tanstack/react-query";
-import { UserOrder, VerifyPayment, fetchUserAddress } from "../API/api";
+import { UserOrder, verifyPayment, fetchUserAddress } from "../API/api";
 
 const BillingTemplate = () => {
   const router = useRouter();
@@ -140,6 +140,7 @@ const BillingTemplate = () => {
         }
       } else {
         console.log("This is Online Payment:", paymentOpt);
+        const address_id = localStorage.getItem("address_id")
 
         // Load Razorpay SDK
         const loadRazorpay = () => {
@@ -172,8 +173,8 @@ const BillingTemplate = () => {
         };
 
         // API: verify payment
-        const verifyPayment = async (data) => {
-          const res = await VerifyPayment(data);
+        const VerifyPayment = async (data) => {
+          const res = await verifyPayment(data);
           console.log("Step 1")
 
           if (!res) {
