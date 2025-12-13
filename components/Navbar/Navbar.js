@@ -499,7 +499,7 @@ const Navbar = () => {
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className="lg:hidden px-3 pt-26 absolute bg-white w-full
+          className="lg:hidden px-3 pt-32 absolute bg-white w-full
       transition-all duration-300 ease-out
       animate-slide-down flex itme justify-center gap-3 p-2"
         >
