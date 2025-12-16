@@ -325,7 +325,7 @@ export const fetchUserProfile = async () => {
       const err = await res.json();
       console.error("💥 Server Validation Error:", err);
     }
-    return res.json();
+    return await res.json();
   } catch (e) {
     console.error("Network/Parse Error:", e);
   }

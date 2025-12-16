@@ -204,7 +204,7 @@ const User = () => {
 
   if (isLoading) {
     return (
-      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+      <div className="pt-[135px] min-h-screen bg-gray-50 py-10 px-5">
         <div className="max-w-3xl mx-auto">
           <div className="animate-pulse space-y-4">
             <div className="h-6 bg-gray-200 rounded w-1/3" />
@@ -222,7 +222,7 @@ const User = () => {
 
   if (isError) {
     return (
-      <div className="pt-[115px] min-h-screen bg-gray-50 py-10 px-5">
+      <div className="pt-[135px] min-h-screen bg-gray-50 py-10 px-5">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-xl font-semibold">Could not load profile</h2>
           <p className="text-gray-500 mt-2">
