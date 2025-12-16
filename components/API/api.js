@@ -377,15 +377,15 @@ export const UserOrder = async (items) => {
 };
 
 // User's Verify Payment API
-export const verifyPayment = async (data) => {
+export const verifyUserPayment = async (data) => {
   try {
-    const res = await fetch("/payments/verify-payment", {
+    const res = await secureFetch("/payments/verify-payment", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      const err = await res.json();
+      const err = res;
       console.error("💥 Server Validation Error:", err);
     }
     return res;

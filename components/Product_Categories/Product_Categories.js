@@ -14,7 +14,7 @@ const Product_Categories = ({ categProd }) => {
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
           <div
-            className={`bg-gray-50 p-2 shadow rounded-xl m-2`}
+            className={`bg-gray-100 p-2 shadow rounded-xl m-2`}
             key={category.id}
           >
             {/* Category Title */}
@@ -36,7 +36,7 @@ const Product_Categories = ({ categProd }) => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-2 md:flex gap-3">
+              <div className="grid grid-cols-2 md:flex gap-2">
                 {category.products.map((prod) => (
                   <Product key={prod.id} product={prod} category_name={category.category_name} />
                 ))}

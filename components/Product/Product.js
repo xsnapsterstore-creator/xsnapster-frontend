@@ -44,7 +44,7 @@ const Product = ({ product, category_name }) => {
   }
 
   return (
-    <div className="relative cursor-pointer bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[165px] lg:w-[200px] m-auto">
+    <div className="relative cursor-pointer bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[160px] md:w-[200px] m-auto">
       {/* Discount Badge */}
       <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
         Sale
@@ -62,7 +62,7 @@ const Product = ({ product, category_name }) => {
           alt={product.title}
           width={100}
           height={100}
-          className="object-cover w-[165px] lg:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
+          className="object-cover w-[160px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
         />
       </div>
 
@@ -123,7 +123,7 @@ const Product = ({ product, category_name }) => {
             }}
             sx={{
               fontSize: "9px",
-              padding: "8px 7px",
+              padding: "8px 6px",
               transition: "all 0.25s ease",
               backgroundColor: added ? "#22c55e" : "", // temporary green color
             }}
@@ -138,7 +138,7 @@ const Product = ({ product, category_name }) => {
             variant="contained"
             sx={{
               fontSize: "9px",
-              padding: "8px 7px",
+              padding: "8px 6px",
             }}
             className="cursor-pointer"
             onClick={(e) => {

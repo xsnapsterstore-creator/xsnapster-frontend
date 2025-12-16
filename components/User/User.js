@@ -11,10 +11,11 @@ import {
 } from "../API/api";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { Button } from "@mui/material";
+import Order from "../Order/order";
 
 const User = () => {
   const router = useRouter();
-  const [openOrder, setOpenOrder] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [invalidPincode, setInvalidPincode] = useState(false);
   const [city, setCity] = useState("");
@@ -23,6 +24,8 @@ const User = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userData, SetUserData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [showOrders, setShowOrders] = useState(false);
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -60,10 +63,6 @@ const User = () => {
   };
 
   const toggleEdit = () => setIsEditing(!isEditing);
-
-  const toggleOrder = (id) => {
-    setOpenOrder(openOrder === id ? null : id);
-  };
 
   // 📌 Handle Pincode Auto-Fill
   const handlePincodeChange = (e) => {
@@ -172,8 +171,10 @@ const User = () => {
   });
 
   async function GetOrders() {
-    // const res = await fetchUserOrder();
-    // console.log("THis is ORder:", res)
+    setShowOrders((prev) => !prev);
+    const res = await fetchUserOrder();
+    const data = await res.json();
+    setOrders(data);
   }
 
   useEffect(() => {
@@ -703,13 +704,16 @@ const User = () => {
           </div>
 
           {/* Order Button */}
-          <div className="mt-10 flex justify-center">
-            <button
+          <div className="mt-10 flex flex-col justify-center">
+            <Button
+              variant="contained"
               onClick={GetOrders}
               className="bg-gray-500 p-3 rounded-2xl cursor-pointer"
             >
-              See Your Orders
-            </button>
+              {showOrders ? "Hide Orders" : "See Your Orders"}
+            </Button>
+
+            {showOrders && <div className="mt-4"><Order order={orders} /></div>}
           </div>
         </div>
       </div>

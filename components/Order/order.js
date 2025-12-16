@@ -1,13 +1,19 @@
 import React from "react";
+import Image from "next/image";
+import { useState } from "react";
 
-const Order = () => {
+const Order = ({ order }) => {
+  const [openOrder, setOpenOrder] = useState(null);
+  const toggleOrder = (id) => {
+    setOpenOrder(openOrder === id ? null : id);
+  };
   return (
-    <div className="mt-12">
+    <div className="mt-5">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
         Order History
       </h2>
 
-      {userData.orders.length === 0 ? (
+      {order.length === 0 ? (
         // EMPTY UI
         <div className="bg-white rounded-2xl shadow-md p-8 flex flex-col items-center text-center border border-gray-200">
           <div className="w-24 h-24 bg-gray-100 flex items-center justify-center rounded-full">
@@ -38,7 +44,7 @@ const Order = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {userData.orders.map((order) => {
+          {order.map((order) => {
             const isOpen = openOrder === order.id;
 
             return (
@@ -47,13 +53,13 @@ const Order = () => {
                 className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm"
               >
                 <div className="flex justify-between items-center">
-                  <p className="text-sm text-gray-500">Order ID</p>
+                  <p className="text-sm text-gray-500">Order ID:</p>
 
                   <span
                     className={`px-3 py-1 text-xs rounded-full font-medium ${
-                      order.order_status === "Delivered"
+                      order.status === "Delivered"
                         ? "bg-green-100 text-green-700"
-                        : order.order_status === "Shipped"
+                        : order.status === "Shipped"
                         ? "bg-blue-100 text-blue-700"
                         : "bg-yellow-100 text-yellow-700"
                     }`}
@@ -67,7 +73,7 @@ const Order = () => {
                 <div className="mt-3 space-y-1 text-sm">
                   <p className="text-gray-600">
                     <span className="font-medium text-gray-800">Date:</span>{" "}
-                    {order.created_at}
+                    {order.created_at.split("T")[0]}
                   </p>
                   <p className="text-gray-600">
                     <span className="font-medium text-gray-800">Items:</span>{" "}
@@ -91,40 +97,48 @@ const Order = () => {
                 {/* Expandable Section */}
                 <div
                   className={`transition-all duration-300 overflow-hidden ${
-                    isOpen ? "max-h-[500px] mt-4" : "max-h-0"
+                    isOpen ? "mt-4" : "max-h-0"
                   }`}
                 >
                   {/* Product List */}
                   <div className="bg-gray-50 p-4 rounded-xl space-y-4">
-                    {order.product_ids.map((product) => (
+                    {order.items.map((product, index) => (
                       <div
-                        key={product}
+                        key={index}
                         className="flex items-center gap-4 border-b pb-3 last:border-none"
                       >
                         <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                          <Image
-                            src="/logo.svg"
+                          <img
+                            src={product.image}
                             alt="Product"
-                            width={50}
-                            height={50}
+                            width={60}
+                            height={60}
                             className="w-full h-full object-cover rounded-lg"
                           />
                         </div>
 
                         <div className="flex-1">
                           <p className="font-semibold text-gray-800 text-sm">
-                            {product}
+                            {product.title.substring(0, 45) + "..."}
                           </p>
                           <p className="text-gray-600 text-xs mt-1">
-                            Price: ₹{product}
+                            Price: ₹{product.ordered_price}
                           </p>
+                          <div className="flex justify-start items-end gap-5">
+                            <p className="text-gray-600 text-xs">
+                              Qty: {product.quantity}
+                            </p>
+                            <p className="text-gray-600 text-xs">
+                              Type: {product.ordered_dimension}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     ))}
 
                     <div className="pt-2">
                       <p className="text-gray-700 font-semibold text-right">
-                        Total Amount: ₹{order.total_cost}
+                        Total Amount: ₹{order.paid_amount}
                       </p>
                     </div>
                   </div>

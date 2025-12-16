@@ -11,7 +11,7 @@ import {
   removeFromCart,
 } from "../store/cartSlice";
 import { useQuery } from "@tanstack/react-query";
-import { UserOrder, verifyPayment, fetchUserAddress } from "../API/api";
+import { UserOrder, verifyUserPayment, fetchUserAddress } from "../API/api";
 
 const BillingTemplate = () => {
   const router = useRouter();
@@ -102,6 +102,7 @@ const BillingTemplate = () => {
   const grandTotal = total + deliveryCharge;
 
   async function ProceedPayment() {
+    const address_id = localStorage.getItem("address_id");
     try {
       // Prevent checkout if cart is empty
       if (!cart || cart.length === 0) {
@@ -116,6 +117,8 @@ const BillingTemplate = () => {
             dimension: item.dimensions, // <-- confirm this key name
             qty: item.quantity,
           })),
+          address_id: address_id,
+          payment_method: "COD",
         };
 
         const res = await UserOrder(payload);
@@ -132,7 +135,6 @@ const BillingTemplate = () => {
           Promise.resolve().then(() => {
             localStorage.removeItem("cart");
             localStorage.setItem("order_id", data.order_id);
-            localStorage.setItem("razorpay_id", data.razorpay_order_id);
           });
           window.location.href = "/order-placed";
         } else {
@@ -140,7 +142,6 @@ const BillingTemplate = () => {
         }
       } else {
         console.log("This is Online Payment:", paymentOpt);
-        const address_id = localStorage.getItem("address_id")
 
         // Load Razorpay SDK
         const loadRazorpay = () => {
@@ -158,13 +159,15 @@ const BillingTemplate = () => {
           const payload = {
             items: cart.map((item) => ({
               product_id: item.id,
-              dimension: item.dimensions,
               qty: item.quantity,
+              dimension: item.dimensions,
             })),
+            address_id: address_id,
+            payment_method: "RAZORPAY",
           };
           const res = await UserOrder(payload);
 
-          if (!res) {
+          if (!res.ok) {
             alert("Network error. Please try again.");
             return;
           }
@@ -174,14 +177,14 @@ const BillingTemplate = () => {
 
         // API: verify payment
         const VerifyPayment = async (data) => {
-          const res = await verifyPayment(data);
-          console.log("Step 1")
+          const res = await verifyUserPayment(data);
+          console.log("Step 1");
 
           if (!res) {
             alert("Network error. Please try again.");
             return;
           }
-          console.log("Step 2")
+          console.log("Step 2");
 
           return res;
         };
@@ -200,27 +203,31 @@ const BillingTemplate = () => {
             key: "rzp_test_Rc3r0uTkowIjsF",
             amount: order.amount * 100,
             currency: "INR",
-            order_id: order.razorpay_order_id,
-            name: "Test Payment",
-            description: "Test Order",
+            order_id: order.payment_gateway_order_id,
+            name: "XSNAPSTER",
+            description: "Order Payment",
             handler: async function (response) {
               const verifyRes = await VerifyPayment({
+                order_id: order.order_id,
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
               });
-              console.log("Step 3")
+              console.log("Step 3");
               const data = await verifyRes.json();
 
               console.log("VERIFY RESPONSE:", data);
-              console.log("Step 4")
+              console.log("Step 4");
               alert(data.message);
-              if(verifyRes.ok){
+              if (verifyRes.ok) {
                 Promise.resolve().then(() => {
+                  localStorage.setItem("order_id", order.order_id);
                   localStorage.removeItem("cart");
                   localStorage.removeItem("address_id");
                 });
-                window.location.href = '/order-placed'
+                window.location.href = "/order-placed";
+              } else {
+                window.location.href = "/billing";
               }
             },
           };

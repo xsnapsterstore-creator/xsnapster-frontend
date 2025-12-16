@@ -138,8 +138,8 @@ const Navbar = () => {
         <div className="flex lg:hidden justify-between items-center h-[65px]">
           <div className="pl-2 flex justify-center items-center gap-2">
             <Link href={"/"}>
-              <div className="flex items-center gap-[2px] text-[24px]">
-                <Image src="/logo.svg" alt="xsnapster" width={45} height={45} />
+              <div className="flex items-center gap-[2px] text-[22px]">
+                <Image src="/logo.svg" alt="xsnapster" width={40} height={40} />
                 <div className="flex items-center">
                   <p className="text-black font-semibold">
                     <bold className="text-red-500">X</bold>SNAPSTER
@@ -150,11 +150,23 @@ const Navbar = () => {
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
-                <Image src="/gender.svg" width={25} height={25} alt="gender" />
+                <Image
+                  src="/gender.svg"
+                  className="text-red-600"
+                  width={22}
+                  height={22}
+                  alt="gender"
+                />
                 {isGenderOpen ? (
-                  <KeyboardArrowUpIcon fontSize="small" />
+                  <KeyboardArrowUpIcon
+                    fontSize="small"
+                    sx={{ fontSize: "15px" }}
+                  />
                 ) : (
-                  <KeyboardArrowDownIcon fontSize="small" />
+                  <KeyboardArrowDownIcon
+                    fontSize="small"
+                    sx={{ fontSize: "15px" }}
+                  />
                 )}
               </div>
 
@@ -198,10 +210,10 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="pr-2 flex justify-center items-center gap-3">
+          <div className="pr-2 flex justify-center items-center gap-2 md:gap-4">
             <div className="">
               <SearchIcon
-                sx={{ fontSize: "30px" }}
+                sx={{ fontSize: "27px" }}
                 onClick={() => setShowMobileSearch((prev) => !prev)}
                 className="cursor-pointer"
                 aria-label="Toggle search"
@@ -219,7 +231,7 @@ const Navbar = () => {
             </div>
             <div className="">
               <MenuIcon
-                sx={{ fontSize: "33px" }}
+                sx={{ fontSize: "30px" }}
                 onClick={toggleSidebar}
                 className="cursor-pointer"
               />
@@ -417,10 +429,11 @@ const Navbar = () => {
     bg-white
     border border-gray-200
     rounded-md
+    shadow-sm
     cursor-pointer
     transition-all duration-200
     hover:bg-gray-50
-    hover:shadow-sm
+    hover:shadow-md
     active:bg-gray-100
   "
                 >
@@ -484,9 +497,7 @@ const Navbar = () => {
                 >
                   <div className="w-full">
                     <div className="flex items-center justify-center gap-4">
-                      <p className="text-white text-[11px]">
-                        {offer.name}
-                      </p>
+                      <p className="text-white text-[11px]">{offer.name}</p>
                     </div>
                   </div>
                 </div>
