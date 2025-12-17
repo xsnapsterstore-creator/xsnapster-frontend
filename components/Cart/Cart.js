@@ -31,10 +31,10 @@ const Cart = ({ isOpen, onClose }) => {
   const checkout = async () => {
     onClose();
     const token = localStorage.getItem("access_token");
-    if(token){
-      router.push('/address')
-    }else{
-      router.push('/login')
+    if (token) {
+      router.push("/address");
+    } else {
+      router.push("/login");
     }
   };
 
@@ -61,7 +61,7 @@ const Cart = ({ isOpen, onClose }) => {
     >
       {/* Header */}
       <div className="flex h-[65px] justify-between items-center bg-[#212121] text-white p-4 border-b">
-        <h2 className="text-lg font-bold">Your Walls's Wish List</h2>
+        <h2 className="text-lg font-bold">Your Wall's Wishlist</h2>
         <button onClick={onClose} className="text-xl font-bold">
           ✕
         </button>
@@ -99,9 +99,11 @@ const Cart = ({ isOpen, onClose }) => {
             >
               {/* Product Image */}
               <div className="flex items-center gap-2">
-                <img
+                <Image
                   className="h-[70px] w-[70px] object-cover rounded-lg"
                   src={item.image_link}
+                  loading="lazy"
+                  quality={75}
                   width={70}
                   height={70}
                   alt={item.title}
@@ -111,7 +113,7 @@ const Cart = ({ isOpen, onClose }) => {
                     {item.title}
                   </h3>
                   <div className="flex items-end gap-1 mt-1">
-                    <p className="text-green-400 font-semibold text-sm animate-pulse">
+                    <p className="text-red-600 font-semibold text-sm animate-pulse">
                       ₹{item.discounted_price}
                     </p>
                     <p className="line-through text-gray-500 text-xs">

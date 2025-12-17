@@ -59,7 +59,8 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
           {" "}
           {CategoryTitle[router.query.category_name] || "Subtitle Not Found"}
         </h1>
-        <h3 className="text-center text-[12px] pb-2 text-black">
+        <div className="w-12 h-1 bg-red-400 mx-auto rounded-full mb-2"></div>
+        <h3 className="text-center italic text-[12px] pb-2 text-black">
           {CategorySubtitle[router.query.category_name] || "Subtitle Not Found"}
         </h3>
         <hr />
@@ -93,7 +94,7 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-3 md:mt-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  gap-5 mt-3 md:mt-5">
               {Array.isArray(products) && products.length > 0 ? (
                 products.map((prod) => <Product key={prod.id} product={prod} category_name={category_name} />)
               ) : (

@@ -160,11 +160,11 @@ const Footer = () => {
               <h5 className="text-[15px]">Subscribe to our emails</h5>
               <div className="mt-2 flex justify-start items-center">
                 <input
-                  className="p-2 rounded-2xl bg-gray-500"
+                  className="w-[150px] p-2 rounded-xl bg-gray-500"
                   type="email"
                   placeholder="Enter your email"
                 />
-                <button className="ml-2 text-gray-800 bg-sky-300 drop-shadow-lg text-[13px] shadow py-2 px-3 rounded">
+                <button className="ml-2 text-gray-100 bg-[#333333] drop-shadow-lg shadow-white text-[10px] shadow py-2 px-3 rounded">
                   Subscribe
                 </button>
               </div>

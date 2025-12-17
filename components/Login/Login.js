@@ -120,13 +120,13 @@ export default function AuthPage() {
       : "text-gray-500";
 
   return (
-    <div className="pt-[95px] min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-50 to-white">
+    <div className="pt-[115px] min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="text-center mb-10 px-3"
+        className="text-center mb-5 px-3"
       >
         <Image
           className="m-auto"

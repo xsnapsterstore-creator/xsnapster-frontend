@@ -259,7 +259,7 @@ const BillingTemplate = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 pb-24">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 pb-24 md:pb-36">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* ---------------- LEFT SECTION ---------------- */}
         <div className="lg:col-span-2 flex flex-col gap-5">
@@ -296,7 +296,11 @@ const BillingTemplate = () => {
                   >
                     {/* Item Left */}
                     <div className="flex items-start gap-3">
-                      <img
+                      <Image
+                        loading="lazy"
+                        quality={75}
+                        width={70}
+                        height={70}
                         src={item.image_link}
                         alt={item.title}
                         className="w-20 h-20 rounded-xl object-cover border"

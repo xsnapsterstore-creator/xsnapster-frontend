@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
-import { Button } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Product = ({ product, category_name }) => {
   const router = useRouter();
@@ -44,10 +45,30 @@ const Product = ({ product, category_name }) => {
   }
 
   return (
-    <div className="relative cursor-pointer bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[160px] md:w-[200px] m-auto">
+    <div className="relative cursor-pointer rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[185px] md:w-[200px] m-auto">
       {/* Discount Badge */}
       <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
         Sale
+      </span>
+      <span
+        className={`absolute top-2 right-2 rounded-lg z-10 cursor-pointer 
+    flex items-center justify-center
+    transition-all duration-300
+    ${added ? "bg-green-500" : "bg-[#333333]"}
+  `}
+        style={{ padding: "7px 9px" }}
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(addToCart(pro));
+          setAdded(true);
+          setTimeout(() => setAdded(false), 1200);
+        }}
+      >
+        {added ? (
+          <ShoppingCartIcon sx={{ fontSize: "13px", color: "#fff" }} />
+        ) : (
+          <AddShoppingCartIcon sx={{ fontSize: "12px", color: "#fff" }} />
+        )}
       </span>
 
       {/* Product Image */}
@@ -57,17 +78,19 @@ const Product = ({ product, category_name }) => {
         }}
         className="overflow-hidden rounded-t-2xl"
       >
-        <img
+        <Image
           src={product.image_link}
           alt={product.title}
           width={100}
           height={100}
-          className="object-cover w-[160px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
+          loading="lazy"
+          quality={75}      
+          className="object-cover w-[185px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
         />
       </div>
 
       {/* Product Info */}
-      <div className="p-2 flex flex-col items-center">
+      <div className="p-2 flex flex-col items-center bg-gray-100">
         <h1
           onClick={() => {
             router.push(`/categories/${category}/${subcategory}/${product.id}`);
@@ -77,8 +100,8 @@ const Product = ({ product, category_name }) => {
           {product.title}
         </h1>
 
-        {/* Price Section */}
-        <div className="w-full mt-2 flex justify-start gap-3 md:gap-2 lg:gap-3 items-center">
+        {/* Price & Size Section */}
+        <div className="w-full mt-2 flex justify-between items-end">
           <div>
             <select
               value={sizeOpt}
@@ -110,7 +133,7 @@ const Product = ({ product, category_name }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between lg:gap-6 m-2 w-full">
+        {/* <div className="flex items-center justify-between lg:gap-6 m-2 w-full">
           <Button
             color="primary"
             size="small"
@@ -148,7 +171,7 @@ const Product = ({ product, category_name }) => {
           >
             Buy Now
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

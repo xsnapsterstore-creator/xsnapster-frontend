@@ -1,9 +1,9 @@
 import React from "react";
 import Product from "../Product/Product";
 import { motion } from "framer-motion";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Product_Categories = ({ categProd }) => {
-
   return (
     <div className="">
       <div className="">
@@ -13,14 +13,12 @@ const Product_Categories = ({ categProd }) => {
       </div>
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
-          <div
-            className={`bg-gray-100 p-2 shadow rounded-xl m-2`}
-            key={category.id}
-          >
+          <div className={``} key={category.id}>
             {/* Category Title */}
-            <h2 className="text-[20px]  text-center font-semibold mb-3">
+            <h2 className="text-[20px] text-center font-semibold">
               {category.category_name}
             </h2>
+            <div className="w-7 h-1 bg-red-400 mx-auto rounded-full mb-5"></div>
 
             {category.products.length === 0 && (
               <div className="flex items-center justify-center">
@@ -36,9 +34,13 @@ const Product_Categories = ({ categProd }) => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-2 md:flex gap-2">
+              <div className="grid grid-cols-2 md:flex gap-3 md:m-2">
                 {category.products.map((prod) => (
-                  <Product key={prod.id} product={prod} category_name={category.category_name} />
+                  <Product
+                    key={prod.id}
+                    product={prod}
+                    category_name={category.category_name}
+                  />
                 ))}
               </div>
             </motion.div>
@@ -50,9 +52,9 @@ const Product_Categories = ({ categProd }) => {
                     .replace(/\s+/g, "-")
                     .toLowerCase()}`)
                 }
-                className=" text-gray-800 hover:cursor-pointer bg-sky-300 drop-shadow-lg text-[13px] shadow py-2 px-3 rounded"
+                className="hover:cursor-pointer hover:bg-gray-400 bg-[#333333] drop-shadow-lg shadow px-3 rounded"
               >
-                View More
+                <ExpandMoreIcon sx={{ color: "white" }} />
               </button>
             </div>
           </div>

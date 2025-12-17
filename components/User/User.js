@@ -131,20 +131,11 @@ const User = () => {
     setLoading(false);
   }
 
-  const logOut = () => {
+  const logOut = async () => {
     // clear tokens + redirect
-    if (typeof window !== "undefined") {
-      Promise.resolve().then(() => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("token_type");
-        localStorage.removeItem("userID");
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("address_id");
-        localStorage.removeItem("cart");
-      });
-      // if refresh token is HTTP-only cookie, call backend logout endpoint optionally
-    }
-    window.location.href = "/";
+    const res = await logOutUserProfile();
+    console.log("This is logout data:", res)
+    // window.location.href = "/";
   };
 
   const { data, isLoading, isError } = useQuery({

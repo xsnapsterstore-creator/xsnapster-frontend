@@ -135,9 +135,9 @@ const Navbar = () => {
         }`}
       >
         {/* For Mobile View */}
-        <div className="flex lg:hidden justify-between items-center h-[65px]">
-          <div className="pl-2 flex justify-center items-center gap-2">
-            <Link href={"/"}>
+        <div className="flex lg:hidden justify-between w-full items-center h-[65px]">
+          <div className="pl-3 flex justify-center items-center gap-2">
+            <a href={"/"}>
               <div className="flex items-center gap-[2px] text-[22px]">
                 <Image src="/logo.svg" alt="xsnapster" width={40} height={40} />
                 <div className="flex items-center">
@@ -146,7 +146,7 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-            </Link>
+            </a>
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
@@ -210,10 +210,10 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="pr-2 flex justify-center items-center gap-2 md:gap-4">
+          <div className="pr-3 flex justify-center items-center gap-3 md:gap-4">
             <div className="">
               <SearchIcon
-                sx={{ fontSize: "27px" }}
+                sx={{ fontSize: "30px" }}
                 onClick={() => setShowMobileSearch((prev) => !prev)}
                 className="cursor-pointer"
                 aria-label="Toggle search"
@@ -224,14 +224,14 @@ const Navbar = () => {
                 {cart.length}
               </span>
               <ShoppingCartIcon
-                sx={{ fontSize: "27px" }}
+                sx={{ fontSize: "28px" }}
                 onClick={() => setIsCartOpen(true)}
                 className="cursor-pointer"
               />
             </div>
             <div className="">
               <MenuIcon
-                sx={{ fontSize: "30px" }}
+                sx={{ fontSize: "33px" }}
                 onClick={toggleSidebar}
                 className="cursor-pointer"
               />
@@ -477,40 +477,12 @@ const Navbar = () => {
             <li>Most Watched Frames</li>
           </ul>
         </div>
-
-        {/* Offer Scroller */}
-        <div id="skills" className="bg-[#333333]">
-          <div className="w-full p-1">
-            <Marquee
-              gradient={false}
-              speed={50}
-              pauseOnHover={true}
-              pauseOnClick={true}
-              delay={0}
-              play={true}
-              direction="left"
-            >
-              {OfferData.map((offer) => (
-                <div
-                  key={offer.id}
-                  className="min-w-fit transition-all duration-500 rounded-lg group relative"
-                >
-                  <div className="w-full">
-                    <div className="flex items-center justify-center gap-4">
-                      <p className="text-white text-[11px]">{offer.name}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Marquee>
-          </div>
-        </div>
       </div>
 
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className="lg:hidden px-3 pt-32 absolute bg-white w-full
+          className="lg:hidden px-3 pt-28 absolute bg-white w-full
       transition-all duration-300 ease-out
       animate-slide-down flex itme justify-center gap-3 p-2"
         >

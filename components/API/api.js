@@ -182,8 +182,8 @@ export async function secureFetch(url, options = {}) {
 
   // Build request headers
   const headers = {
-    ...options.headers,
-    Authorization: `Bearer ${accessToken}`,
+    ...(options.headers || {}),
+    Authorization: accessToken ? `Bearer ${accessToken}` : "",
   };
 
   console.log("Step 3");
@@ -206,17 +206,17 @@ export async function secureFetch(url, options = {}) {
 
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
-    const log = await logOutUserProfile();
+    await logOutUserProfile();
     return null;
   }
 
   console.log("Step 12 ─ Retrying request with new token");
 
   // Retry request with new token
-  return await fetch(`${API_URL}${url}`, {
+  return fetch(`${API_URL}${url}`, {
     ...options,
     headers: {
-      ...options.headers,
+      ...(options.headers || {}),
       Authorization: `Bearer ${newToken}`,
     },
     credentials: "include",
@@ -321,9 +321,12 @@ export const fetchUserProfile = async () => {
     const res = await secureFetch(`/user/profile`, {
       method: "GET",
     });
+    if (!res) return null;
+
     if (!res.ok) {
-      const err = await res.json();
-      console.error("💥 Server Validation Error:", err);
+      const err = await res.json().catch(() => null);
+      console.error("💥 Profile fetch error:", err);
+      return null;
     }
     return await res.json();
   } catch (e) {
@@ -333,26 +336,34 @@ export const fetchUserProfile = async () => {
 
 //Logout User's Profile
 export const logOutUserProfile = async () => {
-  let accessToken = localStorage.getItem("access_token");
+  console.log("Step Logout 1")
   try {
     const res = await fetch("/auth/logout", {
       method: "POST",
       credentials: "include",
     });
+    console.log("THis is response:", res)
+    console.log("Step Logout 2")
     if (!res.ok) {
       const err = await res.json();
       console.error("💥 Server Validation Error:", err);
+      return;
     }
+    console.log("Step Logout 3")
     const data = await res.json().catch(() => null);
     console.log("Logout response status:", res.status);
     console.log("Logout response data:", data);
+    console.log("Step Logout 4")
     Promise.resolve().then(() => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("token_type");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userID");
+      localStorage.removeItem("address_id");
+      localStorage.removeItem("cart");
     });
-    return { res, data };
+    console.log("Step Logout 5")
+    return data;
   } catch (e) {
     console.error("Network/Parse Error:", e);
   }
@@ -409,4 +420,3 @@ export const fetchUserOrder = async () => {
     console.error("Network/Parse Error:", e);
   }
 };
-

@@ -1,4 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -6,6 +7,15 @@ const nextConfig = {
   // images: {
   //   unoptimized: true,
   // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "khnbsjuczeylcjrlrtni.storage.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
   reactStrictMode: false,
   eslint: {
     ignoreDuringBuilds: true,

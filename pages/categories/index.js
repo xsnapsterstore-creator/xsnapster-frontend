@@ -3,10 +3,11 @@ import { fetchCategories } from "@/components/API/api";
 
 const Categories = ({ categories }) => {
   return (
-    <div className="pt-[115px] px-3 pb-3">
-      <h1 className="text-2xl font-semibold text-center mt-4 mb-4">
+    <div className="pt-[95px] px-3 pb-3">
+      <h1 className="text-xl font-semibold text-center mt-4 mb-2">
         Shop by Category
       </h1>
+      <div className="w-10 h-1 bg-red-400 mx-auto rounded-full mb-5"></div>
       <hr />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-5 justify-center">

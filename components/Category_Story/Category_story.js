@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Category_Story = ({ category }) => {
   const router = useRouter();
   return (
-    <div className="pt-[108px]">
+    <div className="pt-[82px]">
       <div className="mt-3 ml-2">
         <p className="text-sm font-medium text-gray-700">
           Buy with <bold className="text-red-500">x</bold>Snapster
@@ -24,11 +24,13 @@ const Category_Story = ({ category }) => {
             >
               {/* Story Circle */}
               <div className="p-[2.5px] w-[90px] h-[90px] rounded-full bg-gradient-to-tr from-pink-500 to-yellow-400">
-                <img
-                  src={item.image_links}
+                <Image
+                  src={item.image_links[0]}
                   alt={item.name}
-                  width={90}
-                  height={90}
+                  width={100}
+                  height={100}
+                  loading="lazy"
+                  quality={75}
                   className="rounded-full h-[85px] w-[85px] object-cover border-2 border-white"
                 />
               </div>

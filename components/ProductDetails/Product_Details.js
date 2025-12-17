@@ -251,11 +251,13 @@ export default function ProductDetailsPage({ prod }) {
                   className="w-full flex-shrink-0"
                   style={{ flex: "0 0 100%" }}
                 >
-                  <img
+                  <Image
                     src={src}
                     alt={`${prod.title} ${index + 1}`}
                     width={600}
                     height={400}
+                    loading="lazy"
+                    quality={75}
                     onClick={() => setFullscreenImage(src)}
                     className="object-cover cursor-pointer w-full h-[450px] md:h-[600px]"
                   />
@@ -298,10 +300,14 @@ export default function ProductDetailsPage({ prod }) {
             className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50"
             onClick={() => setFullscreenImage(null)}
           >
-            <img
+            <Image
               src={fullscreenImage}
               alt="preview"
-              className="max-w-[90%] max-h-[90%] rounded-lg shadow-xl animate-fadeIn"
+              loading="lazy"
+              width={400}
+              height={300}
+              quality={75}
+              className="max-w-[90%] max-h-[100%] rounded-lg shadow-xl animate-fadeIn"
               onClick={(e) => e.stopPropagation()} // prevents closing when clicking image
             />
           </div>

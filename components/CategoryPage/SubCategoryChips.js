@@ -21,7 +21,7 @@ const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
                   key={cat.id}
                   onClick={() => onSelect(cat)}
                   className={[
-                    "font-nunito rounded-[120px] h-[28px] text-[12px] flex justify-center items-center font-medium px-3 py-4 whitespace-nowrap border transition-all border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 hover:cursor-pointer",
+                    "font-nunito rounded-[120px] h-[28px] text-[12px] flex justify-center items-center font-medium px-3 py-3 whitespace-nowrap border transition-all border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 hover:cursor-pointer",
                     isActive
                       ? "bg-red-500 text-white border-red-500"
                       : "text-black bg-transparent border-default hover:bg-red-500 hover:border-red-500",
