@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Product_Categories = ({ categProd }) => {
   return (
-    <div className="">
+    <div className="mt-5">
       <div className="">
         <h2 className="text-[30px] font-bold tracking-wide text-center">
           #TRENDINGNOW!
