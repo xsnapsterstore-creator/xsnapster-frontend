@@ -45,17 +45,16 @@ const Product_Categories = ({ categProd }) => {
               </div>
             </motion.div>
             <div className="flex justify-center items-center mt-5 mb-5">
-              <button
+              <ExpandMoreIcon
+              className=""
                 onClick={() =>
                   (window.location.href = `/categories/${category.category_name
                     .trim()
                     .replace(/\s+/g, "-")
                     .toLowerCase()}`)
                 }
-                className="hover:cursor-pointer hover:bg-gray-400 bg-[#333333] drop-shadow-lg shadow px-3 rounded"
-              >
-                <ExpandMoreIcon sx={{ color: "white" }} />
-              </button>
+                sx={{ color: "black", fontSize: "35px" }}
+              />
             </div>
           </div>
         ))}

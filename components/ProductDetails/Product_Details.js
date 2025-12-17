@@ -415,6 +415,47 @@ export default function ProductDetailsPage({ prod }) {
               </div>
             </div>
 
+            {/* Offer  */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-2.5 md:p-5">
+              {/* Heading */}
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
+                <span className="text-lg">🎁</span>
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 tracking-wide">
+                  Special Quantity Offers
+                </h3>
+              </div>
+
+              {/* Offers */}
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="bg-white rounded-lg py-2 px-3 border shadow-sm">
+                  <p className="text-xs font-medium text-gray-700">
+                    Buy <span className="font-semibold text-gray-900">3</span>
+                  </p>
+                  <p className="text-xs text-green-700 font-semibold">
+                    Get 1 Free
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg py-2 px-3 border shadow-sm">
+                  <p className="text-xs font-medium text-gray-700">
+                    Buy <span className="font-semibold text-gray-900">6</span>
+                  </p>
+                  <p className="text-xs text-green-700 font-semibold">
+                    Get 2 Free
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg py-2 px-3 border shadow-sm">
+                  <p className="text-xs font-medium text-gray-700">
+                    Buy <span className="font-semibold text-gray-900">9</span>
+                  </p>
+                  <p className="text-xs text-green-700 font-semibold">
+                    Get 3 Free
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Razorpay Verification Image */}
             <div>
               <Image

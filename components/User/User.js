@@ -11,7 +11,9 @@ import {
 } from "../API/api";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HomeIcon from "@mui/icons-material/Home";
 import Order from "../Order/order";
 
 const User = () => {
@@ -134,7 +136,7 @@ const User = () => {
   const logOut = async () => {
     // clear tokens + redirect
     const res = await logOutUserProfile();
-    console.log("This is logout data:", res)
+    console.log("This is logout data:", res);
     // window.location.href = "/";
   };
 
@@ -439,50 +441,37 @@ const User = () => {
     );
   } else {
     return (
-      <div className="pt-[130px] min-h-screen bg-gray-50 py-10 px-5">
-        <div className="max-w-5xl mx-auto">
-          {/* Profile Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center md:items-start gap-5">
-            {/* Avatar */}
-            <div className="w-28 h-28 rounded-full bg-black text-white flex items-center justify-center text-4xl font-bold shadow-md">
-              {userData.default_address.name.charAt(0)}
-            </div>
+      <div className="pt-[90px] min-h-screen bg-gray-100 py-10">
+        <div className="w-full max-w-full mx-auto bg-black text-white shadow-xl overflow-hidden">
+          {/* Top Profile Card */}
+          <div className="relative p-6 bg-gradient-to-br from-[#0f0f0f] via-[#151515] to-black">
+            {/* Background stripes */}
+            <div className="absolute inset-0 opacity-25 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.06)_50%,rgba(255,255,255,0.06)_75%,transparent_75%,transparent)] bg-[length:40px_40px]" />
 
-            {/* User Info */}
-            <div className="flex-1 w-full">
-              <h2 className="text-xl font-semibold text-gray-900 text-center md:text-left">
-                Profile Information
+            <div className="relative z-50 space-y-6">
+              {/* Header */}
+              <h2 className="text-lg tracking-wide">
+                Welcome{" "}
+                <span className="font-semibold text-white">
+                  {userData.default_address.name}
+                </span>
               </h2>
-              <p className="mt-1 text-center md:text-left text-gray-500 text-sm">
-                Manage your account details
-              </p>
 
-              {/* Info List */}
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                  <p className="text-gray-500 text-xs">Full Name</p>
-                  <p className="font-semibold text-gray-900">
-                    {userData.default_address.name}
-                  </p>
+              {/* Info Section */}
+              <div className="space-y-4 text-sm text-gray-300">
+                <div className="flex items-center gap-3">
+                  <EmailIcon fontSize="small" />
+                  <span className="text-[12px] md:text-[15px]">{userData.email}</span>
                 </div>
 
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                  <p className="text-gray-500 text-xs">Email Address</p>
-                  <p className="font-semibold text-gray-900 break-all">
-                    {userData.email}
-                  </p>
+                <div className="flex items-center gap-3">
+                  <PhoneIcon fontSize="small" />
+                  <span className="text-[12px] md:text-[15px]">{userData.default_address.phone_number}</span>
                 </div>
 
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                  <p className="text-gray-500 text-xs">Phone Number</p>
-                  <p className="font-semibold text-gray-900">
-                    {userData.default_address.phone_number}
-                  </p>
-                </div>
-
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                  <p className="text-gray-500 text-xs">Address</p>
-                  <span className="font-semibold text-gray-900">
+                <div className="flex items-start gap-3 leading-relaxed">
+                  <HomeIcon fontSize="small" />
+                  <span className="text-[12px] md:text-[15px]">
                     {userData.default_address.address_line},{" "}
                     {userData.default_address.city},{" "}
                     {userData.default_address.state},{" "}
@@ -490,222 +479,187 @@ const User = () => {
                     {userData.default_address.zip_code})
                   </span>
                 </div>
-
-                {/* Edit Button */}
-                <div className="mt-6 flex justify-center items-center gap-5">
-                  <button
-                    onClick={toggleEdit}
-                    className="w-full py-3 cursor-pointer bg-black text-white rounded-xl font-medium text-sm active:scale-95 transition"
-                  >
-                    {isEditing ? "Close Editor" : "Edit Profile"}
-                  </button>
-                  <button
-                    onClick={logOut}
-                    className="w-full py-3 cursor-pointer bg-black text-white rounded-xl font-medium text-sm active:scale-95 transition"
-                  >
-                    Log Out
-                  </button>
-                </div>
-
-                {/* Expandable Edit Form */}
-                {loading ? (
-                  <div>
-                    <svg
-                      aria-hidden="true"
-                      className="w-5 h-5 animate-spin text-white"
-                      viewBox="0 0 100 101"
-                      fill="none"
-                    >
-                      <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 
-              50 100.591C22.3858 100.591 0 78.2051 
-              0 50.5908C0 22.9766 22.3858 0.59082 
-              50 0.59082C77.6142 0.59082 100 22.9766 
-              100 50.5908ZM9.08144 50.5908C9.08144 74.0622 
-              26.5286 91.5093 50 91.5093C73.4714 91.5093 
-              90.9186 74.0622 90.9186 50.5908C90.9186 
-              27.1195 73.4714 9.67236 50 9.67236C26.5286 
-              9.67236 9.08144 27.1195 9.08144 50.5908Z"
-                        fill="#ffffff33"
-                      />
-                      <path
-                        d="M93.9676 39.0409C96.393 38.4038 
-              97.8624 35.9116 97.0079 33.5539C95.2932 
-              28.8227 92.871 24.3692 89.8167 20.348C85.8452 
-              15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 
-              4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 
-              0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 
-              1.69328 37.813 4.19778 38.4501 6.62326C39.0873 
-              9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 
-              9.50999 51.7191 9.52689 55.5402 10.1577C60.8642 
-              11.0248 65.9928 12.9971 70.6331 15.936C75.2735 
-              18.8749 79.3347 22.725 82.5849 27.2726C84.9175 
-              30.4217 86.7997 33.9366 88.1811 37.6822C89.083 
-              40.0309 91.5421 41.9145 93.9676 40.0409Z"
-                        fill="white"
-                      />
-                    </svg>
-                    Saving...
-                  </div>
-                ) : (
-                  <div
-                    className={`transition-all duration-300 overflow-hidden ${
-                      isEditing ? "max-h-[1200px] mt-6" : "max-h-0"
-                    }`}
-                  >
-                    <form
-                      onSubmit={handleEditDetails}
-                      className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3"
-                    >
-                      {/* Name */}
-                      <div>
-                        <label className="text-xs text-gray-500">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      {/* Phone */}
-                      <div>
-                        <label className="text-xs text-gray-500">
-                          Phone Number
-                        </label>
-                        <input
-                          type="text"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      {/* Pincode + City */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs text-gray-500">
-                            Pincode
-                          </label>
-                          <input
-                            type="text"
-                            name="pincode"
-                            value={formData.pincode}
-                            onChange={handlePincodeChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs text-gray-500">City</label>
-                          <input
-                            type="text"
-                            name="city"
-                            value={formData.city}
-                            onChange={handleChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      {/* State + House */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs text-gray-500">State</label>
-                          <input
-                            type="text"
-                            name="state"
-                            value={formData.state}
-                            onChange={handleChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs text-gray-500">
-                            House No.
-                          </label>
-                          <input
-                            type="text"
-                            name="house"
-                            value={formData.house}
-                            onChange={handleChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Address Type */}
-                      <div>
-                        <label className="text-xs text-gray-500">
-                          Address Type
-                        </label>
-                        <input
-                          type="text"
-                          name="address_type"
-                          value={formData.address_type}
-                          onChange={handleChange}
-                          className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                        />
-                      </div>
-
-                      {/* Street + landmark */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-xs text-gray-500">
-                            Street
-                          </label>
-                          <input
-                            type="text"
-                            name="street"
-                            value={formData.street}
-                            onChange={handleChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-xs text-gray-500">
-                            Landmark
-                          </label>
-                          <input
-                            type="text"
-                            name="landmark"
-                            value={formData.landmark}
-                            onChange={handleChange}
-                            className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Save Button */}
-                      <button
-                        type="submit"
-                        className="w-full py-3 cursor-pointer bg-blue-600 text-white rounded-xl font-medium text-sm active:scale-95 transition"
-                      >
-                        Save Changes
-                      </button>
-                    </form>
-                  </div>
-                )}
               </div>
             </div>
           </div>
 
-          {/* Order Button */}
-          <div className="mt-10 flex flex-col justify-center">
-            <Button
-              variant="contained"
-              onClick={GetOrders}
-              className="bg-gray-500 p-3 rounded-2xl cursor-pointer"
-            >
-              {showOrders ? "Hide Orders" : "See Your Orders"}
-            </Button>
+          {/* Actions */}
+          <div className="bg-white flex flex-col justify-center text-black p-5 space-y-4">
+            {/* Top Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:justify-center">
+              <button
+                onClick={toggleEdit}
+                className="w-full sm:w-auto min-w-[160px] px-6 py-3 rounded-xl
+                 bg-gray-800 text-white font-medium text-sm
+                 hover:bg-neutral-900 active:scale-95 transition"
+              >
+                {isEditing ? "Close Editor" : "Edit Profile"}
+              </button>
 
-            {showOrders && <div className="mt-4"><Order order={orders} /></div>}
+              <button
+                onClick={GetOrders}
+                className="w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-xl
+                 bg-gray-800 text-white font-medium text-sm
+                 hover:bg-gray-700 active:scale-95 transition"
+              >
+                {showOrders ? "Hide Orders" : "See Your Orders"}
+              </button>
+            </div>
+
+            {/* Logout */}
+            <button
+              onClick={logOut}
+              className="w-full sm:max-w-xs mx-auto px-6 py-3 rounded-xl
+               bg-gray-800 text-white font-medium text-sm
+                active:scale-95 transition"
+            >
+              Log Out
+            </button>
+
+            {/* Orders */}
+            {showOrders && (
+              <div className="mt-4 bg-gray-50 rounded-xl p-4 border">
+                <Order order={orders} />
+              </div>
+            )}
           </div>
+        </div>
+
+        {/* Profile Edit Section */}
+        <div
+          className={`transition-all duration-300 m-5 ${
+            isEditing
+              ? "max-h-[1200px] opacity-100"
+              : "max-h-0 opacity-0 overflow-hidden"
+          }`}
+        >
+          <form
+            onSubmit={handleEditDetails}
+            className="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3"
+          >
+            {/* Name */}
+            <div>
+              <label className="text-xs text-gray-500">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="text-xs text-gray-500">Phone Number</label>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+              />
+            </div>
+
+            {/* Pincode + City */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-gray-500">Pincode</label>
+                <input
+                  type="text"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handlePincodeChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-500">City</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+            </div>
+
+            {/* State + House */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-gray-500">State</label>
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-500">House No.</label>
+                <input
+                  type="text"
+                  name="house"
+                  value={formData.house}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Address Type */}
+            <div>
+              <label className="text-xs text-gray-500">Address Type</label>
+              <input
+                type="text"
+                name="address_type"
+                value={formData.address_type}
+                onChange={handleChange}
+                className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+              />
+            </div>
+
+            {/* Street + Landmark */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs text-gray-500">Street</label>
+                <input
+                  type="text"
+                  name="street"
+                  value={formData.street}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-500">Landmark</label>
+                <input
+                  type="text"
+                  name="landmark"
+                  value={formData.landmark}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Save Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full py-3 rounded-xl font-medium text-sm transition active:scale-95
+        ${
+          loading
+            ? "bg-blue-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700 text-white"
+        }
+      `}
+            >
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
+          </form>
         </div>
       </div>
     );

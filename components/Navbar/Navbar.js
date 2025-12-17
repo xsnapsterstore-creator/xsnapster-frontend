@@ -137,7 +137,7 @@ const Navbar = () => {
         {/* For Mobile View */}
         <div className="flex lg:hidden justify-between w-full items-center h-[65px]">
           <div className="pl-3 flex justify-center items-center gap-2">
-            <a href={"/"}>
+            <Link href={"/"}>
               <div className="flex items-center gap-[2px] text-[22px]">
                 <Image src="/logo.svg" alt="xsnapster" width={40} height={40} />
                 <div className="flex items-center">
@@ -146,7 +146,7 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-            </a>
+            </Link>
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
@@ -242,7 +242,7 @@ const Navbar = () => {
         {/* For Desktop View */}
         <div className="lg:flex hidden justify-between items-center h-[65px]">
           <div className="pl-7 flex items-center gap-2">
-            <a href={"/"}>
+            <Link href={"/"}>
               <div className="flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold">
                 <Image src="/logo.svg" alt="xsnapster" width={47} height={30} />
                 <div className="flex items-center">
@@ -251,7 +251,7 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-            </a>
+            </Link>
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">

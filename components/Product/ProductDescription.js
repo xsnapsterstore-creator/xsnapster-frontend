@@ -88,7 +88,7 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(0)}
-        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
@@ -145,7 +145,7 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(1)}
-        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
@@ -211,7 +211,7 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(2)}
-        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
@@ -278,7 +278,7 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(3)}
-        className="bg-white border cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
