@@ -577,7 +577,7 @@ const Navbar = () => {
               } m-4 flex flex-col space-y-5`}
             >
               {data?.map((item) => (
-                <Link
+                <a
                   onClick={toggleSidebar}
                   href={`/categories/${item.slug}`}
                   key={item.id}
@@ -587,7 +587,7 @@ const Navbar = () => {
                   <p className="text-[10px] text-red-500 animate-pulse">
                     {item.one_liner}
                   </p>
-                </Link>
+                </a>
               ))}
             </div>
           )}

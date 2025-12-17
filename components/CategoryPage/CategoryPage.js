@@ -18,7 +18,6 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
   let subCateg = SubCategory;
 
   const handleSubCategorySelect = async (cat) => {
-
     setLoading(true);
     setSelectedCategory(cat.slug);
 
@@ -49,7 +48,7 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
       if (item.slug === sub_category_name) {
         handleSubCategorySelect(item);
       }
-    })
+    });
   }, [sub_category_name]);
 
   return (
@@ -94,9 +93,15 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  gap-5 mt-3 md:mt-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-3 md:mt-5">
               {Array.isArray(products) && products.length > 0 ? (
-                products.map((prod) => <Product key={prod.id} product={prod} category_name={category_name} />)
+                products.map((prod) => (
+                  <Product
+                    key={prod.id}
+                    product={prod}
+                    category_name={category_name}
+                  />
+                ))
               ) : (
                 <div className="col-span-full h-[60vh] flex items-center justify-center">
                   <h1 className="text-gray-400 text-lg">No Products Found</h1>
