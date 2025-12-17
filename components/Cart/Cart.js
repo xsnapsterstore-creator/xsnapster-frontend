@@ -184,14 +184,14 @@ const Cart = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer / Checkout (sticky) */}
-        <div className="p-4 border-t border-neutral-800  backdrop-blur-md sticky bottom-0">
+        <div className="p-2 border-t border-neutral-800  backdrop-blur-md sticky bottom-0">
           <div className="flex gap-3 justify-between items-center mb-3">
             <GppGoodIcon fontSize="small" />
-            <p className="text-xs">
+            <p className="text-[10px] md:text-[12px]">
               Safe and Secure Payments. Easy Returns. 100% Authentic Products
             </p>
           </div>
-          <div className="flex justify-between mb-3 text-sm">
+          <div className="flex justify-between mb-2 text-sm">
             <span className="text-gray-400">Total</span>
             <span className="font-semibold">₹{total}</span>
           </div>

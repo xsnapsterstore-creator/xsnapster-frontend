@@ -45,7 +45,7 @@ const Product = ({ product, category_name }) => {
   }
 
   return (
-    <div className="relative cursor-pointer rounded-2xl shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[185px] md:w-[200px] m-auto">
+    <div className="relative cursor-pointer rounded-lg shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[185px] md:w-[200px] m-auto">
       {/* Discount Badge */}
       <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
         Sale
@@ -76,7 +76,7 @@ const Product = ({ product, category_name }) => {
         onClick={() => {
           router.push(`/categories/${category}/${subcategory}/${product.id}`);
         }}
-        className="overflow-hidden rounded-t-2xl"
+        className="overflow-hidden rounded-t-lg"
       >
         <Image
           src={product.image_link}

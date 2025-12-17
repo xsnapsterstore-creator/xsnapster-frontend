@@ -338,7 +338,7 @@ export const fetchUserProfile = async () => {
 export const logOutUserProfile = async () => {
   console.log("Step Logout 1")
   try {
-    const res = await fetch("/auth/logout", {
+    const res = await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
