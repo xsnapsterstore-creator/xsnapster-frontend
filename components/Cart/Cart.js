@@ -191,13 +191,13 @@ const Cart = ({ isOpen, onClose }) => {
               Safe and Secure Payments. Easy Returns. 100% Authentic Products
             </p>
           </div>
-          <div className="flex justify-between mb-2 text-sm">
+          <div className="flex justify-between mb-2 pl-2 pr-2 text-sm">
             <span className="text-gray-400">Total</span>
             <span className="font-semibold">₹{total}</span>
           </div>
           <button
             onClick={checkout}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 rounded-lg font-semibold transition-all duration-300 shadow-md"
+            className="w-full bg-gradient-to-r bg-[#111111] hover:bg-[#212121] cursor-pointer text-white py-2 rounded-lg transition-all duration-300 shadow-md"
           >
             Proceed to Checkout
           </button>
