@@ -33,8 +33,9 @@ export default function Poster() {
               width={100}
               height={100}
               src={src}
-              loading="lazy"
-              // quality={75}
+              priority
+              fetchPriority="high"
+              quality={100}
               alt={`Banner ${index + 1}`}
               className="w-full h-full object-cover"
             />

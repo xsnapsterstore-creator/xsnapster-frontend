@@ -229,10 +229,10 @@ export default function AddressForm() {
                     setSelectedId(address.id);
                     setShowForm(false);
                   }}
-                  className={`border bg-white rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
+                  className={`border  rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
                     selectedId === address.id
-                      ? "border-black ring-1 ring-black"
+                      ? "border-black ring-1 bg-gray-200 ring-black"
                       : "border-gray-200"
                   }
                 `}
@@ -462,7 +462,7 @@ export default function AddressForm() {
 
       {/* Add New Address Button */}
       {!showForm && (
-        <div className="mt-5 max-w-lg mx-auto">
+        <div className="mt-5 max-w-2xl mx-auto">
           <button
             onClick={() => {
               setForm({
@@ -481,7 +481,7 @@ export default function AddressForm() {
               setSelectedId(null);
               setShowForm(true);
             }}
-            className="w-full bg-black text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all"
+            className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-all"
           >
             + Add New Address
           </button>

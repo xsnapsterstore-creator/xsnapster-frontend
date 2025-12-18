@@ -29,8 +29,9 @@ const Category_Story = ({ category }) => {
                   alt={item.name}
                   width={100}
                   height={100}
-                  loading="lazy"
                   quality={75}
+                  fetchPriority="high"
+                  priority
                   className="rounded-full h-[85px] w-[85px] object-cover border-2 border-white"
                 />
               </div>

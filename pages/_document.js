@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -26,6 +27,10 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <Script
+          src="https://dev.xsnapster.store/analytics.js"
+          strategy="afterInteractive"
+        />
       </Head>
       <body className="antialiased">
         <Main />

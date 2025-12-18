@@ -83,7 +83,8 @@ const Product = ({ product, category_name }) => {
           alt={product.title}
           width={100}
           height={100}
-          loading="lazy"
+          priority
+          fetchPriority="high"
           quality={75}      
           className="object-cover w-[185px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
         />

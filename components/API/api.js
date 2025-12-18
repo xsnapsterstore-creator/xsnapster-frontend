@@ -24,11 +24,6 @@ export const verifyOTP = async (email, otp) => {
     credentials: "include",
     body: JSON.stringify({ identifier: email, otp }),
   });
-
-  if (!res.ok) {
-    const error = await res.json();
-    return error || "OTP verification failed";
-  }
   return res;
 };
 
