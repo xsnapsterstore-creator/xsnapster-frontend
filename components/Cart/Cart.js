@@ -184,10 +184,10 @@ const Cart = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer / Checkout (sticky) */}
-        <div className="p-2 border-t border-neutral-800  backdrop-blur-md sticky bottom-0">
+        <div className="p-4 border-t border-neutral-800  backdrop-blur-md sticky bottom-0">
           <div className="flex gap-3 justify-between items-center mb-3">
             <GppGoodIcon fontSize="small" />
-            <p className="text-[10px] md:text-[12px]">
+            <p className="text-[10px] md:text-[14px]">
               Safe and Secure Payments. Easy Returns. 100% Authentic Products
             </p>
           </div>

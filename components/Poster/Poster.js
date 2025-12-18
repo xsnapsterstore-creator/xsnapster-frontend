@@ -4,11 +4,9 @@ import Image from "next/image";
 const banners = [
   "/bmw_1.webp",
   "/defender_1.webp",
+  "/porsche_1.webp",
   "/bmw_2.webp",
-  "/defender_2.webp",
   "/ferrari_1.webp",
-  "/bmw_3.webp",
-  "/ferrari_2.webp",
 ];
 
 export default function Poster() {
@@ -31,12 +29,12 @@ export default function Poster() {
       >
         {banners.map((src, index) => (
           <div key={index} className="min-w-full h-[480px] md:h-[600px]">
-            <Image
+            <img
               width={100}
               height={100}
               src={src}
               loading="lazy"
-              quality={75}
+              // quality={75}
               alt={`Banner ${index + 1}`}
               className="w-full h-full object-cover"
             />
@@ -45,7 +43,7 @@ export default function Poster() {
       </div>
 
       {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
 
       {/* Text Content */}
       <div className="absolute left-5 md:left-10 top-1/2 -translate-y-1/2 text-white max-w-xs md:max-w-lg">

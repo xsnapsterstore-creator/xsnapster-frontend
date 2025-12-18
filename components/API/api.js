@@ -152,7 +152,7 @@ export async function refreshAccessToken() {
       credentials: "include", // <-- IMPORTANT (send refresh_token cookie)
     });
 
-    console.log("Step 8");
+    console.log("Step 7");
 
     if (!res.ok) {
       console.log("Refresh failed:", res.status);
@@ -160,10 +160,11 @@ export async function refreshAccessToken() {
     }
 
     const data = await res.json();
+    console.log("Step 8");
 
     if (data?.access_token) {
       localStorage.setItem("access_token", data.access_token);
-      console.log("Step 10 ─ New access token saved");
+      console.log("Step 9 ─ New access token saved");
       return data.access_token;
     }
 
@@ -202,14 +203,23 @@ export async function secureFetch(url, options = {}) {
 
   // Try to refresh token
   const newToken = await refreshAccessToken();
-  console.log("Step 11");
+  console.log("Step 10");
 
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
+    Promise.resolve().then(() => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token_type");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userID");
+      localStorage.removeItem("address_id");
+      localStorage.removeItem("cart");
+    });
+    window.location.href = "/login";
     return null;
   }
 
-  console.log("Step 12 ─ Retrying request with new token");
+  console.log("Step 11 ─ Retrying request with new token");
 
   // Retry request with new token
   return fetch(`${API_URL}${url}`, {

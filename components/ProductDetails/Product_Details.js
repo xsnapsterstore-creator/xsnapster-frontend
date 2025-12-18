@@ -18,10 +18,13 @@ import { addToCart } from "../store/cartSlice";
 import Link from "next/link";
 import ProductDescription from "../Product/ProductDescription";
 import ShareIcon from "@mui/icons-material/Share";
+import { useRouter } from "next/router";
 
 export default function ProductDetailsPage({ prod }) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [added, setAdded] = useState(false);
+  const [buyAdded, setBuyAdded] = useState(false);
   const [prodQuantity, setProdQuantity] = useState(1);
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [sizeOpt, setSizeOpt] = useState(prod.dimensions[0]);
@@ -43,6 +46,18 @@ export default function ProductDetailsPage({ prod }) {
     price: selectedPricing.price,
     discounted_price: selectedPricing.discounted_price,
   };
+
+  async function BuyNow() {
+    dispatch(addToCart({ ...product, quantity: prodQuantity }));
+    const userID = localStorage.getItem("userID");
+    setBuyAdded(true);
+    setTimeout(() => setBuyAdded(false), 1200);
+    if (!userID) {
+      router.push("/login");
+    } else {
+      router.push("/address");
+    }
+  }
 
   const prodQuality = [
     {
@@ -409,8 +424,11 @@ export default function ProductDetailsPage({ prod }) {
               {/* Buy Now Button */}
               <div className="">
                 {/* Buy Now */}
-                <button className="px-8 py-2 w-full rounded-lg shadow-md text-lg transition bg-gray-900 hover:bg-gray-700 text-white">
-                  Buy Now
+                <button
+                  onClick={BuyNow}
+                  className="px-8 py-2 w-full rounded-lg shadow-md text-lg transition bg-gray-900 hover:bg-gray-700 text-white"
+                >
+                  {buyAdded ? "Please Wait" : "Buy Now"}
                 </button>
               </div>
             </div>
