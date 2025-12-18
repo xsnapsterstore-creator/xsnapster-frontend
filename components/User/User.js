@@ -134,10 +134,9 @@ const User = () => {
   }
 
   const logOut = async () => {
-    // clear tokens + redirect
     const res = await logOutUserProfile();
-    console.log("This is logout data:", res);
-    // window.location.href = "/";
+    const data = await res.json();
+    console.log("This is logout data:", data);
   };
 
   const { data, isLoading, isError } = useQuery({

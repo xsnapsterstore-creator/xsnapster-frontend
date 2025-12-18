@@ -206,7 +206,6 @@ export async function secureFetch(url, options = {}) {
 
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
-    await logOutUserProfile();
     return null;
   }
 
@@ -336,24 +335,20 @@ export const fetchUserProfile = async () => {
 
 //Logout User's Profile
 export const logOutUserProfile = async () => {
-  console.log("Step Logout 1");
+  const access_token = localStorage.getItem("access_token");
   try {
     const res = await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
       credentials: "include",
     });
-    console.log("THis is response:", res);
-    console.log("Step Logout 2");
     if (!res.ok) {
       const err = await res.json();
       console.error("💥 Server Validation Error:", err);
       return;
     }
-    console.log("Step Logout 3");
-    const data = await res.json().catch(() => null);
-    console.log("Logout response status:", res.status);
-    console.log("Logout response data:", data);
-    console.log("Step Logout 4");
     Promise.resolve().then(() => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("token_type");
@@ -362,8 +357,8 @@ export const logOutUserProfile = async () => {
       localStorage.removeItem("address_id");
       localStorage.removeItem("cart");
     });
-    console.log("Step Logout 5");
-    return data;
+    window.location.href = "/";
+    return res;
   } catch (e) {
     console.error("Network/Parse Error:", e);
   }

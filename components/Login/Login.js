@@ -109,7 +109,7 @@ export default function AuthPage() {
     }
 
     window.location.href = `/user/${userId}`;
-  }, [router]);
+  }, []);
 
   // --- STYLES FOR MESSAGES ---
   const messageColor =
