@@ -23,8 +23,6 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import Marquee from "react-fast-marquee";
-import { OfferData } from "../Data/data";
 
 const Navbar = () => {
   const dispatch = useDispatch();

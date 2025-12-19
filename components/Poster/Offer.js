@@ -1,0 +1,82 @@
+import { useEffect, useState } from "react";
+
+export default function OfferPopup() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const seen = localStorage.getItem("offerPopupSeen");
+    if (!seen) {
+      setShow(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (show) {
+      // Lock scroll
+      document.body.style.overflow = "hidden";
+    } else {
+      // Unlock scroll
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup (important)
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [show]);
+
+  const handleClose = () => {
+    localStorage.setItem("offerPopupSeen", "true");
+    setShow(false);
+  };
+
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 bottom-0 z-50 flex items-end md:items-center justify-center bg-black/50">
+      <div className="relative max-w-md w-full bg-[#333333] md:rounded-lg p-3 shadow-2xl animate-scaleIn">
+        {/* Close Button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-3 right-3 text-gray-300 hover:text-black text-xl"
+        >
+          ✕
+        </button>
+
+        {/* Content */}
+        <h2 className="text-[15px] md:text-xl font-semibold text-gray-300 mb-2">
+          🎁 Special Launch Offers
+        </h2>
+
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+            <p className="text-[10px] font-medium text-gray-400">
+              Buy <span className="font-semibold text-gray-400">3 Frames</span>
+            </p>
+            <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
+              Get 1 Frame Free
+            </p>
+          </div>
+
+          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+            <p className="text-[10px] font-medium text-gray-400">
+              Buy <span className="font-semibold text-gray-400">6 Frames</span>
+            </p>
+            <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
+              Get 2 Frames Free
+            </p>
+          </div>
+
+          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+            <p className="text-[10px] font-medium text-gray-400">
+              Buy <span className="font-semibold text-gray-400">9 Frames</span>
+            </p>
+            <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
+              Get 3 Frames Free
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

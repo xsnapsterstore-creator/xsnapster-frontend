@@ -449,7 +449,7 @@ export default function ProductDetailsPage({ prod }) {
                   <p className="text-xs font-medium text-gray-700">
                     Buy <span className="font-semibold text-gray-900">3</span>
                   </p>
-                  <p className="text-xs text-green-700 font-semibold">
+                  <p className="text-xs text-red-600 animate-pulse font-semibold">
                     Get 1 Free
                   </p>
                 </div>
@@ -458,7 +458,7 @@ export default function ProductDetailsPage({ prod }) {
                   <p className="text-xs font-medium text-gray-700">
                     Buy <span className="font-semibold text-gray-900">6</span>
                   </p>
-                  <p className="text-xs text-green-700 font-semibold">
+                  <p className="text-xs text-red-600 animate-pulse font-semibold">
                     Get 2 Free
                   </p>
                 </div>
@@ -467,7 +467,7 @@ export default function ProductDetailsPage({ prod }) {
                   <p className="text-xs font-medium text-gray-700">
                     Buy <span className="font-semibold text-gray-900">9</span>
                   </p>
-                  <p className="text-xs text-green-700 font-semibold">
+                  <p className="text-xs text-red-600 animate-pulse font-semibold">
                     Get 3 Free
                   </p>
                 </div>
