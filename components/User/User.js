@@ -447,7 +447,7 @@ const User = () => {
             {/* Background stripes */}
             <div className="absolute inset-0 opacity-25 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.06)_50%,rgba(255,255,255,0.06)_75%,transparent_75%,transparent)] bg-[length:40px_40px]" />
 
-            <div className="relative z-50 space-y-6">
+            <div className="z-50 space-y-6">
               {/* Header */}
               <h2 className="text-lg tracking-wide">
                 Welcome{" "}

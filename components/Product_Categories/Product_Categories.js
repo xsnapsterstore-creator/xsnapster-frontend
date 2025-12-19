@@ -34,7 +34,7 @@ const Product_Categories = ({ categProd }) => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="grid grid-cols-2 md:flex gap-3 md:m-2">
+              <div className="grid grid-cols-2 md:flex gap-2 md:m-2">
                 {category.products.map((prod) => (
                   <Product
                     key={prod.id}
