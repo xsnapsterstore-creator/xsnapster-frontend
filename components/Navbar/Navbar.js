@@ -480,16 +480,16 @@ const Navbar = () => {
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className="lg:hidden px-3 pt-28 absolute bg-white w-full
+          className="lg:hidden px-2 pt-26 absolute bg-white w-full
       transition-all duration-300 ease-out
-      animate-slide-down flex itme justify-center gap-3 p-2"
+      animate-slide-down flex itme justify-start gap-3 p-2"
         >
           <form onSubmit={searchItem} type="submit" action="submit">
             <input
               value={mobileSearchTerm}
               onChange={(e) => setMobileSearchTerm(e.target.value)}
               placeholder="Search products"
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+              className="border rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
               autoFocus
               onKeyDown={(e) => {
                 if (e.key === "Enter") {

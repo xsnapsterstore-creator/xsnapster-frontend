@@ -5,8 +5,10 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Link from "next/link";
 import { fetchAllSubCategories } from "../API/api";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Footer = () => {
+  const [activeTag, setActiveTag] = useState(null);
   const { data, isLoading } = useQuery({
     queryKey: ["subCategories"],
     queryFn: async () => {
@@ -76,15 +78,26 @@ const Footer = () => {
                 <div>
                   <p className="text-center text-xl m-4">Explore Categories</p>
                   <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
-                    {data?.map((tag, i) => (
-                      <a
-                        href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
-                        key={i}
-                        className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 hover:border-red-700 cursor-pointer hover:bg-red-700 text-[12px] transition-all"
-                      >
-                        {tag.name}
-                      </a>
-                    ))}
+                    {data?.map((tag, i) => {
+                      const isActive = activeTag === tag.slug;
+
+                      return (
+                        <a
+                          href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
+                          key={i}
+                          onClick={() => setActiveTag(tag.slug)}
+                          className={`px-2 py-1 rounded-lg border text-[10px] transition-all cursor-pointer
+          ${
+            isActive
+              ? "bg-red-500 border-red-700 text-white"
+              : "bg-neutral-900 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
+          }
+        `}
+                        >
+                          {tag.name}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -257,15 +270,26 @@ const Footer = () => {
               <div>
                 <p className="text-center text-xl m-4">Explore Categories</p>
                 <div className="flex flex-wrap gap-1 w-full max-w-3xl justify-center">
-                  {data?.map((tag, i) => (
-                    <a
-                      href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
-                      key={i}
-                      className="px-3 py-1 text-sm rounded-lg bg-neutral-900 text-white border border-neutral-700 hover:border-red-700 cursor-pointer hover:bg-red-700 text-[12px] transition-all"
-                    >
-                      {tag.name}
-                    </a>
-                  ))}
+                  {data?.map((tag, i) => {
+                    const isActive = activeTag === tag.slug;
+
+                    return (
+                      <a
+                        href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
+                        key={i}
+                        onClick={() => setActiveTag(tag.slug)}
+                        className={`px-3 py-1 rounded-lg border text-[12px] transition-all cursor-pointer
+          ${
+            isActive
+              ? "bg-red-500 border-red-700 text-white"
+              : "bg-neutral-900 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
+          }
+        `}
+                      >
+                        {tag.name}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             )}

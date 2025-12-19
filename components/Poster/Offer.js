@@ -30,7 +30,7 @@ export default function OfferPopup() {
 
         {/* Content */}
         <h2 className="text-[13px] md:text-lg font-semibold text-gray-300 mb-2">
-          🎁 Special Launch Offers
+          🎁 SPECIAL OFFERS
         </h2>
 
         <div className="grid grid-cols-3 gap-2 text-center">

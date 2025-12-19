@@ -439,7 +439,7 @@ export default function ProductDetailsPage({ prod }) {
               <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <span className="text-lg">🎁</span>
                 <h3 className="text-sm md:text-base font-semibold text-gray-800 tracking-wide">
-                  Special Quantity Offers
+                  SPECIAL OFFERS
                 </h3>
               </div>
 
