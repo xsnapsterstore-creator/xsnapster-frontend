@@ -10,21 +10,6 @@ export default function OfferPopup() {
     }
   }, []);
 
-  useEffect(() => {
-    if (show) {
-      // Lock scroll
-      document.body.style.overflow = "hidden";
-    } else {
-      // Unlock scroll
-      document.body.style.overflow = "";
-    }
-
-    // Cleanup (important)
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [show]);
-
   const handleClose = () => {
     localStorage.setItem("offerPopupSeen", "true");
     setShow(false);
@@ -33,18 +18,18 @@ export default function OfferPopup() {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bottom-0 z-50 flex items-end md:items-center justify-center bg-black/50">
+    <div className="fixed inset-0 bottom-0 z-50 flex items-end md:items-center justify-center">
       <div className="relative max-w-md w-full bg-[#333333] md:rounded-lg p-3 shadow-2xl animate-scaleIn">
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 text-gray-300 hover:text-black text-xl"
+          className="absolute top-1 right-2 text-gray-300 hover:text-black text-xl"
         >
           ✕
         </button>
 
         {/* Content */}
-        <h2 className="text-[15px] md:text-xl font-semibold text-gray-300 mb-2">
+        <h2 className="text-[13px] md:text-lg font-semibold text-gray-300 mb-2">
           🎁 Special Launch Offers
         </h2>
 

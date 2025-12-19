@@ -203,12 +203,7 @@ export async function secureFetch(url, options = {}) {
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
     Promise.resolve().then(() => {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userID");
-      localStorage.removeItem("address_id");
-      localStorage.removeItem("cart");
+      localStorage.clear()
     });
     window.location.href = "/login";
     return null;
@@ -355,12 +350,7 @@ export const logOutUserProfile = async () => {
       return;
     }
     Promise.resolve().then(() => {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userID");
-      localStorage.removeItem("address_id");
-      localStorage.removeItem("cart");
+      localStorage.clear();
     });
     window.location.href = "/";
     return res;
