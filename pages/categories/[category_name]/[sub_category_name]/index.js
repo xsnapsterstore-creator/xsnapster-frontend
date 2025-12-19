@@ -13,7 +13,7 @@ const SubCategory = ({ sub_category, products }) => {
 
   return (
     <div className="pt-[85px]">
-      <div className="m-1 md:m-3">
+      <div className="md:m-3">
         <CategoryPage
           category={category_name}
           productName={products}
