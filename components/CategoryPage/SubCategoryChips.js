@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 
 const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
   const router = useRouter();
