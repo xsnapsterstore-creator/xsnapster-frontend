@@ -43,14 +43,6 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
     }
   };
 
-  // useEffect(() => {
-  //   subCateg.map((item) => {
-  //     if (item.slug === sub_category_name) {
-  //       handleSubCategorySelect(item);
-  //     }
-  //   });
-  // }, [sub_category_name]);
-
   return (
     <div>
       <div>

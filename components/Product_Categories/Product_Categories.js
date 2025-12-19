@@ -2,6 +2,7 @@ import React from "react";
 import Product from "../Product/Product";
 import { motion } from "framer-motion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Link from "next/link";
 
 const Product_Categories = ({ categProd }) => {
   return (
@@ -44,18 +45,19 @@ const Product_Categories = ({ categProd }) => {
                 ))}
               </div>
             </motion.div>
-            <div className="flex justify-center items-center mt-5 mb-5">
+            <Link
+              href={`/categories/${category.category_name
+                .trim()
+                .replace(/\s+/g, "-")
+                .toLowerCase()}`}
+              className="flex justify-center items-center mt-5 mb-5"
+            >
               <ExpandMoreIcon
-              className=""
-                onClick={() =>
-                  (window.location.href = `/categories/${category.category_name
-                    .trim()
-                    .replace(/\s+/g, "-")
-                    .toLowerCase()}`)
-                }
+                className=""
+                
                 sx={{ color: "black", fontSize: "35px" }}
               />
-            </div>
+            </Link>
           </div>
         ))}
       </div>
