@@ -18,18 +18,18 @@ export default function OfferPopup() {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bottom-0 z-50 flex items-end md:items-center justify-center">
-      <div className="relative max-w-md w-full bg-[#333333] md:rounded-lg p-3 shadow-2xl animate-scaleIn">
+    <div className="fixed bottom-0 z-50 w-full flex items-end md:items-center justify-center md:justify-start">
+      <div className="relative max-w-md w-full bg-[#333333] md:rounded-t-lg p-3 shadow-2xl animate-scaleIn">
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-1 right-2 text-gray-300 hover:text-black text-xl"
+          className="absolute top-1 right-2 cursor-pointer text-gray-300 hover:text-black text-xl"
         >
           ✕
         </button>
 
         {/* Content */}
-        <h2 className="text-[13px] md:text-lg font-semibold text-gray-300 mb-2">
+        <h2 className="text-[13px] md:text-[15px] font-semibold text-gray-300 mb-2">
           🎁 SPECIAL OFFERS
         </h2>
 

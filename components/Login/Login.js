@@ -172,7 +172,7 @@ export default function AuthPage() {
 
           <button
             onClick={handleSendOTP}
-            className="mt-5 w-full bg-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:bg-blue-700 transition"
+            className="mt-5 w-full bg-blue-600 cursor-pointer text-white py-3 rounded-xl font-medium shadow-md hover:bg-blue-700 transition"
           >
             {loading ? "Sending OTP..." : "Request OTP"}
           </button>
@@ -210,14 +210,14 @@ export default function AuthPage() {
 
           <button
             onClick={handleVerifyOTP}
-            className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:bg-blue-700 transition"
+            className="mt-6 w-full bg-blue-600 cursor-pointer text-white py-3 rounded-xl font-medium shadow-md hover:bg-blue-700 transition"
           >
             {loading ? "Verifying..." : "Verify OTP"}
           </button>
 
           <button
             onClick={handleResendOTP}
-            className="mt-2 w-full bg-gray-500 text-white py-3 rounded-xl font-medium hover:bg-gray-700 transition"
+            className="mt-2 w-full bg-gray-500 cursor-pointer text-white py-3 rounded-xl font-medium hover:bg-gray-700 transition"
           >
             {reSending ? "Sending..." : "Resend OTP"}
           </button>

@@ -15,6 +15,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HomeIcon from "@mui/icons-material/Home";
 import Order from "../Order/order";
+import Alert from "../Alert/alert";
 
 const User = () => {
   const router = useRouter();
@@ -28,6 +29,10 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
   const [showOrders, setShowOrders] = useState(false);
+  const [customAlert, setCustomAlert] = useState({
+    open: false,
+    message: "",
+  });
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -107,9 +112,15 @@ const User = () => {
     const res = await addUserAddress(form, form.is_default);
     if (res && res.ok) {
       const newAddress = await res.json();
-      router.reload();
+      setCustomAlert({
+        open: true,
+        message: "Address Added Successfully",
+      });
     } else {
-      alert("Failed to add address");
+      setCustomAlert({
+        open: true,
+        message: "Failed to Add Address",
+      });
     }
     setLoading(false);
   }
@@ -126,9 +137,15 @@ const User = () => {
     // console.log("This is the Old User update his details:", data);
     const res = await updateUserAddress(data);
     if (res.ok) {
-      router.reload();
+      setCustomAlert({
+        open: true,
+        message: "Address Updated Successfully",
+      });
     } else {
-      alert("Address Updation Failed");
+      setCustomAlert({
+        open: true,
+        message: "Address Updation Failed",
+      });
     }
     setLoading(false);
   }
@@ -429,7 +446,7 @@ const User = () => {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full bg-black text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all"
+                className="w-full bg-black cursor-pointer text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all"
               >
                 Save Address
               </button>
@@ -460,12 +477,16 @@ const User = () => {
               <div className="space-y-4 text-sm text-gray-300">
                 <div className="flex items-center gap-3">
                   <EmailIcon fontSize="small" />
-                  <span className="text-[12px] md:text-[15px]">{userData.email}</span>
+                  <span className="text-[12px] md:text-[15px]">
+                    {userData.email}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <PhoneIcon fontSize="small" />
-                  <span className="text-[12px] md:text-[15px]">{userData.default_address.phone_number}</span>
+                  <span className="text-[12px] md:text-[15px]">
+                    {userData.default_address.phone_number}
+                  </span>
                 </div>
 
                 <div className="flex items-start gap-3 leading-relaxed">
@@ -485,12 +506,12 @@ const User = () => {
           {/* Actions */}
           <div className="bg-white flex flex-col justify-center text-black p-5 space-y-4">
             {/* Top Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:justify-center">
+            <div className="flex gap-3 justify-center">
               <button
                 onClick={toggleEdit}
                 className="w-full sm:w-auto min-w-[160px] px-6 py-3 rounded-xl
-                 bg-gray-800 text-white font-medium text-sm
-                 hover:bg-neutral-900 active:scale-95 transition"
+                  text-white font-medium text-sm
+                 hover:bg-gray-900 bg-black active:scale-95 transition"
               >
                 {isEditing ? "Close Editor" : "Edit Profile"}
               </button>
@@ -498,8 +519,8 @@ const User = () => {
               <button
                 onClick={GetOrders}
                 className="w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-xl
-                 bg-gray-800 text-white font-medium text-sm
-                 hover:bg-gray-700 active:scale-95 transition"
+                 text-white font-medium text-sm
+                 hover:bg-gray-900 bg-black active:scale-95 transition"
               >
                 {showOrders ? "Hide Orders" : "See Your Orders"}
               </button>
@@ -509,7 +530,7 @@ const User = () => {
             <button
               onClick={logOut}
               className="w-full sm:max-w-xs mx-auto px-6 py-3 rounded-xl
-               bg-gray-800 text-white font-medium text-sm
+               hover:bg-gray-900 bg-black text-white font-medium text-sm
                 active:scale-95 transition"
             >
               Log Out
@@ -523,6 +544,12 @@ const User = () => {
             )}
           </div>
         </div>
+
+        <Alert
+          open={customAlert.open}
+          message={customAlert.message}
+          onClose={() => setCustomAlert({ open: false, message: "" })}
+        />
 
         {/* Profile Edit Section */}
         <div

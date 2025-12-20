@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Image from "next/image";
+import Alert from "@/components/Alert/alert";
 
 export default function AddressForm() {
   const router = useRouter();
@@ -39,7 +40,11 @@ export default function AddressForm() {
   const [confirmDelete, setConfirmDelete] = useState({
     open: false,
     id: null,
-    default: false
+    default: false,
+  });
+  const [customAlert, setCustomAlert] = useState({
+    open: false,
+    message: "",
   });
 
   // 📌 Form heading (Dynamic)
@@ -109,30 +114,37 @@ export default function AddressForm() {
 
   // 📌 Handle Edit Address
   const handleDelete = async (data) => {
-    if(data.default){
-      alert("Default address can not be deleted")
+    if (data.default) {
+      setCustomAlert({
+        open: true,
+        message: "Default address can't be deleted",
+      });
       return;
     }
     const res = await deleteUserAddress(data.id);
     if (res && res.ok) {
-      alert("Address deleted successfully");
-      setUserAddress((prev) => prev.filter((addr) => addr.address_id !== id));
+      setCustomAlert({
+        open: true,
+        message: "Address deleted successfully",
+      });
     } else {
-      alert("Failed to delete address");
+      setCustomAlert({
+        open: true,
+        message: "Failed to delete address",
+      });
     }
-    router.reload();
   };
 
   // 📌 Just Save and Continue Existing Address
   const handleSaveContinue = async () => {
-    if(!selectedId){
-      alert("Select Address and Proceed")
+    if (!selectedId) {
+      alert("Select Address and Proceed");
     }
     const selectedAddress = UserAddress.find(
       (addr) => addr.address_id === selectedId
     );
-    await localStorage.setItem('address_id', selectedId)
-    router.push('/billing')
+    await localStorage.setItem("address_id", selectedId);
+    router.push("/billing");
   };
 
   // 📌 On Submit
@@ -144,10 +156,15 @@ export default function AddressForm() {
       const res = await updateUserAddress({ form, data });
       const response = await res.json();
       if (res.ok) {
-        alert("Address Updated Successfully");
-        router.reload();
+        setCustomAlert({
+          open: true,
+          message: "Address Updated successfully",
+        });
       } else {
-        alert("Address Updation Failed");
+        setCustomAlert({
+          open: true,
+          message: "Address Updation Failed",
+        });
       }
       return;
     }
@@ -157,14 +174,20 @@ export default function AddressForm() {
     const res = await addUserAddress(form, isDefault);
     if (res && res.ok) {
       const newAddress = await res.json();
-      alert("Address added successfully");
+      setCustomAlert({
+        open: true,
+        message: "Address Added successfully",
+      });
       setUserAddress((prev) => [
         ...(Array.isArray(prev) ? prev : []),
         newAddress,
       ]);
       setShowForm(false);
     } else {
-      alert("Failed to add address");
+      setCustomAlert({
+        open: true,
+        message: "Failed to Add Address",
+      });
     }
   };
 
@@ -232,7 +255,7 @@ export default function AddressForm() {
                   className={`border  rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
                     selectedId === address.id
-                      ? "border-black ring-1 bg-gray-200 ring-black"
+                      ? "border-black ring-1 bg-gray-100 ring-black"
                       : "border-gray-200"
                   }
                 `}
@@ -269,7 +292,11 @@ export default function AddressForm() {
                       className="px-4 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setConfirmDelete({ open: true, id: address.id, default: address.is_default });
+                        setConfirmDelete({
+                          open: true,
+                          id: address.id,
+                          default: address.is_default,
+                        });
                       }}
                     >
                       <DeleteIcon fontSize="small" />
@@ -284,10 +311,10 @@ export default function AddressForm() {
               <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
                 <div className="bg-white p-6 rounded-lg shadow-xl w-80">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    Delete Product
+                    Delete Address
                   </h3>
                   <p className="text-sm text-gray-600 mb-5">
-                    Are you sure you want to delete this product? This action
+                    Are you sure you want to delete this address? This action
                     cannot be undone.
                   </p>
 
@@ -305,7 +332,11 @@ export default function AddressForm() {
                       className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
                       onClick={() => {
                         handleDelete(confirmDelete);
-                        setConfirmDelete({ open: false, id: null, default: false });
+                        setConfirmDelete({
+                          open: false,
+                          id: null,
+                          default: false,
+                        });
                       }}
                     >
                       Delete
@@ -314,6 +345,12 @@ export default function AddressForm() {
                 </div>
               </div>
             )}
+
+            <Alert
+              open={customAlert.open}
+              message={customAlert.message}
+              onClose={() => setCustomAlert({ open: false, message: "" })}
+            />
 
             {/* Save & Continue (Only when selected) */}
             {selectedId && !showForm && (

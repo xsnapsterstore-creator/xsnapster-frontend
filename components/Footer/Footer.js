@@ -77,7 +77,7 @@ const Footer = () => {
                 // ✅ Loaded State
                 <div>
                   <p className="text-center text-xl m-4">Explore Categories</p>
-                  <div className="flex flex-wrap gap-2 w-full max-w-3xl justify-center">
+                  <div className="flex flex-wrap gap-1 w-full max-w-3xl justify-center">
                     {data?.map((tag, i) => {
                       const isActive = activeTag === tag.slug;
 
@@ -86,11 +86,11 @@ const Footer = () => {
                           href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                           key={i}
                           onClick={() => setActiveTag(tag.slug)}
-                          className={`px-2 py-1 rounded-lg border text-[10px] transition-all cursor-pointer
+                          className={`px-2 py-1 rounded-sm text-[10px] transition-all cursor-pointer
           ${
             isActive
               ? "bg-red-500 border-red-700 text-white"
-              : "bg-neutral-900 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
+              : "bg-neutral-800 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
           }
         `}
                         >
@@ -278,11 +278,11 @@ const Footer = () => {
                         href={`/categories/${tag?.category?.slug}/${tag?.slug}`}
                         key={i}
                         onClick={() => setActiveTag(tag.slug)}
-                        className={`px-3 py-1 rounded-lg border text-[12px] transition-all cursor-pointer
+                        className={`px-3 py-1 rounded-sm text-[12px] transition-all cursor-pointer
           ${
             isActive
               ? "bg-red-500 border-red-700 text-white"
-              : "bg-neutral-900 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
+              : "bg-neutral-800 border-neutral-700 text-white hover:bg-red-700 hover:border-red-700"
           }
         `}
                       >
