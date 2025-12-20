@@ -68,7 +68,7 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
           <div className="relative">
             <div className="fixed inset-0 flex items-center justify-center z-10">
               <Image
-                src={"/loading.webp"}
+                src={"/logo.svg"}
                 alt="Loading..."
                 width={100}
                 height={100}

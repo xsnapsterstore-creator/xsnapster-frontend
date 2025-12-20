@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Order = ({ order }) => {
+  const router = useRouter();
   const [openOrder, setOpenOrder] = useState(null);
   const toggleOrder = (id) => {
     setOpenOrder(openOrder === id ? null : id);

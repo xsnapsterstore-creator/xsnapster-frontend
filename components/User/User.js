@@ -112,6 +112,7 @@ const User = () => {
     const res = await addUserAddress(form, form.is_default);
     if (res && res.ok) {
       const newAddress = await res.json();
+      console.log("THis is the address:", newAddress);
       setCustomAlert({
         open: true,
         message: "Address Added Successfully",
@@ -250,17 +251,18 @@ const User = () => {
 
   if (!userData.default_address) {
     return (
-      <div className="pt-[135px] min-h-screen bg-gray-50 py-10 px-5">
-        {loading ? (
-          <div>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5 animate-spin text-white"
-              viewBox="0 0 100 101"
-              fill="none"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 
+      <div>
+        <div className="pt-[135px] min-h-screen bg-gray-50 py-10 px-5">
+          {loading ? (
+            <div>
+              <svg
+                aria-hidden="true"
+                className="w-5 h-5 animate-spin text-white"
+                viewBox="0 0 100 101"
+                fill="none"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 
               50 100.591C22.3858 100.591 0 78.2051 
               0 50.5908C0 22.9766 22.3858 0.59082 
               50 0.59082C77.6142 0.59082 100 22.9766 
@@ -269,10 +271,10 @@ const User = () => {
               90.9186 74.0622 90.9186 50.5908C90.9186 
               27.1195 73.4714 9.67236 50 9.67236C26.5286 
               9.67236 9.08144 27.1195 9.08144 50.5908Z"
-                fill="#ffffff33"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 
+                  fill="#ffffff33"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 
               97.8624 35.9116 97.0079 33.5539C95.2932 
               28.8227 92.871 24.3692 89.8167 20.348C85.8452 
               15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 
@@ -285,52 +287,128 @@ const User = () => {
               18.8749 79.3347 22.725 82.5849 27.2726C84.9175 
               30.4217 86.7997 33.9366 88.1811 37.6822C89.083 
               40.0309 91.5421 41.9145 93.9676 40.0409Z"
-                fill="white"
-              />
-            </svg>
-            Saving...
-          </div>
-        ) : (
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl font-semibold text-gray-900 text-center">
-              Add Profile Information
-            </h2>
-            <p className="text-gray-500 text-center text-sm mb-4">
-              {userEmail}
-            </p>
-            <form
-              onSubmit={handleSubmit}
-              className="w-full max-w-lg bg-white mx-auto p-6 sm:p-8 rounded-2xl shadow-xl space-y-5"
-            >
-              {/* Full Name */}
-              <div>
-                <label className="text-sm font-medium">Full Name</label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                  required
+                  fill="white"
                 />
-              </div>
-
-              {/* Mobile + Pincode */}
-              <div className="grid grid-cols-2 gap-4">
+              </svg>
+              Saving...
+            </div>
+          ) : (
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-xl font-semibold text-gray-900 text-center">
+                Add Profile Information
+              </h2>
+              <p className="text-gray-500 text-center text-sm mb-4">
+                {userEmail}
+              </p>
+              <form
+                onSubmit={handleSubmit}
+                className="w-full max-w-lg bg-white mx-auto p-6 sm:p-8 rounded-2xl shadow-xl space-y-5"
+              >
+                {/* Full Name */}
                 <div>
-                  <label className="text-sm font-medium">Mobile Number</label>
+                  <label className="text-sm font-medium">Full Name</label>
                   <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
+                    name="name"
+                    value={form.name}
                     onChange={(e) =>
                       setForm((prev) => ({
                         ...prev,
-                        phone: e.target.value,
+                        name: e.target.value,
+                      }))
+                    }
+                    className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+                    required
+                  />
+                </div>
+
+                {/* Mobile + Pincode */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium">Mobile Number</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={(e) =>
+                        setForm((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
+                      className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium">Pincode</label>
+                    {invalidPincode && (
+                      <p className="text-red-500 text-xs m-1">
+                        Invalid Pincode
+                      </p>
+                    )}
+                    <input
+                      name="pincode"
+                      value={pincode}
+                      onChange={handlePincodeChange}
+                      className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+                      placeholder="110001"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* City / State */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium">City</label>
+                    <input
+                      name="city"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium">State</label>
+                    <input
+                      name="state"
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                      className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Address fields */}
+                <div>
+                  <label className="text-xs text-gray-500">Address Type</label>
+                  <input
+                    type="text"
+                    name="address_type"
+                    value={form.address_type}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        address_type: e.target.value,
+                      }))
+                    }
+                    className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">House / Flat</label>
+                  <input
+                    name="house"
+                    value={form.house}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        house: e.target.value,
                       }))
                     }
                     className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
@@ -339,120 +417,52 @@ const User = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium">Pincode</label>
-                  {invalidPincode && (
-                    <p className="text-red-500 text-xs m-1">Invalid Pincode</p>
-                  )}
+                  <label className="text-sm font-medium">Street / Area</label>
                   <input
-                    name="pincode"
-                    value={pincode}
-                    onChange={handlePincodeChange}
-                    className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                    placeholder="110001"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* City / State */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium">City</label>
-                  <input
-                    name="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    name="street"
+                    value={form.street}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        street: e.target.value,
+                      }))
+                    }
                     className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium">State</label>
+                  <label className="text-sm font-medium">Landmark</label>
                   <input
-                    name="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
+                    name="landmark"
+                    value={form.landmark}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        landmark: e.target.value,
+                      }))
+                    }
                     className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                    required
                   />
                 </div>
-              </div>
 
-              {/* Address fields */}
-              <div>
-                <label className="text-xs text-gray-500">Address Type</label>
-                <input
-                  type="text"
-                  name="address_type"
-                  value={form.address_type}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      address_type: e.target.value,
-                    }))
-                  }
-                  className="w-full mt-1 p-3 rounded-lg border bg-white text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">House / Flat</label>
-                <input
-                  name="house"
-                  value={form.house}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      house: e.target.value,
-                    }))
-                  }
-                  className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Street / Area</label>
-                <input
-                  name="street"
-                  value={form.street}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      street: e.target.value,
-                    }))
-                  }
-                  className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Landmark</label>
-                <input
-                  name="landmark"
-                  value={form.landmark}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      landmark: e.target.value,
-                    }))
-                  }
-                  className="border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black"
-                />
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                className="w-full bg-black cursor-pointer text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all"
-              >
-                Save Address
-              </button>
-            </form>
-          </div>
-        )}
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="w-full bg-black cursor-pointer text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all"
+                >
+                  Save Address
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+        <Alert
+          open={customAlert.open}
+          message={customAlert.message}
+          onClose={() => setCustomAlert({ open: false, message: "" })}
+        />
       </div>
     );
   } else {

@@ -1,6 +1,4 @@
-// const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://3.110.216.212:8000/v1";
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://api.xsnapster.store/v1";
+const API_URL = "https://api.xsnapster.store/v1";
 
 // Request OTP Api
 export const requestOTP = async (email) => {
@@ -203,7 +201,7 @@ export async function secureFetch(url, options = {}) {
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
     Promise.resolve().then(() => {
-      localStorage.clear()
+      localStorage.clear();
     });
     window.location.href = "/login";
     return null;
