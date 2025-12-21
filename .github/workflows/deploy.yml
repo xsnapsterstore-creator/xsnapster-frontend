@@ -1,0 +1,56 @@
+name: Deploy Next.js Frontend to VPS
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/${{ secrets.APP_NAME }}:latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ github.token }}" | docker login ghcr.io \
+          -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t $IMAGE_NAME .
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME
+
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: IMAGE_NAME
+          script: |
+            echo "Deploying $IMAGE_NAME"
+
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ github.token }}
+
+            docker pull $IMAGE_NAME
+
+            docker stop ${{ secrets.APP_NAME }} || true
+            docker rm ${{ secrets.APP_NAME }} || true
+
+            docker run -d \
+              --name ${{ secrets.APP_NAME }} \
+              -p 3000:3000 \
+              --restart unless-stopped \
+              $IMAGE_NAME
