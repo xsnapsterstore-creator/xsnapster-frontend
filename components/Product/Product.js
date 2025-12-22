@@ -127,7 +127,7 @@ const Product = ({ product, category_name }) => {
 
       {/* Bottom Sheet */}
       <div
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-xl transform transition-transform duration-300
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-white md:w-[450px] md:m-auto rounded-t-2xl shadow-xl transform transition-transform duration-300
         ${open ? "translate-y-0" : "translate-y-full"}`}
       >
         {/* Drag Handle */}
