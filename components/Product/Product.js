@@ -58,26 +58,6 @@ const Product = ({ product, category_name }) => {
       <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
         Sale
       </span>
-      <span
-        className={`absolute top-2 right-2 rounded-lg z-10 cursor-pointer 
-    flex items-center justify-center
-    transition-all duration-300
-    ${added ? "bg-green-500" : "bg-[#333333]"}
-  `}
-        style={{ padding: "7px 9px" }}
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(addToCart(pro));
-          setAdded(true);
-          setTimeout(() => setAdded(false), 1200);
-        }}
-      >
-        {added ? (
-          <ShoppingCartIcon sx={{ fontSize: "13px", color: "#fff" }} />
-        ) : (
-          <AddShoppingCartIcon sx={{ fontSize: "12px", color: "#fff" }} />
-        )}
-      </span>
 
       {/* Product Image */}
       <div
