@@ -135,9 +135,24 @@ const Product = ({ product, category_name }) => {
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Please select the size
-          </h3>
+          <div className="flex justify-between items-end">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Please select the size
+            </h3>
+            <div className="flex items-end gap-2 justify-center">
+              {/* Sale Price */}
+              <p className="text-[17px] md:text-[18px] font-semibold text-green-600">
+                ₹{selectedPricing.discounted_price ?? selectedPricing.price}
+              </p>
+
+              {/* Strike-through original price only if discount exists */}
+              {selectedPricing.discounted_price && (
+                <p className="text-gray-500 text-[12px] md:text-[13px] line-through">
+                  ₹{selectedPricing.price}
+                </p>
+              )}
+            </div>
+          </div>
 
           <p className="text-gray-700 text-[12px]">{FrameSize[sizeOpt]}</p>
 
