@@ -12,6 +12,7 @@ const Product = ({ product, category_name }) => {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
   const [sizeOpt, setSizeOpt] = useState(product.dimensions[0]);
+  const [open, setOpen] = useState(false);
   const selectedPricing = product.dimension_pricing[sizeOpt];
   const pro = {
     category: product.category,
@@ -43,6 +44,13 @@ const Product = ({ product, category_name }) => {
     }
     console.log("THis is Prod ID:", pro);
   }
+
+  const FrameSize = {
+    A4: "8.27 x 11.69 inches",
+    A3: "11.7 x 16.5 inches",
+    A2: "16.5 x 23.4 inches",
+    Poster: "11.7 x 16.5 inches",
+  };
 
   return (
     <div className="relative cursor-pointer rounded-lg shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[175px] md:w-[200px] m-auto">
@@ -85,7 +93,7 @@ const Product = ({ product, category_name }) => {
           height={100}
           priority
           fetchPriority="high"
-          quality={75}      
+          quality={75}
           className="object-cover w-[175px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
         />
       </div>
@@ -102,21 +110,7 @@ const Product = ({ product, category_name }) => {
         </h1>
 
         {/* Price & Size Section */}
-        <div className="w-full mt-2 flex justify-between items-end">
-          <div>
-            <select
-              value={sizeOpt}
-              onChange={(e) => setSizeOpt(e.target.value)}
-              className="border w-[70px] md:w-[85px] rounded-md px-1 "
-            >
-              {product.dimensions.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div>
-
+        <div className="w-full flex-col justify-between items-end">
           {/* Price Section */}
           <div className="flex items-end gap-1 justify-start">
             {/* Sale Price */}
@@ -131,48 +125,74 @@ const Product = ({ product, category_name }) => {
               </p>
             )}
           </div>
+
+          <div className="mt-1">
+            <button
+              onClick={() => setOpen(true)}
+              className="py-1.5 w-full rounded-lg shadow-md text-[10px] transition bg-gray-900 hover:bg-gray-700 text-white"
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* Action Buttons */}
-        {/* <div className="flex items-center justify-between lg:gap-6 m-2 w-full">
-          <Button
-            color="primary"
-            size="small"
-            variant="contained"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(addToCart(pro));
-              setAdded(true);
-              setTimeout(() => setAdded(false), 1200); // reset after 1.2s
-            }}
-            sx={{
-              fontSize: "9px",
-              padding: "8px 6px",
-              transition: "all 0.25s ease",
-              backgroundColor: added ? "#22c55e" : "", // temporary green color
-            }}
-            className="cursor-pointer"
-          >
-            {added ? "Added" : "Add To Cart"}
-          </Button>
+      {/* Size Selector */}
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
 
-          <Button
-            color="primary"
-            size="small"
-            variant="contained"
-            sx={{
-              fontSize: "9px",
-              padding: "8px 6px",
-            }}
-            className="cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              BuyNow(product.id);
-            }}
-          >
-            Buy Now
-          </Button>
-        </div> */}
+      {/* Bottom Sheet */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-xl transform transition-transform duration-300
+        ${open ? "translate-y-0" : "translate-y-full"}`}
+      >
+        {/* Drag Handle */}
+        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3" />
+
+        {/* Content */}
+        <div className="p-5">
+          <h3 className="text-lg font-semibold text-gray-900">
+            Please select the size
+          </h3>
+
+          <p className="text-gray-700 text-[12px]">{FrameSize[sizeOpt]}</p>
+
+          <div className="mt-4 flex gap-3">
+            {product.dimensions.map((size) => (
+              <button
+                value={size}
+                onClick={(e) => setSizeOpt(e.target.value)}
+                className={`py-1.5 px-2.5 rounded-lg shadow-md text-[10px] transition border
+                  ${
+                    sizeOpt === size
+                      ? "bg-red-600 text-white border-red-600"
+                      : "bg-white text-black border-gray-500 hover:bg-gray-200"
+                  }
+                `}
+                key={size}
+              >
+                {size}
+              </button>
+            ))}
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(addToCart(pro));
+                setAdded(true);
+                setTimeout(() => setAdded(false), 1200);
+                setOpen(false);
+              }}
+              className="flex-1 py-2 rounded-lg bg-black text-white cursor-pointer"
+            >
+              {added ? "Added" : "Add To Cart"}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
