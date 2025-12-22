@@ -58,26 +58,6 @@ const Product = ({ product, category_name }) => {
       <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
         Sale
       </span>
-      <span
-        className={`absolute top-2 right-2 rounded-lg z-10 cursor-pointer 
-    flex items-center justify-center
-    transition-all duration-300
-    ${added ? "bg-green-500" : "bg-[#333333]"}
-  `}
-        style={{ padding: "7px 9px" }}
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(addToCart(pro));
-          setAdded(true);
-          setTimeout(() => setAdded(false), 1200);
-        }}
-      >
-        {added ? (
-          <ShoppingCartIcon sx={{ fontSize: "13px", color: "#fff" }} />
-        ) : (
-          <AddShoppingCartIcon sx={{ fontSize: "12px", color: "#fff" }} />
-        )}
-      </span>
 
       {/* Product Image */}
       <div
@@ -147,7 +127,7 @@ const Product = ({ product, category_name }) => {
 
       {/* Bottom Sheet */}
       <div
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-xl transform transition-transform duration-300
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-white md:w-[450px] md:m-auto rounded-t-2xl shadow-xl transform transition-transform duration-300
         ${open ? "translate-y-0" : "translate-y-full"}`}
       >
         {/* Drag Handle */}
@@ -155,9 +135,24 @@ const Product = ({ product, category_name }) => {
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Please select the size
-          </h3>
+          <div className="flex justify-between items-end">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Please select the size
+            </h3>
+            <div className="flex items-end gap-2 justify-center">
+              {/* Sale Price */}
+              <p className="text-[17px] md:text-[18px] font-semibold text-green-600">
+                ₹{selectedPricing.discounted_price ?? selectedPricing.price}
+              </p>
+
+              {/* Strike-through original price only if discount exists */}
+              {selectedPricing.discounted_price && (
+                <p className="text-gray-500 text-[12px] md:text-[13px] line-through">
+                  ₹{selectedPricing.price}
+                </p>
+              )}
+            </div>
+          </div>
 
           <p className="text-gray-700 text-[12px]">{FrameSize[sizeOpt]}</p>
 
