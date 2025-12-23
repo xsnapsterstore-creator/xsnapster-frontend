@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../API/api";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { setUserDetails } from "../store/cartSlice";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -23,6 +23,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Navbar = () => {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileSearchTerm, setMobileSearchTerm] = useState("");
   const [isGenderOpen, setIsGenderOpen] = useState(false);
+  const [blackNavbar, setBlackNavbar] = useState(false);
 
   let toggle = false;
   const router = useRouter();
@@ -69,6 +71,13 @@ const Navbar = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  const pathname = router.pathname;
+
+  useEffect(() => {
+    const isBlackNavbar = pathname.includes("premium-categories");
+    setBlackNavbar(isBlackNavbar);
+  }, [pathname]);
 
   useEffect(() => {
     dispatch(setUserDetails());
@@ -128,8 +137,10 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 shadow z-30 bg-white transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          blackNavbar ? "bg-black/80 text-white/80" : "bg-white text-black"
         }`}
       >
         {/* For Mobile View */}
@@ -137,10 +148,15 @@ const Navbar = () => {
           <div className="pl-3 flex justify-center items-center gap-2">
             <Link href={"/"}>
               <div className="flex items-center gap-[2px] text-[22px]">
-                <Image src="/logo.svg" alt="xsnapster" width={40} height={40} />
+                <Image
+                  src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
+                  alt="xsnapster"
+                  width={40}
+                  height={40}
+                />
                 <div className="flex items-center">
-                  <p className="text-black font-semibold">
-                    <bold className="text-red-500">X</bold>SNAPSTER
+                  <p className="font-semibold">
+                    <strong className="text-red-500">X</strong>SNAPSTER
                   </p>
                 </div>
               </div>
@@ -149,7 +165,7 @@ const Navbar = () => {
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
                 <Image
-                  src="/gender.svg"
+                  src={`${blackNavbar ? "/white-gender.svg" : "/gender.svg"}`}
                   className="text-red-600"
                   width={22}
                   height={22}
@@ -242,10 +258,15 @@ const Navbar = () => {
           <div className="pl-7 flex items-center gap-2">
             <Link href={"/"}>
               <div className="flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold">
-                <Image src="/logo.svg" alt="xsnapster" width={47} height={30} />
+                <Image
+                  src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
+                  alt="xsnapster"
+                  width={47}
+                  height={30}
+                />
                 <div className="flex items-center">
-                  <p className="text-black">
-                    <bold className="text-red-500">X</bold>SNAPSTER
+                  <p className="">
+                    <strong className="text-red-500">X</strong>SNAPSTER
                   </p>
                 </div>
               </div>
@@ -253,7 +274,12 @@ const Navbar = () => {
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
-                <Image src="/gender.svg" width={25} height={25} alt="gender" />
+                <Image
+                  src={`${blackNavbar ? "/white-gender.svg" : "/gender.svg"}`}
+                  width={25}
+                  height={25}
+                  alt="gender"
+                />
                 {isGenderOpen ? (
                   <KeyboardArrowUpIcon fontSize="small" />
                 ) : (
@@ -320,7 +346,11 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute z-20 left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                    className={`${
+                      blackNavbar
+                        ? "bg-[#333333] text-white/80"
+                        : "bg-white text-black"
+                    } absolute z-20 left-0 top-[100%] shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isCategoriesOpen
                         ? "max-h-[500px] mt-2 opacity-100 visible"
                         : "max-h-0 opacity-0 invisible"
@@ -363,7 +393,11 @@ const Navbar = () => {
 
                   {/* Dropdown Menu */}
                   <div
-                    className={`absolute z-20 left-0 top-[100%] bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
+                    className={`${
+                      blackNavbar
+                        ? "bg-[#333333] text-white/80"
+                        : "bg-white text-black"
+                    } absolute z-20 left-0 top-[100%] shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isHelpCenterOpen
                         ? "max-h-[500px] mt-2 opacity-100 visible"
                         : "max-h-0 opacity-0 invisible"
@@ -461,18 +495,39 @@ const Navbar = () => {
         </div>
 
         {/* Premium Links  */}
-        <div className="bg-black">
-          <ul className="text-white py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
+        <div
+          className={`${
+            blackNavbar ? "bg-white/30 text-white" : "bg-black text-white"
+          }`}
+        >
+          <ul className="py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
             <li className="text-red-600 animate-pulse font-semibold">
-              • OnlyFrames
+              <Link href={`/premium-categories/only-frames`}>• OnlyFrames</Link>
             </li>
-            <li className="flex items-center gap-[2px] text-amber-300">
-              <PaidIcon fontSize="small" /> Premium Frames
+            <li className=" text-amber-300">
+              <Link
+                className="flex items-center gap-[2px]"
+                href={`/premium-categories/premium-frames`}
+              >
+                <PaidIcon fontSize="small" /> Premium Frames
+              </Link>
             </li>
-            <li>Sexy Frames</li>
-            <li>Hot Right Now</li>
-            <li>Frame Stars</li>
-            <li>Most Watched Frames</li>
+            <li>
+              <Link href={`/premium-categories/sexy-frames`}>Sexy Frames</Link>
+            </li>
+            <li>
+              <Link href={`/premium-categories/hot-right-now`}>
+                Hot Right Now
+              </Link>
+            </li>
+            <li>
+              <Link href={`/premium-categories/frame-stars`}>Frame Stars</Link>
+            </li>
+            <li>
+              <Link href={`/premium-categories/most-watched-frames`}>
+                Most Watched Frames
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

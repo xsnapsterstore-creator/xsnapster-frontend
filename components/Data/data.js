@@ -148,7 +148,7 @@ export const CategoryTitle = {
 };
 
 export const CategorySubtitle = {
-  cars: "Because people come for speed... and curosity",
+  cars: "Because people come for speed... and curiosity",
   anime: "Instant clickbait frames, not fantasies",
   "bw-aesthetics": "No whips, only frames in grayscale",
   gym: "Weights? Or something else? You decide",
