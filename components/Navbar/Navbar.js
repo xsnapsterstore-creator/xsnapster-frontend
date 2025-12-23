@@ -140,7 +140,7 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
         } ${
-          blackNavbar ? "bg-black/80 text-white/80" : "bg-white text-black"
+          blackNavbar ? "bg-black/80 text-white/90" : "bg-white text-black"
         }`}
       >
         {/* For Mobile View */}
