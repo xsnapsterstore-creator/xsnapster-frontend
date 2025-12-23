@@ -95,8 +95,9 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
                   />
                 ))
               ) : (
-                <div className="col-span-full h-[60vh] flex items-center justify-center">
-                  <h1 className="text-gray-400 text-lg">No Products Found</h1>
+                <div className="col-span-full h-[60vh] flex flex-col items-center justify-center">
+                  <h5 className="text-gray-500 text-lg">Coming Soon!</h5>
+                  <p className="text-gray-400 text-md">Stay Tuned</p>
                 </div>
               )}
             </div>

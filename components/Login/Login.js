@@ -31,12 +31,13 @@ export default function AuthPage() {
     setMsg({ type: "", text: "" });
 
     const res = await requestOTP(email);
+    const data = await res.json();
 
     if (res.status === 200) {
       setStep("otp");
       setMsg({ type: "success", text: "OTP Sent Successfully" });
     } else {
-      setMsg({ type: "error", text: "Invalid email, please try again" });
+      setMsg({ type: "error", text: data.message });
     }
 
     setLoading(false);
@@ -52,11 +53,12 @@ export default function AuthPage() {
     setMsg({ type: "", text: "" });
 
     const res = await requestOTP(email);
+    const data = await res.json();
 
     if (res.status === 200) {
       setMsg({ type: "success", text: "OTP Resent Successfully" });
     } else {
-      setMsg({ type: "error", text: res.message });
+      setMsg({ type: "error", text: data.message });
     }
 
     setReSending(false);

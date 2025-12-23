@@ -36,15 +36,6 @@ const Product = ({ product, category_name }) => {
     ? product.subcategory.trim().replace(/\s+/g, "-").toLowerCase()
     : "";
 
-  async function BuyNow(id) {
-    let access_token = localStorage.getItem("access_token");
-    if (!access_token) {
-      router.push("/login");
-      return;
-    }
-    console.log("THis is Prod ID:", pro);
-  }
-
   const FrameSize = {
     A4: "8.27 x 11.69 inches",
     A3: "11.7 x 16.5 inches",
