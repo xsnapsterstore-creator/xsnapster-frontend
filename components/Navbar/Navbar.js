@@ -140,7 +140,7 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
         } ${
-          blackNavbar ? "bg-[#212121] text-white/80" : "bg-white text-black"
+          blackNavbar ? "bg-black/80 text-white/80" : "bg-white text-black"
         }`}
       >
         {/* For Mobile View */}
@@ -497,7 +497,7 @@ const Navbar = () => {
         {/* Premium Links  */}
         <div
           className={`${
-            blackNavbar ? "bg-white/60 text-black" : "bg-black text-white"
+            blackNavbar ? "bg-white/30 text-white" : "bg-black text-white"
           }`}
         >
           <ul className="py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">

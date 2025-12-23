@@ -21,10 +21,10 @@ const PremiumCategory = ({ productName }) => {
   return (
     <div
       className={`${
-        blackNavbar ? "bg-[#212121] text-white/80" : "bg-white text-black"
+        blackNavbar ? "bg-black/90 text-white/80" : "bg-white text-black"
       }`}
     >
-      <div className="pt-[95px] bg-[#333333]">
+      <div className="pt-[95px] bg-black/30">
         <h1 className={`text-[23px] font-semibold text-center mt-5`}>
           Build For People With Standards
         </h1>
