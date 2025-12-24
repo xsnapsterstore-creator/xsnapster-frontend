@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const banners = [
   "/bmw_1.webp",
@@ -56,7 +57,7 @@ export default function Poster() {
         </p>
 
         <button className="mt-4 px-5 py-2 rounded-xl bg-white text-black text-sm font-semibold hover:bg-gray-100 transition">
-          Shop Now
+          <Link href={"/categories/movies"}>Shop Now</Link>
         </button>
       </div>
 

@@ -27,9 +27,7 @@ const BillingTemplate = () => {
   const paymentOptions = [
     { value: "", label: "Select a payment method", isDisabled: true },
     { value: "cod", label: "💵 Cash on Delivery" },
-    { value: "upi", label: "🟢 UPI (GPay / PhonePe / Paytm)" },
-    { value: "debit", label: "💳 Debit Card" },
-    { value: "credit", label: "💳 Credit Card" },
+    { value: "upi", label: "🟢 UPI (GPay / PhonePe / Paytm) / Debit Card / Credit Card" },
   ];
 
   const customStyles = {

@@ -21,10 +21,12 @@ const PremiumCategory = ({ productName }) => {
   return (
     <div
       className={`${
-        blackNavbar ? "bg-black/90 text-white/80" : "bg-white text-black"
+        blackNavbar
+          ? "bg-gradient-to-b from-[#262626] via-[#262626]/60 text-white"
+          : "bg-gradient-to-b from-white via-white/80 to-white/60 text-black"
       }`}
     >
-      <div className="pt-[95px] bg-black/30">
+      <div className="pt-[95px] bg-[#1C1C1C]">
         <h1 className={`text-[23px] font-semibold text-center mt-5`}>
           Build For People With Standards
         </h1>
@@ -63,8 +65,8 @@ const PremiumCategory = ({ productName }) => {
                 ))
               ) : (
                 <div className="col-span-full h-[60vh] flex flex-col items-center justify-center">
-                  <h5 className="text-gray-500 text-lg">Coming Soon!</h5>
-                  <p className="text-gray-400 text-md">Stay Tuned</p>
+                  <h5 className="text-gray-800 text-lg">Coming Soon!</h5>
+                  <p className="text-gray-600 text-md">Stay Tuned</p>
                 </div>
               )}
             </div>
