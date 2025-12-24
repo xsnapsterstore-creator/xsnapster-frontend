@@ -27,7 +27,7 @@ const PremiumCategory = ({ productName }) => {
       }`}
     >
       <div className="pt-[95px] bg-[#1C1C1C]">
-        <h1 className={`text-[23px] font-semibold text-center mt-5`}>
+        <h1 className={`text-[22px] font-semibold text-center mt-5`}>
           Build For People With Standards
         </h1>
         <div className="w-12 h-1 bg-red-400 mx-auto rounded-full mb-2"></div>

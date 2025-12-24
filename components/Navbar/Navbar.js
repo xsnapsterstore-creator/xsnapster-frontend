@@ -163,7 +163,7 @@ const Navbar = () => {
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-2 left-34 tracking-wide flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs font-semibold">
+                <span className="absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs font-semibold">
                   Premium
                 </span>
               )}
@@ -280,7 +280,7 @@ const Navbar = () => {
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-2 left-42 tracking-wide flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[13px] font-semibold">
+                <span className="absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[13px] font-semibold">
                   Premium
                 </span>
               )}
