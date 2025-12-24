@@ -3,10 +3,6 @@ const API_URL =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "export",
-  // images: {
-  //   unoptimized: true,
-  // },
   images: {
     remotePatterns: [
       {
@@ -17,9 +13,6 @@ const nextConfig = {
     ],
   },
   reactStrictMode: false,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   async rewrites() {
     return [
       {

@@ -107,7 +107,7 @@ const Footer = () => {
               <h3 className="text-[15px] tracking-wide font-semibold">
                 About Us
               </h3>
-              <p className="text-[13px] text-center p-3">
+              <p className="text-[12px] text-center p-3">
                 Welcome to <bold className="text-red-500">x</bold>snapster.store
                 - where creativity meets artistry in the form of stunning
                 customized and designer frames. We believe that every wall has a
@@ -123,7 +123,7 @@ const Footer = () => {
                 <h4 className="text-[17px] font-semibold">Quick links</h4>
               </div>
               <div className="pt-2">
-                <ul className="text-[15px] text-gray-200 flex flex-col gap-2">
+                <ul className="text-[14px] text-gray-200 flex flex-col gap-2">
                   <li>
                     <Link href="/who-is-behind-the-camera">
                       Who's Behind The Camera

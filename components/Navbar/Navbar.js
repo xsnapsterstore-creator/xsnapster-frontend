@@ -140,27 +140,34 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
         } ${
-          blackNavbar ? "bg-black/80 text-white/80" : "bg-white text-black"
+          blackNavbar ? "bg-[#141414] text-white/90" : "bg-white text-black"
         }`}
       >
         {/* For Mobile View */}
         <div className="flex lg:hidden justify-between w-full items-center h-[65px]">
           <div className="pl-3 flex justify-center items-center gap-2">
-            <Link href={"/"}>
-              <div className="flex items-center gap-[2px] text-[22px]">
-                <Image
-                  src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
-                  alt="xsnapster"
-                  width={40}
-                  height={40}
-                />
-                <div className="flex items-center">
-                  <p className="font-semibold">
-                    <strong className="text-red-500">X</strong>SNAPSTER
-                  </p>
+            <div className="relative inline-block">
+              <Link href={"/"}>
+                <div className="flex items-center gap-[2px] text-[22px]">
+                  <Image
+                    src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
+                    alt="xsnapster"
+                    width={40}
+                    height={40}
+                  />
+                  <div className="flex items-center">
+                    <p className="font-semibold">
+                      <strong className="text-red-500">X</strong>SNAPSTER
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+              {blackNavbar && (
+                <span className="absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs font-semibold">
+                  Premium
+                </span>
+              )}
+            </div>
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">
@@ -256,21 +263,28 @@ const Navbar = () => {
         {/* For Desktop View */}
         <div className="lg:flex hidden justify-between items-center h-[65px]">
           <div className="pl-7 flex items-center gap-2">
-            <Link href={"/"}>
-              <div className="flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold">
-                <Image
-                  src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
-                  alt="xsnapster"
-                  width={47}
-                  height={30}
-                />
-                <div className="flex items-center">
-                  <p className="">
-                    <strong className="text-red-500">X</strong>SNAPSTER
-                  </p>
+            <div className="relative inline-block">
+              <Link href={"/"}>
+                <div className="flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold">
+                  <Image
+                    src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
+                    alt="xsnapster"
+                    width={47}
+                    height={30}
+                  />
+                  <div className="flex items-center">
+                    <p className="">
+                      <strong className="text-red-500">X</strong>SNAPSTER
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+              {blackNavbar && (
+                <span className="absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[13px] font-semibold">
+                  Premium
+                </span>
+              )}
+            </div>
             <div className="relative" onClick={toggleGender}>
               {/* Trigger */}
               <div className="flex justify-center items-center cursor-pointer">

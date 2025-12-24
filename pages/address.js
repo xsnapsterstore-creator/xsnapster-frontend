@@ -252,7 +252,7 @@ export default function AddressForm() {
                     setSelectedId(address.id);
                     setShowForm(false);
                   }}
-                  className={`border  rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
+                  className={`border rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
                     selectedId === address.id
                       ? "border-black ring-1 bg-gray-100 ring-black"
@@ -260,19 +260,37 @@ export default function AddressForm() {
                   }
                 `}
                 >
-                  <div>
-                    <p className="font-semibold text-gray-900 mb-1">
-                      {address.name}
-                    </p>
-                    <p className="font-semibold text-sm text-gray-900 mb-1">
-                      {address.phone_number}
-                    </p>
+                  <div className="flex gap-2">
+                    <div>
+                      <input
+                        type="radio"
+                        name="selectedAddress"
+                        checked={selectedId === address.id}
+                        onChange={() => setSelectedId(address.id)}
+                        className={`w-3 h-3 rounded-full border-2 cursor-pointer transition
+      appearance-none
+      ${
+        selectedId === address.id
+          ? "bg-green-500 border-green-500"
+          : "bg-white border-gray-300"
+      }
+    `}
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">
+                        {address.name}
+                      </p>
+                      <p className="font-semibold text-sm text-gray-900 mb-1">
+                        {address.phone_number}
+                      </p>
 
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {address.address_line}
-                      <br />
-                      {address.city}, {address.state} ({address.zip_code})
-                    </p>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {address.address_line}
+                        <br />
+                        {address.city}, {address.state} ({address.zip_code})
+                      </p>
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
