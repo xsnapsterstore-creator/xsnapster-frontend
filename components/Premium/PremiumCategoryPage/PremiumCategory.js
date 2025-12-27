@@ -26,7 +26,7 @@ const PremiumCategory = ({ productName }) => {
           : "bg-gradient-to-b from-white via-white/80 to-white/60 text-black"
       }`}
     >
-      <div className="pt-[95px] bg-[#1C1C1C]">
+      <div className="pt-[95px] bg-[#242424]">
         <h1 className={`text-[22px] font-semibold text-center mt-5`}>
           Build For People With Standards
         </h1>

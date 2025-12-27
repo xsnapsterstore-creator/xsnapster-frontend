@@ -12,6 +12,7 @@ import {
 } from "../store/cartSlice";
 import { useQuery } from "@tanstack/react-query";
 import { UserOrder, verifyUserPayment, fetchUserAddress } from "../API/api";
+import OfferAlert from "../Alert/OfferAlert";
 
 const BillingTemplate = () => {
   const router = useRouter();
@@ -24,10 +25,18 @@ const BillingTemplate = () => {
   const [showBilling, setShowBilling] = useState(false);
   const [deliveryCharge, setDeliveryCharge] = useState("Free");
   const [order, setOrder] = useState([]);
+  const [customAlert, setCustomAlert] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
   const paymentOptions = [
     { value: "", label: "Select a payment method", isDisabled: true },
     { value: "cod", label: "💵 Cash on Delivery" },
-    { value: "upi", label: "🟢 UPI (GPay / PhonePe / Paytm) / Debit Card / Credit Card" },
+    {
+      value: "upi",
+      label: "🟢 UPI (GPay / PhonePe / Paytm) / Debit Card / Credit Card",
+    },
   ];
 
   const customStyles = {
@@ -61,11 +70,39 @@ const BillingTemplate = () => {
     }),
   };
 
+  const CurrAddress =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("address_details") || "{}")
+      : {};
+
   // Load cart items from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
     setLoading(true);
     const cartData = localStorage.getItem("cart");
+
+    //Poster Offer Logic
+    const data = JSON.parse(localStorage.getItem("cart"));
+    const isPoster = data.filter((item) => item.dimensions === "Poster");
+    const PosterTotal = isPoster.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (PosterTotal) {
+      if (PosterTotal < 10) {
+        setCustomAlert({
+          open: true,
+          title: "POSTER OFFER !",
+          message: `Add ${
+            10 - PosterTotal
+          } more POSTERS and GET 10 POSTERS For Free`,
+        });
+      } else {
+        setCustomAlert({
+          open: true,
+          title: "POSTER OFFER UNLOCKED",
+          message: `Add ${20 - PosterTotal} POSTERS for Free`,
+        });
+      }
+    }
 
     if (!cartData || cartData === "[]") {
       setItems([]);
@@ -398,14 +435,14 @@ const BillingTemplate = () => {
                 </div>
               ) : (
                 <div className="text-gray-700 text-sm leading-relaxed">
-                  {data?.[0]?.name}
+                  {CurrAddress?.name}
                   <br />
-                  {data?.[0]?.address_line}, {data?.[0]?.city},{" "}
-                  {data?.[0]?.state}, {data?.[0]?.zip_code}
+                  {CurrAddress?.address_line}, {CurrAddress?.city},{" "}
+                  {CurrAddress?.state}, {CurrAddress?.zip_code}
                   <br />
-                  Mobile: {data?.[0]?.phone_number}
+                  Mobile: {CurrAddress?.phone_number}
                   <br />
-                  Address Type: {data?.[0]?.address_type}
+                  Address Type: {CurrAddress?.address_type}
                 </div>
               )}
 
@@ -534,6 +571,13 @@ const BillingTemplate = () => {
           </div>
         )}
       </div>
+
+      <OfferAlert
+        open={customAlert.open}
+        title={customAlert.title}
+        message={customAlert.message}
+        onClose={() => setCustomAlert({ open: false, message: "" })}
+      />
     </div>
   );
 };

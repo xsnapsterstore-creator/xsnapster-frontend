@@ -140,9 +140,8 @@ export default function AddressForm() {
     if (!selectedId) {
       alert("Select Address and Proceed");
     }
-    const selectedAddress = UserAddress.find(
-      (addr) => addr.address_id === selectedId
-    );
+    const userAdd = UserAddress.find((add) => add.id === selectedId);
+    await localStorage.setItem("address_details", JSON.stringify(userAdd));
     await localStorage.setItem("address_id", selectedId);
     router.push("/billing");
   };
