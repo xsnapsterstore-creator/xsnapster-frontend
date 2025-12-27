@@ -141,7 +141,11 @@ const BillingTemplate = () => {
     try {
       // Prevent checkout if cart is empty
       if (!cart || cart.length === 0) {
-        alert("Your cart is empty.");
+        setCustomAlert({
+          open: true,
+          title: "CART",
+          message: "Your Cart is Empty",
+        });
         return;
       }
       if (paymentOpt === "cod") {
@@ -164,7 +168,6 @@ const BillingTemplate = () => {
         }
 
         const data = await res.json();
-        console.log("This is response data:", data);
 
         if (res.ok) {
           Promise.resolve().then(() => {
@@ -176,8 +179,6 @@ const BillingTemplate = () => {
           alert(data.message || "Failed to place order.");
         }
       } else {
-        console.log("This is Online Payment:", paymentOpt);
-
         // Load Razorpay SDK
         const loadRazorpay = () => {
           return new Promise((resolve) => {
@@ -213,13 +214,11 @@ const BillingTemplate = () => {
         // API: verify payment
         const VerifyPayment = async (data) => {
           const res = await verifyUserPayment(data);
-          console.log("Step 1");
 
           if (!res) {
             alert("Network error. Please try again.");
             return;
           }
-          console.log("Step 2");
 
           return res;
         };
@@ -232,7 +231,6 @@ const BillingTemplate = () => {
           }
 
           const order = await createOrder();
-          console.log("ORDER FROM BACKEND:", order);
 
           const options = {
             key: "rzp_test_Rc3r0uTkowIjsF",
@@ -253,7 +251,11 @@ const BillingTemplate = () => {
 
               console.log("VERIFY RESPONSE:", data);
               console.log("Step 4");
-              alert(data.message);
+              setCustomAlert({
+                open: true,
+                title: "PAYMENT UPDATE",
+                message: data.message,
+              });
               if (verifyRes.ok) {
                 Promise.resolve().then(() => {
                   localStorage.setItem("order_id", order.order_id);
