@@ -1,6 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
+  const logo = "/logo.png";
+
   return (
     <Html lang="en">
       <Head>
@@ -26,6 +28,10 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta property="og:image" content={`https://xsnapster.store/${logo}`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
       </Head>
       <body className="antialiased">
         <Main />

@@ -35,17 +35,17 @@ const ContactUs = () => {
           <div className="absolute w-56 h-56 bg-yellow-300 opacity-20 rounded-full bottom-0 -left-20 blur-3xl"></div>
 
           <h2 className="text-2xl font-bold mb-3 text-gray-900">
-            We Don’t Bite{" "}
+            We Don't Bite{" "}
             <span className="text-red-500 text-sm animate-pulse">
-              (Unless You’re a Dusty Wall)
+              (Unless You're a Dusty Wall)
             </span>
           </h2>
           <hr className="border-gray-200 mb-4" />
 
           <p className="text-gray-700 leading-relaxed text-[15px]">
-            Whether it’s about your order, a custom frame, or just to tell us
+            Whether it's about your order, a Custom Frame, or just to tell us
             how hilarious we are — we love hearing from you. Our customer
-            support team replies faster than your ex’s “seen” message.
+            support team replies faster than your ex's “seen” message.
           </p>
 
           <div className="mt-6 flex items-center gap-2 text-gray-800 hover:text-red-600 cursor-pointer transition">
@@ -66,11 +66,11 @@ const ContactUs = () => {
           className="relative backdrop-blur-2xl bg-white/10 border border-white/20 text-white p-10 rounded-2xl shadow-2xl overflow-hidden"
         >
           {/* Gradient Accents */}
-          <div className="absolute top-0 left-0 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl -z-10"></div>
-          <div className="absolute bottom-0 right-0 w-56 h-56 bg-blue-500/30 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-amber-500/30 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute bottom-0 right-0 w-56 h-56 bg-yellow-500/30 rounded-full blur-3xl -z-10"></div>
 
-          <h2 className="text-3xl font-extrabold mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">
-            Reach Out to Us ✨
+          <h2 className="text-3xl font-extrabold mb-8 text-center bg-gradient-to-r from-sky-600 to-pink-400 text-transparent bg-clip-text">
+            Talk to Us
           </h2>
 
           <form method="post" action="#" className="space-y-8">
@@ -139,9 +139,9 @@ const ContactUs = () => {
               }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-500 via-pink-400 to-blue-500 text-white font-bold py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:opacity-95"
+              className="w-full bg-black text-white font-bold py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:opacity-95"
             >
-              Send Message 🚀
+              Send
             </motion.button>
           </form>
         </motion.div>

@@ -137,15 +137,11 @@ export const addProduct = async (data) => {
 
 // Refresh Token
 export async function refreshAccessToken() {
-  console.log("Step 6");
-
   try {
     const res = await fetch(`${API_URL}/auth/refresh`, {
       method: "POST",
       credentials: "include", // <-- IMPORTANT (send refresh_token cookie)
     });
-
-    console.log("Step 7");
 
     if (!res.ok) {
       console.log("Refresh failed:", res.status);
@@ -153,11 +149,9 @@ export async function refreshAccessToken() {
     }
 
     const data = await res.json();
-    console.log("Step 8");
 
     if (data?.access_token) {
       localStorage.setItem("access_token", data.access_token);
-      console.log("Step 9 ─ New access token saved");
       return data.access_token;
     }
 
@@ -170,8 +164,6 @@ export async function refreshAccessToken() {
 
 // Secure Fetch API
 export async function secureFetch(url, options = {}) {
-  console.log("Step 2");
-
   let accessToken = localStorage.getItem("access_token");
 
   // Build request headers
@@ -180,19 +172,14 @@ export async function secureFetch(url, options = {}) {
     Authorization: accessToken ? `Bearer ${accessToken}` : "",
   };
 
-  console.log("Step 3");
-
   // First API request
   let res = await fetch(`${API_URL}${url}`, {
     ...options,
     headers,
     credentials: "include", // <-- FIXED
   });
-  console.log("Step 4");
 
   if (res.status !== 401) return res; // Access token is valid
-
-  console.log("Step 5 ─ Access token expired");
 
   // Try to refresh token
   const newToken = await refreshAccessToken();
@@ -206,8 +193,6 @@ export async function secureFetch(url, options = {}) {
     window.location.href = "/login";
     return null;
   }
-
-  console.log("Step 11 ─ Retrying request with new token");
 
   // Retry request with new token
   return fetch(`${API_URL}${url}`, {
