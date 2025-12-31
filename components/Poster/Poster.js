@@ -10,6 +10,14 @@ const banners = [
   "/ferrari_1.webp",
 ];
 
+const desktopBanners = [
+  "/bmw_desktop.png",
+  "/defender_desktop.png",
+  "/porsche_desktop.png",
+  "/bmw_desktop1.png",
+  "/ferrari_desktop.png",
+];
+
 export default function Poster() {
   const [current, setCurrent] = useState(0);
   const intervalRef = useRef(null);
@@ -56,12 +64,29 @@ export default function Poster() {
       onTouchEnd={handleTouchEnd}
     >
       {/* Slides */}
+      {/* For Mobile Screen */}
       <div
-        className="flex transition-transform duration-700 ease-in-out"
+        className="flex md:hidden transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {banners.map((src, index) => (
           <div key={index} className="min-w-full h-[480px] md:h-[600px]">
+            <img
+              src={src}
+              alt={`Banner ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* For Desktop Screen */}
+      <div
+        className="hidden md:flex transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${current * 100}%)` }}
+      >
+        {desktopBanners.map((src, index) => (
+          <div key={index} className="min-w-full h-auto">
             <img
               src={src}
               alt={`Banner ${index + 1}`}

@@ -2,6 +2,7 @@ import React from "react";
 import AddCategory from "@/components/Admin/AddCategory";
 import AddProduct from "@/components/Admin/AddProduct";
 import ActiveProducts from "@/components/Admin/ActiveProducts";
+import Orders from "@/components/Admin/Orders";
 import { useState } from "react";
 
 const XsnapsterUser = () => {
@@ -12,7 +13,7 @@ const XsnapsterUser = () => {
       <div className="m-3">
         <div className="m-1">
           <h1 className="text-[30px] font-semibold tracking-wide text-center">
-            <span className="text-red-500">X</span>SNAPSTER Product Listing
+            <span className="text-red-500">X</span>SNAPSTER ADMIN
           </h1>
         </div>
 
@@ -50,6 +51,17 @@ const XsnapsterUser = () => {
           >
             Active Products
           </button>
+
+          <button
+            onClick={() => setActiveTab("orders")}
+            className={`lg:px-5 lg:py-2 py-2 px-4 text-xs font-medium rounded-lg transition-all ${
+              activeTab === "orders"
+                ? "bg-black text-white scale-105"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            }`}
+          >
+            Orders
+          </button>
         </div>
 
         {/* ===== Conditional Rendering ===== */}
@@ -57,6 +69,7 @@ const XsnapsterUser = () => {
           {activeTab === "product" && <AddProduct />}
           {activeTab === "category" && <AddCategory />}
           {activeTab === "price" && <ActiveProducts />}
+          {activeTab === "orders" && <Orders />}
         </div>
       </div>
     </div>

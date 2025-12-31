@@ -83,7 +83,7 @@ const ActiveProducts = () => {
   async function handleDelete(id) {
     const res = await deleteProduct(id);
     const data = await res.json();
-    alert(data.message)
+    alert(data.message);
   }
 
   return (
@@ -202,19 +202,18 @@ const ActiveProducts = () => {
                 {/* Title */}
                 <div className="w-1/5">
                   <h2 className="text-xs font-semibold text-gray-800">
-                    {prod.title}
+                    {prod.title.substring(0, 40)}
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">
                     Product ID: {prod.id}
                   </p>
-                  <p className="text-sm text-gray-500">View Count: {prod.view_count}</p>
                 </div>
 
                 {/* Description */}
                 <div className="w-1/3 text-sm text-gray-600 flex flex-col gap-1">
                   <p className="font-medium text-gray-700">{prod.one_liner}</p>
-                  <p className="line-clamp-2 text-xs text-gray-500">
-                    {prod.description}
+                  <p className="text-sm text-gray-500">
+                    View Count: {prod.view_count}
                   </p>
                 </div>
 
