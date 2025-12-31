@@ -86,7 +86,7 @@ export default function Poster() {
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {desktopBanners.map((src, index) => (
-          <div key={index} className="min-w-full h-auto">
+          <div key={index} className="min-w-full h-[650px]">
             <img
               src={src}
               alt={`Banner ${index + 1}`}
