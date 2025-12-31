@@ -114,7 +114,7 @@ const Footer = () => {
                 story to tell, and we are here to help you tell yours.
               </p>
               <p className="text-xs tracking-wide text-red-600 animate-pulse italic">
-                Your walls deserve better.
+                Your wall deserves better.
               </p>
             </div>
 
@@ -305,7 +305,7 @@ const Footer = () => {
               wall has a story to tell, and we are here to help you tell yours.
             </p>
             <p className="text-xs text-red-600 animate-pulse mt-1 italic">
-              Your walls deserve better.
+              Your wall deserves better.
             </p>
           </div>
 

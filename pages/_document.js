@@ -1,7 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
-  const logo = "/logo.png";
+  const logo = "/logo.svg";
 
   return (
     <Html lang="en">
