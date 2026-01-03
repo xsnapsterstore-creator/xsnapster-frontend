@@ -25,33 +25,6 @@ export const verifyOTP = async (email, otp) => {
   return res;
 };
 
-// Add Categories API
-export const AddCategories = async (data) => {
-  const formData = new FormData();
-  formData.append("category_name", data.category);
-  formData.append("category_one_liner", data.categoryOneLiner);
-  data.subCategories.map((item) => formData.append("subcategory_names", item));
-  formData.append("images", data.categoryImage);
-  const res = await fetch(`${API_URL}/subcategory/`, {
-    method: "POST",
-    body: formData,
-  });
-  return res;
-};
-
-// Add Sub-Categories API
-export const AddSubCategories = async (data) => {
-  const formData = new FormData();
-  formData.append("category_id", Number(data.category));
-  data.subCategories.map((item) => formData.append("subcategory_names", item));
-  const res = await fetch(`${API_URL}/subcategory/`, {
-    method: "POST",
-    body: formData,
-  });
-
-  return res;
-};
-
 //Fetch Categories API
 export const fetchCategories = async () => {
   const res = await fetch(`${API_URL}/category/`, {
@@ -92,14 +65,6 @@ export const fetchProduct = async (id) => {
   return res;
 };
 
-// Delete Product by ID
-export const deleteProduct = async (id) => {
-  const res = await fetch(`${API_URL}/products/${id}`, {
-    method: "DELETE",
-  });
-  return res;
-};
-
 // Fetch Homepage Products
 export const fetchHomepage = async (id) => {
   const res = await fetch(`${API_URL}/products/top-viewed`, {
@@ -108,28 +73,7 @@ export const fetchHomepage = async (id) => {
   return res;
 };
 
-// Adding Product
-export const addProduct = async (data) => {
-  const formData = new FormData();
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("one_liner", data.one_liner);
-  formData.append("category_id", Number(data.category_id));
-  formData.append("subcategory_id", Number(data.subcategory_id));
-  formData.append("price", Number(data.price));
-  formData.append("discounted_price", Number(data.discounted_price));
-  data.dimensions.forEach((size) => {
-    formData.append("dimensions", size);
-  });
-  data.images.forEach((img) => {
-    formData.append("images", img);
-  });
-  const res = await fetch(`${API_URL}/products/`, {
-    method: "POST",
-    body: formData,
-  });
-  return res;
-};
+
 
 // ---------------------------------------------
 //        Secure API's (Protected Routes)
@@ -205,10 +149,66 @@ export async function secureFetch(url, options = {}) {
   });
 }
 
+// Add Categories API
+export const AddCategories = async (data) => {
+  const formData = new FormData();
+  formData.append("category_name", data.category);
+  formData.append("category_one_liner", data.categoryOneLiner);
+  data.subCategories.map((item) => formData.append("subcategory_names", item));
+  formData.append("images", data.categoryImage);
+  const res = await secureFetch("/subcategory/", {
+    method: "POST",
+    body: formData,
+  });
+  return res;
+};
+
+// Add Sub-Categories API
+export const AddSubCategories = async (data) => {
+  const formData = new FormData();
+  formData.append("category_id", Number(data.category));
+  data.subCategories.map((item) => formData.append("subcategory_names", item));
+  const res = await secureFetch("/subcategory/", {
+    method: "POST",
+    body: formData,
+  });
+
+  return res;
+};
+
+// Adding Product
+export const addProduct = async (data) => {
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("one_liner", data.one_liner);
+  formData.append("category_id", Number(data.category_id));
+  formData.append("subcategory_id", Number(data.subcategory_id));
+  formData.append("price", Number(data.price));
+  formData.append("discounted_price", Number(data.discounted_price));
+  data.dimensions.forEach((size) => {
+    formData.append("dimensions", size);
+  });
+  data.images.forEach((img) => {
+    formData.append("images", img);
+  });
+  const res = await secureFetch("/products/", {
+    method: "POST",
+    body: formData,
+  });
+  return res;
+};
+
+// Delete Product by ID
+export const deleteProduct = async (id) => {
+  const res = await secureFetch(`/products/${id}`, {
+    method: "DELETE",
+  });
+  return res;
+};
+
 // Fetch User's Address
 export const fetchUserAddress = async () => {
-  console.log("Step 1");
-
   const res = await secureFetch("/addresses/", { method: "GET" });
 
   if (!res) return null;
