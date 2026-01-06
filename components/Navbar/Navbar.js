@@ -23,7 +23,6 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import clsx from "clsx";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -140,7 +139,7 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
           visible ? "translate-y-0" : "-translate-y-full"
         } ${
-          blackNavbar ? "bg-[#141414] text-gray-400" : "bg-white text-black"
+          blackNavbar ? "bg-[#141414] text-gray-300" : "bg-white text-black"
         }`}
       >
         {/* For Mobile View */}
@@ -163,7 +162,7 @@ const Navbar = () => {
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs font-semibold">
+                <span className="absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs italic">
                   Premium
                 </span>
               )}
@@ -280,7 +279,7 @@ const Navbar = () => {
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[13px] font-semibold">
+                <span className="absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[12px] italic">
                   Premium
                 </span>
               )}

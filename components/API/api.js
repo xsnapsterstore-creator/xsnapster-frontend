@@ -73,8 +73,6 @@ export const fetchHomepage = async (id) => {
   return res;
 };
 
-
-
 // ---------------------------------------------
 //        Secure API's (Protected Routes)
 //----------------------------------------------
@@ -124,10 +122,8 @@ export async function secureFetch(url, options = {}) {
   });
 
   if (res.status !== 401) return res; // Access token is valid
-
   // Try to refresh token
   const newToken = await refreshAccessToken();
-  console.log("Step 10");
 
   if (!newToken) {
     console.log("❌ User must login again (no new token)");
@@ -148,6 +144,10 @@ export async function secureFetch(url, options = {}) {
     credentials: "include",
   });
 }
+
+// ---------------------------------------------
+//        Admin API's
+//----------------------------------------------
 
 // Add Categories API
 export const AddCategories = async (data) => {
@@ -206,6 +206,28 @@ export const deleteProduct = async (id) => {
   });
   return res;
 };
+
+export const fetchTotalOrders = async () => {
+  try {
+    const res = await secureFetch(`/user/orders/admin`, {
+      method: "GET",
+    });
+    if (!res) return null;
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      console.error("💥 Profile fetch error:", err);
+      return null;
+    }
+    return await res.json();
+  } catch (e) {
+    console.error("Network/Parse Error:", e);
+  }
+};
+
+// ---------------------------------------------
+//        User API's
+//----------------------------------------------
 
 // Fetch User's Address
 export const fetchUserAddress = async () => {
