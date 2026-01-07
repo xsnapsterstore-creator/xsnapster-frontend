@@ -1,30 +1,25 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { fetchTotalOrders } from "../API/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const Orders = () => {
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 30 }, (_, i) => currentYear - i);
+  const months = Array.from({ length: 12 }, (_, i) =>
+    new Date(0, i).toLocaleString("en-US", { month: "long" })
+  );
   const [openOrderId, setOpenOrderId] = useState(null);
+  const [year, setYear] = useState(years[0]);
+  const [month, setMonth] = useState("");
+  const [price, setPrice] = useState(5000);
+  const [status, setStatus] = useState("");
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const toggleOrder = (id) => {
     setOpenOrderId((prev) => (prev === id ? null : id));
   };
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["TotalOrders"],
-    queryFn: async () => {
-      const res = await fetchTotalOrders();
-      return res;
-    },
-
-    staleTime: 600_000,
-    gcTime: 600_000,
-    refetchInterval: 600_000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    retry: false,
-  });
 
   const statusStyles = {
     CONFIRMED: "bg-amber-100 text-green-700",
@@ -34,12 +29,45 @@ const Orders = () => {
     CANCELLED: "bg-red-100 text-red-700",
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetchTotalOrders();
+      setData(res);
+      setFilteredData(res); // initialize filtered data
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    let result = [...data];
+    if (year) {
+      result = result.filter((item) => {
+        const currYear = new Date(item.created_at).getUTCFullYear();
+        return currYear === Number(year);
+      });
+    }
+
+    if (month) {
+      result = result.filter((item) => {
+        const CurrMonth = new Date(item.created_at).getUTCMonth() + 1;
+        return CurrMonth === Number(month);
+      });
+    }
+
+    if (status.length) {
+      result = result.filter((item) => item.status === status);
+    }
+    setFilteredData(result);
+  }, [year, month, price, status]);
+
   return (
     <div className="p-6 bg-gray-50 rounded-xl shadow-sm border border-gray-200 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Orders</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">
+            Total Orders: {data?.length || ""}
+          </h1>
           <p className="text-sm text-gray-500 mt-1">
             Manage and track customer orders
           </p>
@@ -58,12 +86,53 @@ const Orders = () => {
           className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        <select className="px-4 py-2 border border-gray-300 rounded-lg text-sm">
-          <option>All Status</option>
-          <option>DELIVERED</option>
-          <option>SHIPPED</option>
-          <option>PENDING</option>
-          <option>CANCELLED</option>
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+        >
+          {months.map((month, index) => (
+            <option key={index} value={index + 1}>
+              {month}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+        >
+          <option value="">Price</option>
+          <option value={500}>500</option>
+          <option value={1000}>1000</option>
+          <option value={1500}>1500</option>
+          <option value={2000}>2000</option>
+        </select>
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg text-sm"
+        >
+          <option value="">All Status</option>
+          <option value="CONFIRMED">CONFIRMED</option>
+          <option value="DELIVERED">DELIVERED</option>
+          <option value="SHIPPED">SHIPPED</option>
+          <option value="PENDING">PENDING</option>
+          <option value="CANCELLED">CANCELLED</option>
         </select>
       </div>
 
@@ -82,7 +151,7 @@ const Orders = () => {
           </thead>
 
           <tbody>
-            {data?.map((order) => {
+            {filteredData?.map((order) => {
               const isOpen = openOrderId === order.id;
 
               return (
@@ -121,7 +190,7 @@ const Orders = () => {
                     <td className="px-5 py-4 text-right">
                       <button
                         onClick={() => toggleOrder(order.id)}
-                        className="text-blue-600 text-sm font-medium hover:text-blue-800 transition"
+                        className="text-blue-600 text-sm font-medium cursor-pointer hover:text-blue-800 transition"
                       >
                         {isOpen ? "Hide Items ▲" : "View Items ▼"}
                       </button>
@@ -187,7 +256,7 @@ const Orders = () => {
                               {/* Price */}
                               <div className="text-right">
                                 <p className="font-semibold text-gray-900">
-                                  ₹{item.ordered_price}
+                                  ₹{item.ordered_price * item.quantity}
                                 </p>
                               </div>
                             </div>
