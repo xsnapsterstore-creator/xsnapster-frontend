@@ -23,7 +23,7 @@ const Error = () => {
 
         {/* Subtitle */}
         <p className="text-gray-600 text-center mt-3 max-w-md text-sm md:text-base">
-          The page you're looking for doesn’t exist or has been moved. Please
+          The page you're looking for doesn't exist or has been moved. Please
           check the URL or go back to the homepage.
         </p>
 
