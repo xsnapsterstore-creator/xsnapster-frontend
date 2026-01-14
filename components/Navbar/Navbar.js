@@ -724,11 +724,11 @@ const Navbar = () => {
               <p>Reviews</p>
             </Link>
             <Link
-              href={"/track-order"}
+              href={"/privacy-policy"}
               onClick={toggleSidebar}
               className="flex items-center justify-between h-[50px] border-b"
             >
-              <p>Track Order</p>
+              <p>Privacy Policy</p>
             </Link>
             <Link
               href={"/help-center"}
