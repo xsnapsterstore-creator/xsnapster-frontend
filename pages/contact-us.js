@@ -4,7 +4,7 @@ import EmailIcon from "@mui/icons-material/Email";
 
 const ContactUs = () => {
   return (
-    <div className="pt-[130px] pb-20 px-6 md:px-20 bg-gray-50">
+    <div className="pt-[110px] pb-20 px-6 md:px-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
@@ -17,7 +17,7 @@ const ContactUs = () => {
           <span className="text-red-600 animate-pulse text-lg">Slide Into Our Inbox 💌</span>
         </h1>
         <p className="text-gray-600 text-sm mt-2">
-          Got a question, complaint, or an ego that needs validation? We’re all
+          Got a question, complaint, or an ego that needs validation? We're all
           ears (and keyboards).
         </p>
         <div className="w-16 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
@@ -50,7 +50,7 @@ const ContactUs = () => {
 
           <div className="mt-6 flex items-center gap-2 text-gray-800 hover:text-red-600 cursor-pointer transition">
             <EmailIcon />
-            <p className="text-[15px] font-medium">support@xsnapster.store</p>
+            <a href="mailto:contact@xsnapster.store" className="text-[15px] font-medium">contact@xsnapster.store</a>
           </div>
 
           <p className="text-[14px] mt-3 text-gray-500 italic">

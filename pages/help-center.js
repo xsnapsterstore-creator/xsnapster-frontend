@@ -8,8 +8,8 @@ const fadeUp = {
 
 const HelpCenter = () => {
   return (
-    <div className="pt-[120px] pb-20 bg-gradient-to-br from-white via-gray-50 to-gray-100 min-h-screen">
-      <div className="max-w-5xl mx-auto px-8">
+    <div className="pt-[110px] pb-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen">
+      <div className="max-w-3xl mx-auto px-8">
         {/* HEADER */}
         <motion.div
           initial="hidden"
@@ -18,10 +18,8 @@ const HelpCenter = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Help Center
-          </h1>
-          <p className="text-red-600 text-sm tracking-wide animate-pulse">
+          <h1 className="text-[35px] font-extrabold mb-2">Help Center</h1>
+          <p className="text-red-500 text-sm md:text-base animate-pulse">
             Where Problems Get Framed
           </p>
           <div className="w-16 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
@@ -45,12 +43,11 @@ const HelpCenter = () => {
             </h2>
             <hr className="mb-4 border-gray-200" />
             <p className="text-[16px] leading-relaxed text-justify text-gray-700">
-              Relax. You’re not on Incognito Mode — we actually help people
-              here. This is the{" "}
-              <b className="text-red-500">XSNAPSTER Help Center</b>, a safe
-              space where your "WTF moments" meet their happy endings. We’ve
-              broken things down so even your goldfish could understand (no
-              offense).
+              Relax. You're not on Incognito Mode — we actually help people
+              here. This is the <strong><span className="text-red-500">X</span>SNAPSTER</strong> Help
+              Center, a safe space where your "WTF moments" meet their happy
+              endings. We've broken things down so even your goldfish could
+              understand (no offense).
             </p>
           </motion.div>
 
@@ -68,8 +65,8 @@ const HelpCenter = () => {
                   How do I know if my order went through?
                 </h3>
                 <p className="text-[16px] text-gray-700 text-justify">
-                  If you got an email from us that says “Your wall’s about to
-                  glow up,” congrats — it’s official! No email? Check your spam
+                  If you got an email from us that says “Your wall's about to
+                  glow up,” congrats — it's official! No email? Check your spam
                   folder before accusing us of ghosting.
                 </p>
               </div>
@@ -80,7 +77,7 @@ const HelpCenter = () => {
                 </h3>
                 <p className="text-[16px] text-gray-700 text-justify">
                   Usually 3–7 business days, depending on how lazy your delivery
-                  guy is. Don’t worry — we’ll send a tracking link so you can
+                  guy is. Don't worry — we'll send a tracking link so you can
                   stalk your frame guilt-free.
                 </p>
               </div>
@@ -101,7 +98,7 @@ const HelpCenter = () => {
                   What payment methods do you accept?
                 </h3>
                 <p className="text-[16px] text-gray-700 text-justify">
-                  All major cards, UPI, and wallets. No goats, no barter deals.
+                  All major Cards, UPI, and Wallets. No goats, no barter deals.
                 </p>
               </div>
 
@@ -111,7 +108,7 @@ const HelpCenter = () => {
                 </h3>
                 <p className="text-[16px] text-gray-700 text-justify">
                   If your frame arrives broken or looking like abstract art (and
-                  not in a good way), contact us within 7 days. We’ll fix it
+                  not in a good way), contact us within 7 days. We'll fix it
                   faster than you can say “refund me.”
                 </p>
               </div>
@@ -121,8 +118,8 @@ const HelpCenter = () => {
                   Can I cancel my order?
                 </h3>
                 <p className="text-[16px] text-gray-700 text-justify">
-                  Sure, as long as we haven’t shipped it yet. Once it’s out, it’s
-                  yours — we don’t believe in breakups after dispatch.
+                  Sure, as long as we haven't shipped it yet. Once it's out,
+                  it's yours — we don't believe in breakups after dispatch.
                 </p>
               </div>
             </div>
@@ -144,10 +141,10 @@ const HelpCenter = () => {
                 <p className="text-[16px] text-gray-700 text-justify">
                   Absolutely! Send us your idea at{" "}
                   <a
-                    href="mailto:support@xsnapster.store"
-                    className="text-sky-600 font-semibold hover:underline"
+                    href="mailto:contact@xsnapster.store"
+                    className="text-red-500 font-semibold hover:underline"
                   >
-                    support@xsnapster.store
+                    contact@xsnapster.store
                   </a>{" "}
                   — we love weird requests. Challenge accepted.
                 </p>
@@ -187,10 +184,10 @@ const HelpCenter = () => {
             <p className="text-[16px] text-gray-700 text-justify mt-2">
               Email us at{" "}
               <a
-                href="mailto:support@xsnapster.store"
-                className="text-sky-600 font-semibold hover:underline"
+                href="mailto:contact@xsnapster.store"
+                className="text-red-500 font-semibold hover:underline"
               >
-                support@xsnapster.store
+                contact@xsnapster.store
               </a>
               <br />
               Response time: <b>24–48 hours</b> (We promise, faster than your
@@ -209,7 +206,7 @@ const HelpCenter = () => {
             <hr className="mb-4 border-gray-200" />
             <p className="text-[16px] text-gray-700 text-justify">
               We might joke a lot, but we take customer happiness seriously. If
-              something’s wrong, we’ll fix it — no drama, no excuses, just pure
+              something's wrong, we'll fix it — no drama, no excuses, just pure
               frame redemption.
             </p>
           </motion.div>
