@@ -8,7 +8,7 @@ const fadeInUp = {
 
 export default function AboutPage() {
   return (
-    <div className="pt-[130px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-gray-100 to-gray-200">
+    <div className="pt-[110px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60">
       {/* Header */}
       <motion.div
         className="text-center mb-12"
@@ -45,8 +45,8 @@ export default function AboutPage() {
                   <span className="text-red-500">X</span>SNAPSTER.STORE
                 </span>
                 — the site that looks dirty at first glance, but is actually…
-                just about Frames. The only thing getting nailed here is your
-                wall.
+                just about <strong>Aesthetic Frames</strong>. The only thing
+                getting nailed here is your wall.
               </>
             ),
           },
@@ -62,7 +62,7 @@ export default function AboutPage() {
                 Sports, you name it. Our job? To make your walls look{" "}
                 <span className="text-red-500 font-semibold">hotter</span> than
                 your search history. Think of us as{" "}
-                <span className="text-red-500 font-semibold">XHAM$TER</span>’s
+                <span className="text-red-500 font-semibold">XHAM$TER</span>'s
                 innocent cousin.
               </>
             ),
@@ -91,13 +91,13 @@ export default function AboutPage() {
                   </li>
                   <li>
                     <span className="text-red-500 font-semibold">Playful</span>{" "}
-                    – full of double meanings.
+                    – getting compliments on usual basis.
                   </li>
                   <li>
                     <span className="text-red-500 font-semibold">
                       Satisfying
                     </span>{" "}
-                    – the kind of wall climax you didn’t know you needed.
+                    – the kind of wall climax you didn't know you needed.
                   </li>
                 </ul>
               </>
@@ -106,7 +106,7 @@ export default function AboutPage() {
           {
             title: (
               <>
-                Who We’re <span className="text-red-500">For</span>
+                Who We're <span className="text-red-500">For</span>
               </>
             ),
             content: (

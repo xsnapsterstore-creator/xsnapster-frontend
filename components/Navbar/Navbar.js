@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../API/api";
 import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { setUserDetails } from "../store/cartSlice";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -42,6 +43,7 @@ const Navbar = () => {
 
   let toggle = false;
   const router = useRouter();
+  const path = usePathname();
 
   const toggleCategories = () => {
     setIsCategoriesOpen(!isCategoriesOpen);
@@ -72,6 +74,52 @@ const Navbar = () => {
   });
 
   const pathname = router.pathname;
+
+  useEffect(() => {
+    const isCarRoute = path.includes("cars");
+    const audio = new Audio("/sound/car_sound.mpeg");
+
+    if (typeof window === "undefined") return;
+    if (!isCarRoute) return;
+
+    const setWith3MinExpiry = (key, value) => {
+      const expiry = Date.now() + 3 * 60 * 1000; // 3 minutes
+
+      localStorage.setItem(
+        key,
+        JSON.stringify({
+          value,
+          expiry,
+        })
+      );
+    };
+
+    const getWith3MinExpiry = (key) => {
+      const itemStr = localStorage.getItem(key);
+      if (!itemStr) return null;
+
+      try {
+        const { expiry } = JSON.parse(itemStr);
+
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key);
+          return null;
+        }
+
+        return true;
+      } catch {
+        localStorage.removeItem(key);
+        return null;
+      }
+    };
+
+    const canPlaySound = !getWith3MinExpiry("car_sound");
+
+    if (canPlaySound) {
+      audio.play().catch(() => {});
+      setWith3MinExpiry("car_sound", "on");
+    }
+  }, [path]);
 
   useEffect(() => {
     const isBlackNavbar = pathname.includes("premium-categories");

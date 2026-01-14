@@ -8,8 +8,8 @@ const fadeInUp = {
 
 const ShippingPolicy = () => {
   return (
-    <div className="pt-[130px] pb-20 bg-gradient-to-br from-white via-gray-50 to-gray-100">
-      <div className="max-w-5xl mx-auto px-8">
+    <div className="pt-[110px] pb-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60">
+      <div className="max-w-3xl mx-auto px-8">
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -45,10 +45,10 @@ const ShippingPolicy = () => {
             </h2>
             <hr className="mb-4 border-gray-200" />
             <p className="text-[16px] leading-relaxed text-justify">
-              Once you hit <b>"Place Order"</b>, your aesthetic upgrade begins.
+              Once you hit <b className="text-red-500">"Place Order"</b>, your aesthetic upgrade begins.
               We print, pack, and ship your frames with more care than your ex
               ever showed you. This page explains how your order travels from
-              our lair to your wall of fame.
+              our lair to your wall.
             </p>
           </motion.div>
 
@@ -65,7 +65,7 @@ const ShippingPolicy = () => {
               We're fast — but not instant noodles fast. Each order takes 1–3
               business days to process because every frame deserves a little
               foreplay (quality check, printing, packing, etc). Once your
-              package leaves our warehouse, it’s officially in transit — aka the
+              package leaves our warehouse, it's officially in transit — aka the
               "long-distance relationship" phase.
             </p>
           </motion.div>
@@ -80,7 +80,7 @@ const ShippingPolicy = () => {
             </h2>
             <hr className="mb-4 border-gray-200" />
             <p className="text-[16px] mb-3 text-justify">
-              We ship all across India through trusted delivery partners. Here’s
+              We ship all across India through trusted delivery partners. Here's
               the usual timeline:
             </p>
             <ul className="list-disc ml-5 text-[16px] leading-relaxed">
@@ -115,10 +115,10 @@ const ShippingPolicy = () => {
             </p>
             <ul className="list-disc ml-5 text-[16px] leading-relaxed mt-2">
               <li>
-                <b>Standard Shipping:</b> Free for orders above ₹999.
+                <b>Standard Shipping:</b> Free for orders above ₹500.
               </li>
               <li>
-                <b>Below ₹999:</b> A tiny shipping fee applies (think of it as
+                <b>Below ₹500:</b> A tiny shipping fee applies (think of it as
                 delivery guy motivation money).
               </li>
             </ul>
@@ -150,11 +150,11 @@ const ShippingPolicy = () => {
             </h2>
             <hr className="mb-4 border-gray-200" />
             <p className="text-[16px] text-justify">
-              You’ll receive a tracking ID via email once your order ships. Use
+              You'll receive a tracking ID via email once your order ships. Use
               it to see where your frame is — or just pretend you're watching a
-              slow-burn thriller. If tracking shows "Delivered" but you’re still
+              slow-burn thriller. If tracking shows "Delivered" but you're still
               waiting, check with neighbours, guards, or that one cousin who
-              “borrows” things permanently.
+              borrows things permanently.
             </p>
           </motion.div>
 
@@ -170,11 +170,11 @@ const ShippingPolicy = () => {
             <ul className="list-disc ml-5 text-[16px] leading-relaxed">
               <li>
                 Make sure your shipping address is correct before checkout. Once
-                it’s shipped, not even Sherlock can reroute it.
+                it's shipped, not even Sherlock can reroute it.
               </li>
               <li>
-                If the courier couldn’t reach you, your order may be sent back.
-                Don’t worry — we’ll contact you before reshipping.
+                If the courier couldn't reach you, your order may be sent back.
+                Don't worry — we'll contact you before reshipping.
               </li>
             </ul>
           </motion.div>
@@ -194,10 +194,10 @@ const ShippingPolicy = () => {
               than your internet provider responds to complaints. For any
               delivery-related emergencies, drop us a line at{" "}
               <a
-                href="mailto:support@xsnapster.store"
-                className="text-sky-600 font-semibold hover:underline"
+                href="mailto:contact@xsnapster.store"
+                className="text-red-500 font-semibold hover:underline"
               >
-                support@xsnapster.store
+                contact@xsnapster.store
               </a>
               .
             </p>

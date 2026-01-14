@@ -6,6 +6,8 @@ import Link from "next/link";
 import { fetchAllSubCategories } from "../API/api";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import CallIcon from "@mui/icons-material/Call";
+import Call from "@mui/icons-material/Call";
 
 const Footer = () => {
   const [activeTag, setActiveTag] = useState(null);
@@ -157,13 +159,27 @@ const Footer = () => {
               <div>
                 <ul className="flex justify-center items-center gap-2">
                   <li>
-                    <InstagramIcon />
+                    <Link
+                      href="https://instagram.com/xsnapster.store"
+                      target="_blank"
+                    >
+                      <InstagramIcon className="cursor-pointer hover:text-white scale-110 transition" />
+                    </Link>
                   </li>
                   <li>
-                    <WhatsAppIcon />
+                    <Link href="https://wa.me/918177046231">
+                      <WhatsAppIcon className="cursor-pointer hover:text-white scale-110 transition" />
+                    </Link>
                   </li>
                   <li>
-                    <MailOutlineIcon />
+                    <Link href="mailto:contact@xsnapster.store">
+                      <MailOutlineIcon className="cursor-pointer hover:text-white scale-110 transition" />
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="tel:+918177046231">
+                      <CallIcon className="cursor-pointer hover:text-white scale-110 transition" />
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -184,7 +200,10 @@ const Footer = () => {
             </div>
 
             <div className="pt-10">
-              <ul className="flex justify-start items-center text-[10px] gap-5">
+              <ul className="flex justify-start items-center text-[8px] gap-5">
+                <li>
+                  <Link href="/help-center">Help Center</Link>
+                </li>
                 <li>
                   <Link href="/return-and-refund">Refund Policy</Link>
                 </li>
@@ -207,10 +226,10 @@ const Footer = () => {
                 otherwise. If you have any issue regarding the artwork, please
                 write to us at{" "}
                 <Link
-                  href="mailto:support@xsnapster.store"
+                  href="mailto:contact@xsnapster.store"
                   className="underline"
                 >
-                  support@xsnapster.store
+                  contact@xsnapster.store
                 </Link>
                 .
               </p>
@@ -359,6 +378,11 @@ const Footer = () => {
               <h4 className="text-lg font-semibold mb-3">Support</h4>
               <ul className="space-y-2 text-sm">
                 <li>
+                  <Link href="/help-center" className="hover:text-white">
+                    Help Center
+                  </Link>
+                </li>
+                <li>
                   <Link href="/return-and-refund" className="hover:text-white">
                     Refund Policy
                   </Link>
@@ -400,14 +424,20 @@ const Footer = () => {
               </div>
 
               <div className="mt-6 flex gap-4">
-                <Link href="https://instagram.com" target="_blank">
+                <Link
+                  href="https://instagram.com/xsnapster.store"
+                  target="_blank"
+                >
                   <InstagramIcon className="cursor-pointer hover:text-white scale-110 transition" />
                 </Link>
-                <Link href="https://instagram.com" target="_blank">
+                <Link href="https://wa.me/918177046231">
                   <WhatsAppIcon className="cursor-pointer hover:text-white scale-110 transition" />
                 </Link>
-                <Link href="https://instagram.com" target="_blank">
+                <Link href="mailto:contact@xsnapster.store">
                   <MailOutlineIcon className="cursor-pointer hover:text-white scale-110 transition" />
+                </Link>
+                <Link href="tel:+918177046231">
+                  <CallIcon className="cursor-pointer hover:text-white scale-110 transition" />
                 </Link>
               </div>
             </div>

@@ -70,10 +70,10 @@ const PrivacyPolicy = () => {
         <>
           To do any of that, email us at{" "}
           <a
-            href="mailto:support@xsnapster.store"
+            href="mailto:contact@xsnapster.store"
             className="text-sky-400 font-semibold hover:underline"
           >
-            support@xsnapster.store
+            contact@xsnapster.store
           </a>{" "}
           — no judgement, no drama.
         </>
@@ -86,7 +86,7 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="pt-[130px] pb-16 px-6 md:px-24 bg-gray-50 text-black relative overflow-hidden">
+    <div className="pt-[110px] pb-16 px-6 md:px-24 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 text-black relative overflow-hidden">
       {/* Glowing Blobs */}
       <div className="absolute top-0 left-0 w-96 h-96 blur-[120px] rounded-full -z-10"></div>
       <div className="absolute bottom-0 right-0 w-[450px] h-[450px] blur-[150px] rounded-full -z-10"></div>

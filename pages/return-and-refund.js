@@ -12,8 +12,8 @@ const sectionVariant = {
 
 const ReturnAndRefund = () => {
   return (
-    <div className="pt-[95px] bg-gradient-to-b from-white to-gray-50 min-h-screen">
-      <div className="max-w-5xl mx-auto px-8 py-10 flex flex-col gap-12">
+    <div className="pt-[110px] bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen">
+      <div className="max-w-3xl mx-auto px-8 flex flex-col gap-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -39,14 +39,15 @@ const ReturnAndRefund = () => {
           className="bg-white shadow-sm rounded-2xl p-8 border border-gray-100"
         >
           <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-            We Got It. Not Every Frame Is “The One”
+            We Got It. Not Every Frame Is{" "}
+            <b className="text-red-500">'The One'</b>
           </h2>
           <div className="h-[1px] bg-gray-200 mb-4"></div>
           <p className="text-gray-600 leading-relaxed text-[16px]">
-            Sometimes what looked sexy on-screen doesn’t vibe on your wall —
-            we’ve been there.
+            Sometimes what looked sexy on-screen doesn't vibe on your wall —
+            we've been there.
             <br />
-            But don’t worry,{" "}
+            But don't worry,{" "}
             <span className="font-semibold">
               <span className="text-red-500">X</span>SNAPSTER
             </span>{" "}
@@ -72,12 +73,12 @@ const ReturnAndRefund = () => {
           <ul className="list-disc ml-6 text-gray-700 leading-relaxed space-y-2">
             <li>Your frame arrived damaged, scratched, or not-so-aesthetic.</li>
             <li>
-              You received the wrong product (we promise we weren’t
+              You received the wrong product (we promise we weren't
               experimenting).
             </li>
             <li>
-              You changed your mind before we shipped it — because once it’s
-              out, it’s like sending an ex a text: you can’t take it back.
+              You changed your mind before we shipped it — because once it's
+              out, it's like sending an ex a text: you can't take it back.
             </li>
           </ul>
         </motion.section>
@@ -98,9 +99,12 @@ const ReturnAndRefund = () => {
           <ol className="list-decimal ml-6 text-gray-700 leading-relaxed space-y-2">
             <li>
               Email us at{" "}
-              <span className="font-semibold text-sky-500">
-                support@xsnapster.store
-              </span>{" "}
+              <a
+                href="mailto:contact@xsnapster.store"
+                className="font-semibold text-red-500"
+              >
+                contact@xsnapster.store
+              </a>{" "}
               within 7 days of delivery.
             </li>
             <li>
@@ -113,7 +117,7 @@ const ReturnAndRefund = () => {
             </li>
           </ol>
           <p className="text-gray-600 mt-3 italic">
-            Once approved, we’ll guide you through the return or refund process
+            Once approved, we'll guide you through the return or refund process
             faster than your crush ghosts you.
           </p>
         </motion.section>
@@ -147,7 +151,7 @@ const ReturnAndRefund = () => {
               <span className="font-semibold text-gray-800">
                 Refund Confirmation
               </span>
-              : We’ll email you once your money starts its journey back home.
+              : We'll email you once your money starts its journey back home.
             </li>
           </ul>
           <p className="text-gray-600 mt-3 italic">
@@ -168,7 +172,7 @@ const ReturnAndRefund = () => {
             Non-Returnable Items
           </h2>
           <div className="h-[1px] bg-gray-200 mb-4"></div>
-          <p className="text-gray-600 mb-3">Here’s what we can’t take back:</p>
+          <p className="text-gray-600 mb-3">Here's what we can't take back:</p>
           <ul className="list-disc ml-6 text-gray-700 leading-relaxed space-y-2">
             <li>Custom or personalized frames</li>
             <li>Gift cards</li>
