@@ -1,239 +1,281 @@
-"use client";
-import React, { useState } from "react";
-import PersonIcon from "@mui/icons-material/Person";
-import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Image from "next/image";
-import PaidIcon from "@mui/icons-material/Paid";
-import Cart from "../Cart/Cart";
-import { useEffect } from "react";
-import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCategories } from "../API/api";
-import { useRouter } from "next/router";
-import { usePathname } from "next/navigation";
-import { setUserDetails } from "../store/cartSlice";
-import SearchIcon from "@mui/icons-material/Search";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import MaleIcon from "@mui/icons-material/Male";
-import FemaleIcon from "@mui/icons-material/Female";
-import TransgenderIcon from "@mui/icons-material/Transgender";
-import { Button } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+'use client'
+import React, { useState } from 'react'
+import PersonIcon from '@mui/icons-material/Person'
+import CloseIcon from '@mui/icons-material/Close'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import MenuIcon from '@mui/icons-material/Menu'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Image from 'next/image'
+import PaidIcon from '@mui/icons-material/Paid'
+import Cart from '../Cart/Cart'
+import { useEffect } from 'react'
+import Link from 'next/link'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchCategories } from '../API/api'
+import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
+import { setUserDetails } from '../store/cartSlice'
+import SearchIcon from '@mui/icons-material/Search'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import MaleIcon from '@mui/icons-material/Male'
+import FemaleIcon from '@mui/icons-material/Female'
+import TransgenderIcon from '@mui/icons-material/Transgender'
+import { Button } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.items);
-  const user = useSelector((state) => state.cart.user);
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleSidebar = () => setIsOpen(!isOpen);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isHelpCenterOpen, setIsHelpCenterOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
-  const [mobileSearchTerm, setMobileSearchTerm] = useState("");
-  const [isGenderOpen, setIsGenderOpen] = useState(false);
-  const [blackNavbar, setBlackNavbar] = useState(false);
+  const dispatch = useDispatch()
+  const cart = useSelector(state => state.cart.items)
+  const user = useSelector(state => state.cart.user)
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleSidebar = () => setIsOpen(!isOpen)
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
+  const [isHelpCenterOpen, setIsHelpCenterOpen] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [showMobileSearch, setShowMobileSearch] = useState(false)
+  const [mobileSearchTerm, setMobileSearchTerm] = useState('')
+  const [isGenderOpen, setIsGenderOpen] = useState(false)
+  const [blackNavbar, setBlackNavbar] = useState(false)
 
-  let toggle = false;
-  const router = useRouter();
-  const path = usePathname();
+  let toggle = false
+  const router = useRouter()
+  const path = usePathname()
 
   const toggleCategories = () => {
-    setIsCategoriesOpen(!isCategoriesOpen);
-    setIsHelpCenterOpen(false);
-  };
+    setIsCategoriesOpen(!isCategoriesOpen)
+    setIsHelpCenterOpen(false)
+  }
   const toggleHelpCenter = () => {
-    setIsHelpCenterOpen(!isHelpCenterOpen);
-    setIsCategoriesOpen(false);
-  };
+    setIsHelpCenterOpen(!isHelpCenterOpen)
+    setIsCategoriesOpen(false)
+  }
   const toggleGender = () => {
-    setIsGenderOpen((prev) => !prev);
-  };
-  const toggleCart = () => setIsCartOpen(!isCartOpen);
-  const [isMounted, setIsMounted] = useState(false);
+    setIsGenderOpen(prev => !prev)
+  }
+  const toggleCart = () => setIsCartOpen(!isCartOpen)
+  const [isMounted, setIsMounted] = useState(false)
 
   const { data, isLoading } = useQuery({
-    queryKey: ["Categories"],
+    queryKey: ['Categories'],
     queryFn: async () => {
-      const res = await fetchCategories();
-      return res.json();
+      const res = await fetchCategories()
+      return res.json()
     },
 
     staleTime: 600_000,
     gcTime: 600_000,
     refetchInterval: 600_000,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+    refetchOnWindowFocus: false
+  })
 
-  const pathname = router.pathname;
+  const pathname = router.pathname
 
   useEffect(() => {
-    const isCarRoute = path.includes("cars");
-    const audio = new Audio("/sound/car_sound.mpeg");
+    const currentPath = router.asPath || router.pathname || ''
+    const isCarRoute = currentPath.includes('cars')
+    const isAnimeRoute = currentPath.includes('anime')
+    const isForHer = currentPath.includes('for-her')
+    const isForHim = currentPath.includes('for-him')
+    const isMovies = currentPath.includes('movies')
 
-    if (typeof window === "undefined") return;
-    if (!isCarRoute) return;
+    if (typeof window === 'undefined') return
 
-    const setWith3MinExpiry = (key, value) => {
-      const expiry = Date.now() + 3 * 60 * 1000; // 3 minutes
-
-      localStorage.setItem(
-        key,
-        JSON.stringify({
-          value,
-          expiry,
-        })
-      );
-    };
-
-    const getWith3MinExpiry = (key) => {
-      const itemStr = localStorage.getItem(key);
-      if (!itemStr) return null;
-
-      try {
-        const { expiry } = JSON.parse(itemStr);
-
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key);
-          return null;
+    const getCarSound = async key => {
+      const carAudio = new Audio('/sound/car_sound.mpeg')
+      const itemStr = localStorage.getItem(key)
+      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
+      if (!itemStr) {
+        await carAudio.play().catch(() => {})
+        localStorage.setItem(key, expiry)
+      } else {
+        const expiryCheck = localStorage.getItem(key)
+        if (Date.now().toString() > expiryCheck) {
+          localStorage.removeItem(key)
+          await carAudio.play().catch(() => {})
+          localStorage.setItem(key, expiry)
         }
-
-        return true;
-      } catch {
-        localStorage.removeItem(key);
-        return null;
       }
-    };
-
-    const canPlaySound = !getWith3MinExpiry("car_sound");
-
-    if (canPlaySound) {
-      audio.play().catch(() => {});
-      setWith3MinExpiry("car_sound", "on");
     }
-  }, [path]);
+    const getAnimeSound = async key => {
+      const animeAudio = new Audio('/sound/anime_sound.mpeg')
+      const itemStr = localStorage.getItem(key)
+      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
+      if (!itemStr) {
+        await animeAudio.play().catch(() => {})
+        localStorage.setItem(key, expiry)
+      } else {
+        const expiryCheck = localStorage.getItem(key)
+        if (Date.now().toString() > expiryCheck) {
+          localStorage.removeItem(key)
+          await animeAudio.play().catch(() => {})
+          localStorage.setItem(key, expiry)
+        }
+      }
+    }
+    const getForherSound = async key => {
+      const forherAudio = new Audio('/sound/forher_sound.mpeg')
+      const itemStr = localStorage.getItem(key)
+      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
+      if (!itemStr) {
+        await forherAudio.play().catch(() => {})
+        localStorage.setItem(key, expiry)
+      } else {
+        const expiryCheck = localStorage.getItem(key)
+        if (Date.now().toString() > expiryCheck) {
+          localStorage.removeItem(key)
+          await forherAudio.play().catch(() => {})
+          localStorage.setItem(key, expiry)
+        }
+      }
+    }
+    const getForhimSound = async key => {
+      const forhimAudio = new Audio('/sound/forhim_sound.mpeg')
+      const itemStr = localStorage.getItem(key)
+      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
+      if (!itemStr) {
+        await forhimAudio.play().catch(() => {})
+        localStorage.setItem(key, expiry)
+      } else {
+        const expiryCheck = localStorage.getItem(key)
+        if (Date.now().toString() > expiryCheck) {
+          localStorage.removeItem(key)
+          await forhimAudio.play().catch(() => {})
+          localStorage.setItem(key, expiry)
+        }
+      }
+    }
+    if (isCarRoute) {
+      getCarSound('car_sound')
+    }
+    if (isAnimeRoute) {
+      getAnimeSound('anime_sound')
+    }
+    if (isForHer) {
+      getForherSound('forher_sound')
+    }
+    if (isForHim) {
+      getForhimSound('forhim_sound')
+    }
+  }, [router.asPath, router.pathname])
 
   useEffect(() => {
-    const isBlackNavbar = pathname.includes("premium-categories");
-    setBlackNavbar(isBlackNavbar);
-  }, [pathname]);
+    const isBlackNavbar = pathname.includes('premium-categories')
+    setBlackNavbar(isBlackNavbar)
+  }, [pathname])
 
   useEffect(() => {
-    dispatch(setUserDetails());
-  }, []);
+    dispatch(setUserDetails())
+  }, [])
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
 
     return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
+      const currentScrollPos = window.scrollY
 
       setVisible(
         prevScrollPos > currentScrollPos || // Scrolling up
           currentScrollPos < 10 // At the top
-      );
+      )
 
-      setPrevScrollPos(currentScrollPos);
-    };
+      setPrevScrollPos(currentScrollPos)
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos]);
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [prevScrollPos])
 
-  if (!isMounted) return null;
+  if (!isMounted) return null
 
-  async function CheckLogin(toggle) {
+  async function CheckLogin (toggle) {
     if (user.userEmail && user.userID) {
-      router.replace(`/user/${user.userID}`);
+      router.replace(`/user/${user.userID}`)
     } else {
-      router.replace("/login");
+      router.replace('/login')
     }
     if (toggle) {
-      toggleSidebar();
+      toggleSidebar()
     }
   }
 
-  async function searchItem(e) {
-    e.preventDefault();
-    console.log("This is search Item:", mobileSearchTerm);
-    setMobileSearchTerm("");
+  async function searchItem (e) {
+    e.preventDefault()
+    console.log('This is search Item:', mobileSearchTerm)
+    setMobileSearchTerm('')
   }
 
   return (
     <>
       <div
         className={`fixed top-0 left-0 right-0 shadow z-30 transition-transform duration-300 ${
-          visible ? "translate-y-0" : "-translate-y-full"
+          visible ? 'translate-y-0' : '-translate-y-full'
         } ${
-          blackNavbar ? "bg-[#141414] text-gray-300" : "bg-white text-black"
+          blackNavbar ? 'bg-[#141414] text-gray-300' : 'bg-white text-black'
         }`}
       >
         {/* For Mobile View */}
-        <div className="flex lg:hidden justify-between w-full items-center h-[65px]">
-          <div className="pl-3 flex justify-center items-center gap-2">
-            <div className="relative inline-block">
-              <Link href={"/"}>
-                <div className="flex items-center gap-[2px] text-[22px]">
+        <div className='flex lg:hidden justify-between w-full items-center h-[65px]'>
+          <div className='pl-3 flex justify-center items-center gap-2'>
+            <div className='relative inline-block'>
+              <Link href={'/'}>
+                <div className='flex items-center gap-[2px] text-[22px]'>
                   <Image
-                    src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
-                    alt="xsnapster"
+                    src={`${blackNavbar ? '/white-logo.svg' : '/logo.svg'}`}
+                    alt='xsnapster'
                     width={40}
                     height={40}
                   />
-                  <div className="flex items-center">
-                    <p className="font-semibold">
-                      <strong className="text-red-500">X</strong>SNAPSTER
+                  <div className='flex items-center'>
+                    <p className='font-semibold'>
+                      <strong className='text-red-500'>X</strong>SNAPSTER
                     </p>
                   </div>
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs italic">
+                <span className='absolute -bottom-2 left-34 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-xs italic'>
                   Premium
                 </span>
               )}
             </div>
-            <div className="relative" onClick={toggleGender}>
+            <div className='relative' onClick={toggleGender}>
               {/* Trigger */}
-              <div className="flex justify-center items-center cursor-pointer">
+              <div className='flex justify-center items-center cursor-pointer'>
                 <Image
-                  src={`${blackNavbar ? "/white-gender.svg" : "/gender.svg"}`}
-                  className="text-red-600"
+                  src={`${blackNavbar ? '/white-gender.svg' : '/gender.svg'}`}
+                  className='text-red-600'
                   width={22}
                   height={22}
-                  alt="gender"
+                  alt='gender'
                 />
                 {isGenderOpen ? (
                   <KeyboardArrowUpIcon
-                    fontSize="small"
-                    sx={{ fontSize: "15px" }}
+                    fontSize='small'
+                    sx={{ fontSize: '15px' }}
                   />
                 ) : (
                   <KeyboardArrowDownIcon
-                    fontSize="small"
-                    sx={{ fontSize: "15px" }}
+                    fontSize='small'
+                    sx={{ fontSize: '15px' }}
                   />
                 )}
               </div>
@@ -247,29 +289,29 @@ const Navbar = () => {
       transform transition-all duration-300 z-50
       ${
         isGenderOpen
-          ? "max-h-[300px] opacity-100 visible"
-          : "max-h-0 opacity-0 invisible"
+          ? 'max-h-[300px] opacity-100 visible'
+          : 'max-h-0 opacity-0 invisible'
       }
     `}
               >
-                <div className="flex flex-col p-3 space-y-2">
+                <div className='flex flex-col p-3 space-y-2'>
                   <Link
-                    href={"/categories/for-him"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/for-him'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Him</span>
                     <MaleIcon />
                   </Link>
                   <Link
-                    href={"/categories/for-her"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/for-her'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Her</span>
                     <FemaleIcon />
                   </Link>
                   <Link
-                    href={"/categories/others"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/others'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>Others</span>
                     <TransgenderIcon />
@@ -278,73 +320,73 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="pr-3 flex justify-center items-center gap-3 md:gap-4">
-            <div className="">
+          <div className='pr-3 flex justify-center items-center gap-3 md:gap-4'>
+            <div className=''>
               <SearchIcon
-                sx={{ fontSize: "30px" }}
-                onClick={() => setShowMobileSearch((prev) => !prev)}
-                className="cursor-pointer"
-                aria-label="Toggle search"
+                sx={{ fontSize: '30px' }}
+                onClick={() => setShowMobileSearch(prev => !prev)}
+                className='cursor-pointer'
+                aria-label='Toggle search'
               />
             </div>
-            <div className="relative inline-block">
-              <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs">
+            <div className='relative inline-block'>
+              <span className='absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs'>
                 {cart.length}
               </span>
               <ShoppingCartIcon
-                sx={{ fontSize: "28px" }}
+                sx={{ fontSize: '28px' }}
                 onClick={() => setIsCartOpen(true)}
-                className="cursor-pointer"
+                className='cursor-pointer'
               />
             </div>
-            <div className="">
+            <div className=''>
               <MenuIcon
-                sx={{ fontSize: "33px" }}
+                sx={{ fontSize: '33px' }}
                 onClick={toggleSidebar}
-                className="cursor-pointer"
+                className='cursor-pointer'
               />
             </div>
           </div>
         </div>
 
         {/* For Desktop View */}
-        <div className="lg:flex hidden justify-between items-center h-[65px]">
-          <div className="pl-7 flex items-center gap-2">
-            <div className="relative inline-block">
-              <Link href={"/"}>
-                <div className="flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold">
+        <div className='lg:flex hidden justify-between items-center h-[65px]'>
+          <div className='pl-7 flex items-center gap-2'>
+            <div className='relative inline-block'>
+              <Link href={'/'}>
+                <div className='flex items-center gap-[2px] md:text-[27px] text-[20px] font-semibold'>
                   <Image
-                    src={`${blackNavbar ? "/white-logo.svg" : "/logo.svg"}`}
-                    alt="xsnapster"
+                    src={`${blackNavbar ? '/white-logo.svg' : '/logo.svg'}`}
+                    alt='xsnapster'
                     width={47}
                     height={30}
                   />
-                  <div className="flex items-center">
-                    <p className="">
-                      <strong className="text-red-500">X</strong>SNAPSTER
+                  <div className='flex items-center'>
+                    <p className=''>
+                      <strong className='text-red-500'>X</strong>SNAPSTER
                     </p>
                   </div>
                 </div>
               </Link>
               {blackNavbar && (
-                <span className="absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[12px] italic">
+                <span className='absolute -bottom-1.5 left-42 tracking-wider flex items-center justify-center w-4 h-4 rounded-full text-red-600 animate-pulse text-[12px] italic'>
                   Premium
                 </span>
               )}
             </div>
-            <div className="relative" onClick={toggleGender}>
+            <div className='relative' onClick={toggleGender}>
               {/* Trigger */}
-              <div className="flex justify-center items-center cursor-pointer">
+              <div className='flex justify-center items-center cursor-pointer'>
                 <Image
-                  src={`${blackNavbar ? "/white-gender.svg" : "/gender.svg"}`}
+                  src={`${blackNavbar ? '/white-gender.svg' : '/gender.svg'}`}
                   width={25}
                   height={25}
-                  alt="gender"
+                  alt='gender'
                 />
                 {isGenderOpen ? (
-                  <KeyboardArrowUpIcon fontSize="small" />
+                  <KeyboardArrowUpIcon fontSize='small' />
                 ) : (
-                  <KeyboardArrowDownIcon fontSize="small" />
+                  <KeyboardArrowDownIcon fontSize='small' />
                 )}
               </div>
 
@@ -357,29 +399,29 @@ const Navbar = () => {
       transform transition-all duration-300 z-50
       ${
         isGenderOpen
-          ? "max-h-[300px] opacity-100 visible"
-          : "max-h-0 opacity-0 invisible"
+          ? 'max-h-[300px] opacity-100 visible'
+          : 'max-h-0 opacity-0 invisible'
       }
     `}
               >
-                <div className="flex flex-col p-3 space-y-2">
+                <div className='flex flex-col p-3 space-y-2'>
                   <Link
-                    href={"/categories/for-him"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/for-him'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Him</span>
                     <MaleIcon />
                   </Link>
                   <Link
-                    href={"/categories/for-her"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/for-her'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Her</span>
                     <FemaleIcon />
                   </Link>
                   <Link
-                    href={"/categories/others"}
-                    className="hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center"
+                    href={'/categories/others'}
+                    className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>Others</span>
                     <TransgenderIcon />
@@ -391,15 +433,15 @@ const Navbar = () => {
 
           <div>
             <div>
-              <ul className="flex items-center gap-6 relative">
+              <ul className='flex items-center gap-6 relative'>
                 {/* ✅ Categories Dropdown */}
                 <li
-                  className="cursor-pointer relative"
+                  className='cursor-pointer relative'
                   onClick={toggleCategories}
                 >
-                  <span className="flex text-[14px] hover:text-red-500 items-center">
+                  <span className='flex text-[14px] hover:text-red-500 items-center'>
                     Categories
-                    <sup className="text-red-600 text-[10px] animate-pulse p-[4px] rounded-xl">
+                    <sup className='text-red-600 text-[10px] animate-pulse p-[4px] rounded-xl'>
                       New
                     </sup>
                     {isCategoriesOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -409,29 +451,29 @@ const Navbar = () => {
                   <div
                     className={`${
                       blackNavbar
-                        ? "bg-[#333333] text-white/80"
-                        : "bg-white text-black"
+                        ? 'bg-[#333333] text-white/80'
+                        : 'bg-white text-black'
                     } absolute z-20 left-0 top-[100%] shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isCategoriesOpen
-                        ? "max-h-[500px] mt-2 opacity-100 visible"
-                        : "max-h-0 opacity-0 invisible"
+                        ? 'max-h-[500px] mt-2 opacity-100 visible'
+                        : 'max-h-0 opacity-0 invisible'
                     }`}
                   >
                     {isLoading ? (
                       // 🔄 Loading State (Skeleton Chips)
-                      <div className="text-center text-xl p-4">
+                      <div className='text-center text-xl p-4'>
                         <p>Loading...</p>
                       </div>
                     ) : (
-                      <div className="flex flex-col p-4 space-y-3">
-                        {data?.map((item) => (
+                      <div className='flex flex-col p-4 space-y-3'>
+                        {data?.map(item => (
                           <a
                             href={`/categories/${item.slug}`}
                             key={item.name}
-                            className="flex items-end justify-between hover:text-red-500 transition-all duration-200"
+                            className='flex items-end justify-between hover:text-red-500 transition-all duration-200'
                           >
-                            <p className="text-[13px]">{item.name}</p>
-                            <p className="text-[10px] text-red-600 animate-pulse">
+                            <p className='text-[13px]'>{item.name}</p>
+                            <p className='text-[10px] text-red-600 animate-pulse'>
                               {item.one_liner}
                             </p>
                           </a>
@@ -444,10 +486,10 @@ const Navbar = () => {
                 {/* Other Menu Items */}
                 {/* Help Center Dropdown */}
                 <li
-                  className="cursor-pointer relative"
+                  className='cursor-pointer relative'
                   onClick={toggleHelpCenter}
                 >
-                  <span className="flex text-[14px] hover:text-red-500 items-center gap-1">
+                  <span className='flex text-[14px] hover:text-red-500 items-center gap-1'>
                     Help Center
                     {isHelpCenterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                   </span>
@@ -456,42 +498,42 @@ const Navbar = () => {
                   <div
                     className={`${
                       blackNavbar
-                        ? "bg-[#333333] text-white/80"
-                        : "bg-white text-black"
+                        ? 'bg-[#333333] text-white/80'
+                        : 'bg-white text-black'
                     } absolute z-20 left-0 top-[100%] shadow-lg border border-gray-200 rounded-lg overflow-hidden text-[15px] w-[250px] transform transition-all duration-300 ${
                       isHelpCenterOpen
-                        ? "max-h-[500px] mt-2 opacity-100 visible"
-                        : "max-h-0 opacity-0 invisible"
+                        ? 'max-h-[500px] mt-2 opacity-100 visible'
+                        : 'max-h-0 opacity-0 invisible'
                     }`}
                   >
-                    <div className="flex flex-col p-4 space-y-2">
+                    <div className='flex flex-col p-4 space-y-2'>
                       {[
                         {
                           name: "Who's Behind The Camera",
-                          link: "/who-is-behind-the-camera",
+                          link: '/who-is-behind-the-camera'
                         },
-                        { name: "Reviews", link: "/reviews" },
-                        { name: "FAQ's", link: "/faqs" },
-                        { name: "Contact Us", link: "/contact-us" },
-                        { name: "Privacy Policy", link: "/privacy-policy" },
+                        { name: 'Reviews', link: '/reviews' },
+                        { name: "FAQ's", link: '/faqs' },
+                        { name: 'Contact Us', link: '/contact-us' },
+                        { name: 'Privacy Policy', link: '/privacy-policy' },
                         {
-                          name: "Refund Policy",
-                          link: "/return-and-refund",
+                          name: 'Refund Policy',
+                          link: '/return-and-refund'
                         },
                         {
-                          name: "Terms & Conditions",
-                          link: "/terms-and-conditions",
+                          name: 'Terms & Conditions',
+                          link: '/terms-and-conditions'
                         },
-                        { name: "Shipping Policy", link: "/shipping-policy" },
-                      ].map((item) => (
+                        { name: 'Shipping Policy', link: '/shipping-policy' }
+                      ].map(item => (
                         <div
                           key={item.name}
-                          className="hover:text-red-600 transition-all duration-200"
+                          className='hover:text-red-600 transition-all duration-200'
                         >
                           <Link
                             onClick={toggleHelpCenter}
                             href={item.link}
-                            className="text-[13px]"
+                            className='text-[13px]'
                           >
                             {item.name}
                           </Link>
@@ -502,13 +544,13 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <form onSubmit={searchItem} type="submit" action="submit">
+                  <form onSubmit={searchItem} type='submit' action='submit'>
                     <input
-                      type="text"
+                      type='text'
                       value={mobileSearchTerm}
-                      onChange={(e) => setMobileSearchTerm(e.target.value)}
-                      placeholder="Search products"
-                      className="border rounded-md px-2 w-[180px] h-[30px] py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      onChange={e => setMobileSearchTerm(e.target.value)}
+                      placeholder='Search products'
+                      className='border rounded-md px-2 w-[180px] h-[30px] py-2 focus:outline-none focus:ring-1 focus:ring-red-500'
                       autoFocus
                     />
                   </form>
@@ -516,7 +558,7 @@ const Navbar = () => {
 
                 <li
                   onClick={() => CheckLogin(toggle)}
-                  className="
+                  className='
     flex items-center gap-2
     px-3 py-1
     bg-white
@@ -528,13 +570,13 @@ const Navbar = () => {
     hover:bg-gray-50
     hover:shadow-md
     active:bg-gray-100
-  "
+  '
                 >
-                  <PersonIcon className="text-gray-600 w-4 h-4" />
+                  <PersonIcon className='text-gray-600 w-4 h-4' />
 
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className='text-sm font-medium text-gray-700'>
                     {user?.userEmail?.length > 13
-                      ? user.userEmail.substring(0, 9) + "..."
+                      ? user.userEmail.substring(0, 9) + '...'
                       : user?.userEmail}
                   </span>
                 </li>
@@ -542,14 +584,14 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="pr-7">
-            <div className="relative inline-block">
-              <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs">
+          <div className='pr-7'>
+            <div className='relative inline-block'>
+              <span className='absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs'>
                 {cart.length}
               </span>
               <ShoppingCartIcon
                 onClick={() => setIsCartOpen(true)}
-                className="cursor-pointer"
+                className='cursor-pointer'
               />
             </div>
           </div>
@@ -558,19 +600,19 @@ const Navbar = () => {
         {/* Premium Links  */}
         <div
           className={`${
-            blackNavbar ? "bg-white/30 text-white" : "bg-black text-white"
+            blackNavbar ? 'bg-white/30 text-white' : 'bg-black text-white'
           }`}
         >
-          <ul className="py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide ">
-            <li className="text-red-600 animate-pulse font-semibold">
+          <ul className='py-[5px] pl-5 pr-2 text-[13px] flex items-center gap-6 whitespace-nowrap justify-start overflow-x-auto scrollbar-hide '>
+            <li className='text-red-600 animate-pulse font-semibold'>
               <Link href={`/premium-categories/only-frames`}>• OnlyFrames</Link>
             </li>
-            <li className=" text-amber-300">
+            <li className=' text-amber-300'>
               <Link
-                className="flex items-center gap-[2px]"
+                className='flex items-center gap-[2px]'
                 href={`/premium-categories/premium-frames`}
               >
-                <PaidIcon fontSize="small" /> Premium Frames
+                <PaidIcon fontSize='small' /> Premium Frames
               </Link>
             </li>
             <li>
@@ -596,35 +638,35 @@ const Navbar = () => {
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className="lg:hidden px-2 pt-26 absolute bg-white w-full
+          className='lg:hidden px-2 pt-26 absolute bg-white w-full
       transition-all duration-300 ease-out
-      animate-slide-down flex itme justify-start gap-3 p-2"
+      animate-slide-down flex itme justify-start gap-3 p-2'
         >
-          <form onSubmit={searchItem} type="submit" action="submit">
+          <form onSubmit={searchItem} type='submit' action='submit'>
             <input
               value={mobileSearchTerm}
-              onChange={(e) => setMobileSearchTerm(e.target.value)}
-              placeholder="Search products"
-              className="border rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+              onChange={e => setMobileSearchTerm(e.target.value)}
+              placeholder='Search products'
+              className='border rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-500'
               autoFocus
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
                   // handle search submit here (e.g., navigate or call search)
                 }
               }}
             />
           </form>
           <Button
-            onClick={(e) => {
-              searchItem(e);
+            onClick={e => {
+              searchItem(e)
             }}
             sx={{
-              fontSize: "14px",
-              bgcolor: "black",
-              padding: "2px 2px",
+              fontSize: '14px',
+              bgcolor: 'black',
+              padding: '2px 2px'
             }}
-            variant="contained"
-            className="w-[95px] rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition"
+            variant='contained'
+            className='w-[95px] rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition'
           >
             Search
           </Button>
@@ -633,7 +675,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          className='fixed inset-0 bg-black/40 z-40 lg:hidden'
           onClick={toggleSidebar}
         />
       )}
@@ -641,43 +683,43 @@ const Navbar = () => {
       {/* Sidebar Drawer */}
       <div
         className={`fixed top-0 left-0 h-full overflow-auto w-80 bg-[#333333] lg:hidden shadow-lg z-50 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex h-[65px] justify-between items-center rounded-2xl bg-[#212121] m-3 p-2 border-b">
-          <div className="flex items-center gap-[1px]">
+        <div className='flex h-[65px] justify-between items-center rounded-2xl bg-[#212121] m-3 p-2 border-b'>
+          <div className='flex items-center gap-[1px]'>
             <Link
-              href={"/"}
-              className="h-[27px] font-playfair font-display weight-700 text-[20px] text-white/80 font-semibold pl-1"
+              href={'/'}
+              className='h-[27px] font-playfair font-display weight-700 text-[20px] text-white/80 font-semibold pl-1'
             >
-              <bold className="text-red-600">X</bold>SNAPSTER
+              <bold className='text-red-600'>X</bold>SNAPSTER
             </Link>
           </div>
-          <button className="text-white pr-1" onClick={toggleSidebar}>
+          <button className='text-white pr-1' onClick={toggleSidebar}>
             <CloseIcon />
           </button>
         </div>
 
         <div
-          onClick={(e) => CheckLogin((toggle = true))}
-          className="flex items-center h-[60px] p-2 pl-4 m-3 text-white/80 text-[13px] bg-[#212121] rounded-2xl gap-2"
+          onClick={e => CheckLogin((toggle = true))}
+          className='flex items-center h-[60px] p-2 pl-4 m-3 text-white/80 text-[13px] bg-[#212121] rounded-2xl gap-2'
         >
           <PersonIcon />
           <p>
             {user?.userEmail?.length > 13
-              ? user.userEmail?.substring(0, 20) + "..."
+              ? user.userEmail?.substring(0, 20) + '...'
               : user?.userEmail}
           </p>
         </div>
 
         <div
           onClick={toggleCategories}
-          className="text-white/80 bg-[#212121] text-[13px] flex flex-col justify-center rounded-2xl m-3"
+          className='text-white/80 bg-[#212121] text-[13px] flex flex-col justify-center rounded-2xl m-3'
         >
-          <div className="flex items-center justify-between cursor-pointer min-h-[60px] pl-5 pr-3">
+          <div className='flex items-center justify-between cursor-pointer min-h-[60px] pl-5 pr-3'>
             <span>
               Categories
-              <sup className="text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl">
+              <sup className='text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl'>
                 New
               </sup>
             </span>
@@ -687,18 +729,18 @@ const Navbar = () => {
           {isCategoriesOpen && (
             <div
               className={`overflow-auto text-[13px] transform transition-transform duration-300 ${
-                isCategoriesOpen ? "max-h-68 mt-1" : "max-h-0"
+                isCategoriesOpen ? 'max-h-68 mt-1' : 'max-h-0'
               } m-4 flex flex-col space-y-5`}
             >
-              {data?.map((item) => (
+              {data?.map(item => (
                 <a
                   onClick={toggleSidebar}
                   href={`/categories/${item.slug}`}
                   key={item.id}
-                  className="flex items-end justify-between border-b pb-3 pl-2"
+                  className='flex items-end justify-between border-b pb-3 pl-2'
                 >
                   <p>{item.name}</p>
-                  <p className="text-[10px] text-red-500 animate-pulse">
+                  <p className='text-[10px] text-red-500 animate-pulse'>
                     {item.one_liner}
                   </p>
                 </a>
@@ -707,47 +749,47 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex-1 text-[13px] scrollbar-hide overflow-y-auto p-5 text-white/80 bg-[#212121] rounded-2xl m-3">
+        <div className='flex flex-col'>
+          <div className='flex-1 text-[13px] scrollbar-hide overflow-y-auto p-5 text-white/80 bg-[#212121] rounded-2xl m-3'>
             <Link
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
               onClick={toggleSidebar}
-              href="/who-is-behind-the-camera"
+              href='/who-is-behind-the-camera'
             >
               Who's Behind the Camera?
             </Link>
             <Link
-              href={"/reviews"}
+              href={'/reviews'}
               onClick={toggleSidebar}
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
             >
               <p>Reviews</p>
             </Link>
             <Link
-              href={"/privacy-policy"}
+              href={'/privacy-policy'}
               onClick={toggleSidebar}
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
             >
               <p>Privacy Policy</p>
             </Link>
             <Link
-              href={"/help-center"}
+              href={'/help-center'}
               onClick={toggleSidebar}
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
             >
               <p>Help Center</p>
             </Link>
             <Link
-              href="/faqs"
+              href='/faqs'
               onClick={toggleSidebar}
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
             >
               <p>FAQ's</p>
             </Link>
             <Link
-              href={"/contact-us"}
+              href={'/contact-us'}
               onClick={toggleSidebar}
-              className="flex items-center justify-between h-[50px] border-b"
+              className='flex items-center justify-between h-[50px] border-b'
             >
               <p>Contact Us</p>
             </Link>
@@ -757,12 +799,12 @@ const Navbar = () => {
 
       {/* Cart Component */}
       {isCartOpen && (
-        <div className="fixed inset-0 bg-black/40 z-40" onClick={toggleCart} />
+        <div className='fixed inset-0 bg-black/40 z-40' onClick={toggleCart} />
       )}
 
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

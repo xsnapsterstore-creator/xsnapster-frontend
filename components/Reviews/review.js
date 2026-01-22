@@ -87,7 +87,7 @@ export default function ReviewCarousel() {
       <div className="w-full flex">
         <Marquee
           gradient={false}
-          speed={80}
+          speed={50}
           pauseOnHover={true}
           pauseOnClick={true}
           delay={0}
@@ -98,7 +98,7 @@ export default function ReviewCarousel() {
           {reviews.map((item, i) => (
             <div
               key={i}
-              className="relative m-3 shadow-lg rounded-lg md:h-[250px] h-[110px]"
+              className="relative m-3 shadow-lg rounded-lg md:h-[160px] h-[110px]"
             >
               <Image
                 src={item.image}
@@ -118,7 +118,7 @@ export default function ReviewCarousel() {
       <div className="w-full flex">
         <Marquee
           gradient={false}
-          speed={80}
+          speed={50}
           pauseOnHover={true}
           pauseOnClick={true}
           delay={0}
@@ -129,7 +129,7 @@ export default function ReviewCarousel() {
           {reviews.map((item, i) => (
             <div
               key={i}
-              className="relative m-3 shadow-lg rounded-lg md:h-[250px] h-[110px]"
+              className="relative m-3 shadow-lg rounded-lg md:h-[160px] h-[110px]"
             >
               <Image
                 src={item.image}
