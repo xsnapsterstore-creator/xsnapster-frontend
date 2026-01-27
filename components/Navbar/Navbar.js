@@ -76,92 +76,30 @@ const Navbar = () => {
   const pathname = router.pathname
 
   useEffect(() => {
-    const currentPath = router.asPath || router.pathname || ''
-    const isCarRoute = currentPath.includes('cars')
-    const isAnimeRoute = currentPath.includes('anime')
-    const isForHer = currentPath.includes('for-her')
-    const isForHim = currentPath.includes('for-him')
-    const isMovies = currentPath.includes('movies')
+    const isCarRoute = path.includes('cars')
+    const audio = new Audio('/sound/car_sound.mpeg')
 
     if (typeof window === 'undefined') return
+    if (!isCarRoute) return
 
-    const getCarSound = async key => {
-      const carAudio = new Audio('/sound/car_sound.mpeg')
+    const getWith3MinExpiry = async key => {
       const itemStr = localStorage.getItem(key)
       let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
       if (!itemStr) {
-        await carAudio.play().catch(() => {})
+        await audio.play().catch(() => {})
         localStorage.setItem(key, expiry)
       } else {
         const expiryCheck = localStorage.getItem(key)
-        if (Date.now().toString() > expiryCheck) {
+        if (Date.now() > expiryCheck) {
           localStorage.removeItem(key)
-          await carAudio.play().catch(() => {})
+          await audio.play().catch(() => {})
           localStorage.setItem(key, expiry)
         }
       }
     }
-    const getAnimeSound = async key => {
-      const animeAudio = new Audio('/sound/anime_sound.mpeg')
-      const itemStr = localStorage.getItem(key)
-      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
-      if (!itemStr) {
-        await animeAudio.play().catch(() => {})
-        localStorage.setItem(key, expiry)
-      } else {
-        const expiryCheck = localStorage.getItem(key)
-        if (Date.now().toString() > expiryCheck) {
-          localStorage.removeItem(key)
-          await animeAudio.play().catch(() => {})
-          localStorage.setItem(key, expiry)
-        }
-      }
-    }
-    const getForherSound = async key => {
-      const forherAudio = new Audio('/sound/forher_sound.mpeg')
-      const itemStr = localStorage.getItem(key)
-      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
-      if (!itemStr) {
-        await forherAudio.play().catch(() => {})
-        localStorage.setItem(key, expiry)
-      } else {
-        const expiryCheck = localStorage.getItem(key)
-        if (Date.now().toString() > expiryCheck) {
-          localStorage.removeItem(key)
-          await forherAudio.play().catch(() => {})
-          localStorage.setItem(key, expiry)
-        }
-      }
-    }
-    const getForhimSound = async key => {
-      const forhimAudio = new Audio('/sound/forhim_sound.mpeg')
-      const itemStr = localStorage.getItem(key)
-      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
-      if (!itemStr) {
-        await forhimAudio.play().catch(() => {})
-        localStorage.setItem(key, expiry)
-      } else {
-        const expiryCheck = localStorage.getItem(key)
-        if (Date.now().toString() > expiryCheck) {
-          localStorage.removeItem(key)
-          await forhimAudio.play().catch(() => {})
-          localStorage.setItem(key, expiry)
-        }
-      }
-    }
-    if (isCarRoute) {
-      getCarSound('car_sound')
-    }
-    if (isAnimeRoute) {
-      getAnimeSound('anime_sound')
-    }
-    if (isForHer) {
-      getForherSound('forher_sound')
-    }
-    if (isForHim) {
-      getForhimSound('forhim_sound')
-    }
-  }, [router.asPath, router.pathname])
+
+    getWith3MinExpiry('car_sound')
+  }, [path])
 
   useEffect(() => {
     const isBlackNavbar = pathname.includes('premium-categories')

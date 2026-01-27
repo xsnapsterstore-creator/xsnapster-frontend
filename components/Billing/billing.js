@@ -35,7 +35,7 @@ const BillingTemplate = () => {
     { value: "cod", label: "💵 Cash on Delivery" },
     {
       value: "upi",
-      label: "🟢 UPI (GPay / PhonePe / Paytm) / Debit Card / Credit Card",
+      label: "🟢 UPI / Debit Card / Credit Card",
     },
   ];
 
@@ -149,7 +149,7 @@ const BillingTemplate = () => {
         return;
       }
       if (paymentOpt === "cod") {
-        console.log("This is Online Payment:", paymentOpt);
+        const idempotency = localStorage.getItem("idempotency");
         const payload = {
           items: cart.map((item) => ({
             product_id: item.id,
@@ -158,6 +158,7 @@ const BillingTemplate = () => {
           })),
           address_id: address_id,
           payment_method: "COD",
+          idempotency_key: idempotency
         };
 
         const res = await UserOrder(payload);
