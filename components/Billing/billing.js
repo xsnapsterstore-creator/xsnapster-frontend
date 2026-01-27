@@ -138,6 +138,7 @@ const BillingTemplate = () => {
 
   async function ProceedPayment() {
     const address_id = localStorage.getItem("address_id");
+    const idempotency = localStorage.getItem("idempotency");
     try {
       // Prevent checkout if cart is empty
       if (!cart || cart.length === 0) {
@@ -149,11 +150,10 @@ const BillingTemplate = () => {
         return;
       }
       if (paymentOpt === "cod") {
-        const idempotency = localStorage.getItem("idempotency");
         const payload = {
           items: cart.map((item) => ({
             product_id: item.id,
-            dimension: item.dimensions, // <-- confirm this key name
+            dimension: item.dimensions,
             qty: item.quantity,
           })),
           address_id: address_id,
@@ -201,6 +201,7 @@ const BillingTemplate = () => {
             })),
             address_id: address_id,
             payment_method: "RAZORPAY",
+            idempotency_key: idempotency
           };
           const res = await UserOrder(payload);
 

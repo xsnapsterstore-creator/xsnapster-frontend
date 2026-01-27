@@ -76,32 +76,6 @@ const Navbar = () => {
   const pathname = router.pathname
 
   useEffect(() => {
-    const isCarRoute = path.includes('cars')
-    const audio = new Audio('/sound/car_sound.mpeg')
-
-    if (typeof window === 'undefined') return
-    if (!isCarRoute) return
-
-    const getWith3MinExpiry = async key => {
-      const itemStr = localStorage.getItem(key)
-      let expiry = Date.now() + 3 * 60 * 1000 // 3 minutes
-      if (!itemStr) {
-        await audio.play().catch(() => {})
-        localStorage.setItem(key, expiry)
-      } else {
-        const expiryCheck = localStorage.getItem(key)
-        if (Date.now() > expiryCheck) {
-          localStorage.removeItem(key)
-          await audio.play().catch(() => {})
-          localStorage.setItem(key, expiry)
-        }
-      }
-    }
-
-    getWith3MinExpiry('car_sound')
-  }, [path])
-
-  useEffect(() => {
     const isBlackNavbar = pathname.includes('premium-categories')
     setBlackNavbar(isBlackNavbar)
   }, [pathname])
