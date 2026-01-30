@@ -1,19 +1,19 @@
-import React from "react";
-import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import React from 'react'
+import Image from 'next/image'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../store/cartSlice'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
 const Product = ({ product, category_name }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const [added, setAdded] = useState(false);
-  const [sizeOpt, setSizeOpt] = useState(product.dimensions[0]);
-  const [open, setOpen] = useState(false);
-  const selectedPricing = product.dimension_pricing[sizeOpt];
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const [added, setAdded] = useState(false)
+  const [sizeOpt, setSizeOpt] = useState(product.dimensions[0])
+  const [open, setOpen] = useState(false)
+  const selectedPricing = product.dimension_pricing[sizeOpt]
   const pro = {
     category: product.category,
     dimensions: sizeOpt,
@@ -26,36 +26,36 @@ const Product = ({ product, category_name }) => {
     slug: product.slug,
     subcategory: product.subcategory,
     title: product.title,
-    view_count: product.view_count,
-  };
+    view_count: product.view_count
+  }
 
   const category = category_name
-    ? category_name.trim().replace(/\s+/g, "-").toLowerCase()
-    : "";
+    ? category_name.trim().replace(/\s+/g, '-').toLowerCase()
+    : ''
   const subcategory = product?.subcategory
-    ? product.subcategory.trim().replace(/\s+/g, "-").toLowerCase()
-    : "";
+    ? product.subcategory.trim().replace(/\s+/g, '-').toLowerCase()
+    : ''
 
   const FrameSize = {
-    A4: "8.27 x 11.69 inches",
-    A3: "11.7 x 16.5 inches",
-    A2: "16.5 x 23.4 inches",
-    Poster: "11.7 x 16.5 inches",
-  };
+    A4: '8.27 x 11.69 inches',
+    A3: '11.7 x 16.5 inches',
+    A2: '16.5 x 23.4 inches',
+    Poster: '11.7 x 16.5 inches'
+  }
 
   return (
-    <div className="relative cursor-pointer rounded-lg shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[175px] md:w-[200px] m-auto">
+    <div className='relative cursor-pointer rounded-lg shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[175px] md:w-[200px] m-auto'>
       {/* Discount Badge */}
-      <span className="absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10">
+      <span className='absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10'>
         Sale
       </span>
 
       {/* Product Image */}
       <div
         onClick={() => {
-          router.push(`/categories/${category}/${subcategory}/${product.id}`);
+          router.push(`/categories/${category}/${subcategory}/${product.id}`)
         }}
-        className="overflow-hidden rounded-t-lg"
+        className='overflow-hidden rounded-t-lg'
       >
         <Image
           src={product.image_link}
@@ -63,44 +63,47 @@ const Product = ({ product, category_name }) => {
           width={100}
           height={100}
           priority
-          fetchPriority="high"
+          fetchPriority='high'
           quality={75}
-          className="object-cover w-[175px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500"
+          className='object-cover w-[175px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500'
         />
       </div>
 
       {/* Product Info */}
-      <div className="p-2 flex flex-col items-center bg-gray-100">
+      <div className='p-2 flex flex-col items-center bg-gray-100'>
         <h1
           onClick={() => {
-            router.push(`/categories/${category}/${subcategory}/${product.id}`);
+            router.push(`/categories/${category}/${subcategory}/${product.id}`)
           }}
-          className="text-[11px] md:text-[12px] font-medium text-gray-800 line-clamp-2 h-[36px]"
+          className='text-[11px] md:text-[12px] font-medium text-gray-800 line-clamp-2 h-[36px]'
         >
           {product.title}
         </h1>
 
         {/* Price & Size Section */}
-        <div className="w-full flex-col justify-between items-end">
+        <div className='w-full flex-col justify-between items-end'>
           {/* Price Section */}
-          <div className="flex items-end gap-1 justify-start">
+          <div className='flex items-end gap-1 justify-start'>
             {/* Sale Price */}
-            <p className="text-red-600 font-bold text-[14px] lg:text-[16px]">
+            <p className='text-red-600 font-bold text-[14px] lg:text-[16px]'>
               ₹{selectedPricing.discounted_price ?? selectedPricing.price}
             </p>
 
             {/* Strike-through original price only if discount exists */}
             {selectedPricing.discounted_price && (
-              <p className="line-through text-gray-700 text-[10px] lg:text-[12px]">
+              <p className='line-through text-gray-700 text-[10px] lg:text-[12px]'>
                 ₹{selectedPricing.price}
               </p>
             )}
+            <p className='text-gray-700 text-[8px] lg:text-[9px] ml-2'>
+              inclusive of all taxes.
+            </p>
           </div>
 
-          <div className="mt-1">
+          <div className='mt-1'>
             <button
               onClick={() => setOpen(true)}
-              className="py-1.5 w-full rounded-lg shadow-md text-[10px] transition bg-gray-900 hover:bg-gray-700 text-white"
+              className='py-1.5 w-full rounded-lg shadow-md text-[10px] transition bg-gray-900 hover:bg-gray-700 text-white'
             >
               Add to Cart
             </button>
@@ -112,51 +115,51 @@ const Product = ({ product, category_name }) => {
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/40 z-40"
+          className='fixed inset-0 bg-black/40 z-40'
         />
       )}
 
       {/* Bottom Sheet */}
       <div
         className={`fixed bottom-0 left-0 right-0 z-50 bg-white md:w-[450px] md:m-auto rounded-t-2xl shadow-xl transform transition-transform duration-300
-        ${open ? "translate-y-0" : "translate-y-full"}`}
+        ${open ? 'translate-y-0' : 'translate-y-full'}`}
       >
         {/* Drag Handle */}
-        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3" />
+        <div className='w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3' />
 
         {/* Content */}
-        <div className="p-5">
-          <div className="flex justify-between items-end">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div className='p-5'>
+          <div className='flex justify-between items-end'>
+            <h3 className='text-lg font-semibold text-gray-900'>
               Please select the size
             </h3>
-            <div className="flex items-end gap-2 justify-center">
+            <div className='flex items-end gap-2 justify-center'>
               {/* Sale Price */}
-              <p className="text-[17px] md:text-[18px] font-semibold text-green-600">
+              <p className='text-[17px] md:text-[18px] font-semibold text-green-600'>
                 ₹{selectedPricing.discounted_price ?? selectedPricing.price}
               </p>
 
               {/* Strike-through original price only if discount exists */}
               {selectedPricing.discounted_price && (
-                <p className="text-gray-500 text-[12px] md:text-[13px] line-through">
+                <p className='text-gray-500 text-[12px] md:text-[13px] line-through'>
                   ₹{selectedPricing.price}
                 </p>
               )}
             </div>
           </div>
 
-          <p className="text-gray-700 text-[12px]">{FrameSize[sizeOpt]}</p>
+          <p className='text-gray-700 text-[12px]'>{FrameSize[sizeOpt]}</p>
 
-          <div className="mt-4 flex gap-3">
-            {product.dimensions.map((size) => (
+          <div className='mt-4 flex gap-3'>
+            {product.dimensions.map(size => (
               <button
                 value={size}
-                onClick={(e) => setSizeOpt(e.target.value)}
+                onClick={e => setSizeOpt(e.target.value)}
                 className={`py-1.5 px-2.5 rounded-lg shadow-md text-[10px] transition border
                   ${
                     sizeOpt === size
-                      ? "bg-red-600 text-white border-red-600"
-                      : "bg-white text-black border-gray-500 hover:bg-gray-200"
+                      ? 'bg-red-600 text-white border-red-600'
+                      : 'bg-white text-black border-gray-500 hover:bg-gray-200'
                   }
                 `}
                 key={size}
@@ -166,22 +169,22 @@ const Product = ({ product, category_name }) => {
             ))}
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                dispatch(addToCart(pro));
-                setAdded(true);
-                setTimeout(() => setAdded(false), 1200);
-                setOpen(false);
+              onClick={e => {
+                e.stopPropagation()
+                dispatch(addToCart(pro))
+                setAdded(true)
+                setTimeout(() => setAdded(false), 1200)
+                setOpen(false)
               }}
-              className="flex-1 py-2 rounded-lg bg-black text-white cursor-pointer"
+              className='flex-1 py-2 rounded-lg bg-black text-white cursor-pointer'
             >
-              {added ? "Added" : "Add To Cart"}
+              {added ? 'Added' : 'Add To Cart'}
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

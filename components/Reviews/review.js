@@ -146,11 +146,11 @@ export default function ReviewCarousel() {
         </Marquee>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 justify-center items-center gap-4 py-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 justify-center items-center gap-4 py-4">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
-            className="h-[170px] w-[160px] relative overflow-hidden rounded-xl m-auto bg-gray-200"
+            className="h-[200px] w-[170px] relative overflow-hidden rounded-xl m-auto bg-gray-200"
           >
             <div className="absolute inset-0 skeleton-shimmer" />
             <p className="absolute inset-0 flex items-center justify-center text-center text-[10px] px-2">
