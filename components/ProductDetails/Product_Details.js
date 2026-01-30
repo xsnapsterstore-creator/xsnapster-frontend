@@ -336,7 +336,7 @@ export default function ProductDetailsPage({ prod }) {
             transition={{ duration: 0.4 }}
           >
             <div className="m-2 md:mt-0 text-left">
-              <h1 className="text-[14px] md:text-[16px] text-gray-700 tracking-wide">
+              <h1 className="text-[14px] md:text-[20px] text-gray-900 tracking-wide">
                 {prod.title}
               </h1>
               <h2 className="text-[11px] animate-pulse text-red-600 mt-2">
