@@ -14,7 +14,7 @@ const Product_Categories = ({ categProd }) => {
       </div>
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
-          <div className={``} key={category.id}>
+          <div key={category.id}>
             {/* Category Title */}
             <h2 className="text-[20px] text-center font-semibold">
               {category.category_name}

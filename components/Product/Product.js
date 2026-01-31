@@ -95,7 +95,7 @@ const Product = ({ product, category_name }) => {
                 ₹{selectedPricing.price}
               </p>
             )}
-            <p className='text-gray-700 text-[8px] lg:text-[9px] ml-2'>
+            <p className='text-gray-700 text-[8px] lg:text-[9px]'>
               inclusive of all taxes.
             </p>
           </div>
