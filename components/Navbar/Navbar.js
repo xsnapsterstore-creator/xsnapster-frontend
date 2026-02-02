@@ -40,6 +40,12 @@ const Navbar = () => {
   const [mobileSearchTerm, setMobileSearchTerm] = useState('')
   const [isGenderOpen, setIsGenderOpen] = useState(false)
   const [blackNavbar, setBlackNavbar] = useState(false)
+  const [premiumColorChange, setPremiumColorChange] = useState({
+    sexyframes: false,
+    hotrightnow: false,
+    framestars: false,
+    mostwatchedframes: false
+  })
 
   let toggle = false
   const router = useRouter()
@@ -76,9 +82,45 @@ const Navbar = () => {
   const pathname = router.pathname
 
   useEffect(() => {
-    const isBlackNavbar = pathname.includes('premium-categories')
+    const isBlackNavbar = path.includes('premium-categories')
     setBlackNavbar(isBlackNavbar)
-  }, [pathname])
+    const SexyFrames = path.includes('sexy-frames')
+    const HotRightNow = path.includes('hot-right-now')
+    const FrameStars = path.includes('frame-stars')
+    const MostWatchedFrames = path.includes('most-watched-frames')
+    if (SexyFrames) {
+      setPremiumColorChange({
+        sexyframes: true,
+        hotrightnow: false,
+        framestars: false,
+        mostwatchedframes: false
+      })
+    }
+    if (HotRightNow) {
+      setPremiumColorChange({
+        sexyframes: false,
+        hotrightnow: true,
+        framestars: false,
+        mostwatchedframes: false
+      })
+    }
+    if (FrameStars) {
+      setPremiumColorChange({
+        sexyframes: false,
+        hotrightnow: false,
+        framestars: true,
+        mostwatchedframes: false
+      })
+    }
+    if (MostWatchedFrames) {
+      setPremiumColorChange({
+        sexyframes: false,
+        hotrightnow: false,
+        framestars: false,
+        mostwatchedframes: true
+      })
+    }
+  }, [path])
 
   useEffect(() => {
     dispatch(setUserDetails())
@@ -528,18 +570,32 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href={`/premium-categories/sexy-frames`}>Sexy Frames</Link>
+              <Link
+                className={
+                  premiumColorChange?.sexyframes ? 'text-red-500' : 'text-white'
+                }
+                href='/premium-categories/sexy-frames'
+              >
+                Sexy Frames
+              </Link>
             </li>
+
             <li>
-              <Link href={`/premium-categories/hot-right-now`}>
+              <Link className={
+                  premiumColorChange?.hotrightnow ? 'text-red-500' : 'text-white'
+                } href={`/premium-categories/hot-right-now`}>
                 Hot Right Now
               </Link>
             </li>
             <li>
-              <Link href={`/premium-categories/frame-stars`}>Frame Stars</Link>
+              <Link className={
+                  premiumColorChange?.framestars ? 'text-red-500' : 'text-white'
+                } href={`/premium-categories/frame-stars`}>Frame Stars</Link>
             </li>
             <li>
-              <Link href={`/premium-categories/most-watched-frames`}>
+              <Link className={
+                  premiumColorChange?.mostwatchedframes ? 'text-red-500' : 'text-white'
+                } href={`/premium-categories/most-watched-frames`}>
                 Most Watched Frames
               </Link>
             </li>

@@ -226,10 +226,10 @@ const Footer = () => {
                 otherwise. If you have any issue regarding the artwork, please
                 write to us at{' '}
                 <Link
-                  href='mailto:contact@xsnapster.store'
+                  href='mailto:support@xsnapster.store'
                   className='underline'
                 >
-                  contact@xsnapster.store
+                  support@xsnapster.store
                 </Link>
                 .
               </p>
@@ -449,8 +449,8 @@ const Footer = () => {
               not purported to be official merchandise unless indicated
               otherwise. If you have any issue regarding the artwork, please
               write to us at{' '}
-              <Link href='mailto:contact@xsnapster.store' className='underline'>
-                contact@xsnapster.store
+              <Link href='mailto:support@xsnapster.store' className='underline'>
+                support@xsnapster.store
               </Link>
               .
             </p>

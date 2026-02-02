@@ -71,7 +71,7 @@ const PrivacyPolicy = () => {
           To do any of that, email us at{" "}
           <a
             href="mailto:contact@xsnapster.store"
-            className="text-sky-400 font-semibold hover:underline"
+            className="text-red-500 font-semibold hover:underline"
           >
             contact@xsnapster.store
           </a>{" "}
