@@ -95,29 +95,33 @@ const Navbar = () => {
         framestars: false,
         mostwatchedframes: false
       })
-    }
-    if (HotRightNow) {
+    } else if (HotRightNow) {
       setPremiumColorChange({
         sexyframes: false,
         hotrightnow: true,
         framestars: false,
         mostwatchedframes: false
       })
-    }
-    if (FrameStars) {
+    } else if (FrameStars) {
       setPremiumColorChange({
         sexyframes: false,
         hotrightnow: false,
         framestars: true,
         mostwatchedframes: false
       })
-    }
-    if (MostWatchedFrames) {
+    } else if (MostWatchedFrames) {
       setPremiumColorChange({
         sexyframes: false,
         hotrightnow: false,
         framestars: false,
         mostwatchedframes: true
+      })
+    } else {
+      setPremiumColorChange({
+        sexyframes: false,
+        hotrightnow: false,
+        framestars: false,
+        mostwatchedframes: false
       })
     }
   }, [path])
@@ -581,21 +585,36 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link className={
-                  premiumColorChange?.hotrightnow ? 'text-red-500' : 'text-white'
-                } href={`/premium-categories/hot-right-now`}>
+              <Link
+                className={
+                  premiumColorChange?.hotrightnow
+                    ? 'text-red-500'
+                    : 'text-white'
+                }
+                href={`/premium-categories/hot-right-now`}
+              >
                 Hot Right Now
               </Link>
             </li>
             <li>
-              <Link className={
+              <Link
+                className={
                   premiumColorChange?.framestars ? 'text-red-500' : 'text-white'
-                } href={`/premium-categories/frame-stars`}>Frame Stars</Link>
+                }
+                href={`/premium-categories/frame-stars`}
+              >
+                Frame Stars
+              </Link>
             </li>
             <li>
-              <Link className={
-                  premiumColorChange?.mostwatchedframes ? 'text-red-500' : 'text-white'
-                } href={`/premium-categories/most-watched-frames`}>
+              <Link
+                className={
+                  premiumColorChange?.mostwatchedframes
+                    ? 'text-red-500'
+                    : 'text-white'
+                }
+                href={`/premium-categories/most-watched-frames`}
+              >
                 Most Watched Frames
               </Link>
             </li>
