@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useSwipeable } from 'react-swipeable'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
+import { ArrowDownwardRounded } from '@mui/icons-material'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
@@ -45,7 +46,6 @@ export default function ProductDetailsPage ({ prod }) {
 
   const keyword = product.title
   const finalKeyword = keyword.split('|')
-  console.log('Keyword:', finalKeyword)
 
   async function BuyNow () {
     dispatch(addToCart({ ...product, quantity: prodQuantity }))
@@ -248,7 +248,7 @@ export default function ProductDetailsPage ({ prod }) {
           {/* Image Full Screen */}
           {fullscreenImage && (
             <div
-              className='fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50'
+              className='fixed inset-0 bg-black/50 backdrop-blur-md flex flex-col items-center justify-center z-50'
               onClick={() => setFullscreenImage(null)}
             >
               <Image
@@ -271,8 +271,8 @@ export default function ProductDetailsPage ({ prod }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div className='m-2 md:mt-0 text-left'>
-                <h1 className='text-[14px] md:text-[20px] text-gray-900 tracking-wide'>
+              <div className='md:mt-0 mt-2 text-left'>
+                <h1 className='text-[15px] md:text-[20px] text-gray-900 tracking-wide'>
                   {prod.title}
                 </h1>
                 <h2 className='text-[11px] animate-pulse text-red-600 mt-2'>
@@ -300,7 +300,7 @@ export default function ProductDetailsPage ({ prod }) {
                     )}
                   </div>
                   <div className='text-gray-500 text-[10px] md:text-[12px]'>
-                    <p>Price incl. of all taxes</p>
+                    <p>Price inclusive of all taxes</p>
                   </div>
                 </div>
                 <div className='flex flex-col items-end'>
@@ -373,41 +373,75 @@ export default function ProductDetailsPage ({ prod }) {
 
               {/* Offer  */}
               <div className='bg-green-50 border border-green-200 rounded-lg p-2.5 md:p-5'>
-                {/* Heading */}
-                <div className='flex items-center gap-2 mb-2 md:mb-3'>
-                  <span className='text-lg'>🎁</span>
-                  <h3 className='text-sm md:text-base font-semibold text-gray-800 tracking-wide'>
-                    SPECIAL OFFERS
-                  </h3>
+                <div>
+                  <div className='flex items-center gap-2 mb-2 md:mb-3'>
+                    <span className='text-lg'>🎁</span>
+                    <h3 className='text-sm md:text-base font-semibold text-gray-800 tracking-wide'>
+                      FRAME OFFERS
+                    </h3>
+                  </div>
+
+                  <div className='grid grid-cols-3 gap-2 md:gap-5 text-center'>
+                    <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
+                      <p className='md:text-xs text-[10px] font-medium text-gray-700'>
+                        Buy{' '}
+                        <span className='font-semibold text-gray-900'>3</span>
+                      </p>
+                      <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
+                        Get 1 Free
+                      </p>
+                    </div>
+
+                    <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
+                      <p className='md:text-xs text-[10px] font-medium text-gray-700'>
+                        Buy{' '}
+                        <span className='font-semibold text-gray-900'>6</span>
+                      </p>
+                      <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
+                        Get 2 Free
+                      </p>
+                    </div>
+
+                    <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
+                      <p className='md:text-xs text-[10px] font-medium text-gray-700'>
+                        Buy{' '}
+                        <span className='font-semibold text-gray-900'>9</span>
+                      </p>
+                      <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
+                        Get 3 Free
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Offers */}
-                <div className='grid grid-cols-3 gap-2 text-center'>
-                  <div className='bg-white rounded-lg py-2 px-3 border shadow-sm'>
-                    <p className='text-xs font-medium text-gray-700'>
-                      Buy <span className='font-semibold text-gray-900'>3</span>
-                    </p>
-                    <p className='text-xs text-red-600 animate-pulse font-semibold'>
-                      Get 1 Free
-                    </p>
+                <div className='mt-3'>
+                  <div className='flex items-center gap-2 mb-2 md:mb-3'>
+                    <span className='text-lg'>🎁</span>
+                    <h3 className='text-sm md:text-base font-semibold text-gray-800 tracking-wide'>
+                      POSTER OFFERS
+                    </h3>
                   </div>
 
-                  <div className='bg-white rounded-lg py-2 px-3 border shadow-sm'>
-                    <p className='text-xs font-medium text-gray-700'>
-                      Buy <span className='font-semibold text-gray-900'>6</span>
-                    </p>
-                    <p className='text-xs text-red-600 animate-pulse font-semibold'>
-                      Get 2 Free
-                    </p>
-                  </div>
+                  <div className='grid grid-cols-2 gap-2 md:gap-5 text-center'>
+                    <div className='rounded-lg bg-[#B8DFFF] h-10 p-1 shadow-sm'>
+                      <p className='md:text-xs text-[10px] font-medium text-gray-700'>
+                        Buy{' '}
+                        <span className='font-semibold text-gray-900'>5</span>
+                      </p>
+                      <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
+                        Get 5 Free
+                      </p>
+                    </div>
 
-                  <div className='bg-white rounded-lg py-2 px-3 border shadow-sm'>
-                    <p className='text-xs font-medium text-gray-700'>
-                      Buy <span className='font-semibold text-gray-900'>9</span>
-                    </p>
-                    <p className='text-xs text-red-600 animate-pulse font-semibold'>
-                      Get 3 Free
-                    </p>
+                    <div className='rounded-lg bg-[#B8DFFF] h-10 p-1 shadow-sm'>
+                      <p className='md:text-xs text-[10px] font-medium text-gray-700'>
+                        Buy{' '}
+                        <span className='font-semibold text-gray-900'>15</span>
+                      </p>
+                      <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
+                        Get 20 Free
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -428,21 +462,21 @@ export default function ProductDetailsPage ({ prod }) {
               <ProductDescription prodDesc={prod.description} />
             </div>
 
-            {/* <div className="flex flex-col justify-center mt-5 rounded-2xl p-3 bg-gray-400">
-        <div>
-          <p className="text-center">Looking for a custom frame</p>
-        </div>
-        <div className="flex justify-center items-center">
-          <ArrowDownwardRounded />
-        </div>
-        <div>
-          <input
-            type="file"
-            placeholder="Upload Your Image"
-            className="border px-3 py-2 rounded-lg w-full md:w-1/2"
-          />
-        </div>
-      </div> */}
+            {/* <div className='flex flex-col justify-center mt-5 rounded-2xl p-3 bg-gray-400'>
+              <div>
+                <p className='text-center'>Looking for a custom frame</p>
+              </div>
+              <div className='flex justify-center items-center'>
+                <ArrowDownwardRounded />
+              </div>
+              <div>
+                <input
+                  type='file'
+                  placeholder='Upload Your Image'
+                  className='border px-3 py-2 rounded-lg w-full md:w-1/2'
+                />
+              </div>
+            </div> */}
 
             <div className='flex flex-col md:flex-row gap-2 justify-center mt-4 pb-2'>
               <div>
