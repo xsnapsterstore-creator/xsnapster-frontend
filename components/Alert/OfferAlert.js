@@ -20,7 +20,7 @@ export default function OfferAlert({
             onClick={() => {
               onClose();
             }}
-            className="px-6 py-2 rounded-md bg-black text-white text-sm font-medium hover:bg-gray-900 active:scale-95 transition"
+            className="px-6 py-2 rounded-md bg-black text-white text-sm font-medium cursor-pointer hover:bg-gray-900 active:scale-95 transition"
           >
             OK
           </button>
