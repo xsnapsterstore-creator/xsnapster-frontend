@@ -88,7 +88,7 @@ const ActiveProducts = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="w-full bg-green-100 p-5 rounded-2xl shadow-2xl">
+      <div className="w-full bg-green-100 p-5 rounded-2xl">
         {/* Loading Overlay */}
         {loading && (
           <div className="fixed inset-0 flex items-center justify-center bg-white/70 z-50 backdrop-blur-sm">
@@ -240,10 +240,10 @@ const ActiveProducts = () => {
 
                 {/* Price */}
                 <div className="w-1/6 text-sm">
-                  <p className="font-semibold text-gray-800">₹{prod.price}</p>
-                  {prod.discounted_price && (
+                  <p className="font-semibold text-gray-800">₹{prod.discounted_price}</p>
+                  {prod.price && (
                     <p className="text-red-500 line-through text-xs">
-                      ₹{prod.discounted_price}
+                      ₹{prod.price}
                     </p>
                   )}
                 </div>
