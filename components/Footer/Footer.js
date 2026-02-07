@@ -7,10 +7,11 @@ import { fetchAllSubCategories } from '../API/api'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import CallIcon from '@mui/icons-material/Call'
-import Call from '@mui/icons-material/Call'
+import OfferAlert from '../Alert/OfferAlert'
 
 const Footer = () => {
   const [activeTag, setActiveTag] = useState(null)
+  const [open, setOpen] = useState(false)
   const { data, isLoading } = useQuery({
     queryKey: ['subCategories'],
     queryFn: async () => {
@@ -62,7 +63,7 @@ const Footer = () => {
             </svg>
           </div>
         </div>
-        <div className='text-white bg-[#121212]'>
+        <footer className='text-white bg-[#121212]'>
           <div className='pt-10 pl-5 p-5'>
             <div className='flex items-center justify-center w-full border-b pb-5'>
               {isLoading ? (
@@ -120,12 +121,12 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className='pt-10'>
+            <div className='pt-8'>
               <div>
                 <h4 className='text-[17px] font-semibold'>Quick links</h4>
               </div>
               <div className='pt-2'>
-                <ul className='text-[14px] text-gray-200 flex flex-col gap-2'>
+                <ul className='text-[14px] text-gray-200 flex flex-col gap-1.5'>
                   <li>
                     <Link href='/who-is-behind-the-camera'>
                       Who's Behind The Camera
@@ -154,7 +155,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className='pt-10 flex justify-start items-center gap-3'>
+            <div className='pt-5 flex justify-start items-center gap-3'>
               <div>Connect with us :</div>
               <div>
                 <ul className='flex justify-center items-center gap-2'>
@@ -185,21 +186,29 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className='pt-10'>
-              <h5 className='text-[15px]'>Subscribe to our emails</h5>
-              <div className='mt-2 flex justify-start items-center'>
+            <div className='pt-5'>
+              <div className='flex gap-2'>
                 <input
-                  className='w-[150px] p-2 rounded-xl bg-gray-500'
                   type='email'
+                  className='w-40 p-2 bg-gray-600 border border-gray-600 rounded-lg text-xs placeholder-gray-400 focus:ring-2 focus:ring-sky-400 outline-none'
                   placeholder='Enter your email'
                 />
-                <button className='ml-2 text-gray-100 bg-[#333333] drop-shadow-lg shadow-white text-[10px] shadow py-2 px-3 rounded'>
+                <button
+                  onClick={() => setOpen(true)}
+                  className='bg-red-600 hover:bg-red-500 cursor-pointer px-4 py-2 text-sm rounded-lg text-white transition'
+                >
                   Subscribe
                 </button>
               </div>
+              <OfferAlert
+                open={open}
+                title='EMAIL SUBSCRIPTION'
+                message='You have successfully subscribed to our email newsletter. You will receive updates about our latest products and offers.'
+                onClose={() => setOpen(false)}
+              />
             </div>
 
-            <div className='pt-10'>
+            <div className='pt-8'>
               <ul className='flex justify-start items-center text-[8px] gap-5'>
                 <li>
                   <Link href='/help-center'>Help Center</Link>
@@ -219,7 +228,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className='border-t border-gray-700 text-justify pt-6 mt-10'>
+            <div className='border-t border-gray-700 text-justify pt-6 mt-6'>
               <p className='text-xs'>
                 All artwork posted on this website is intended as fan art and is
                 not purported to be official merchandise unless indicated
@@ -237,16 +246,15 @@ const Footer = () => {
 
             <div className='pt-5 text-center'>
               <p className='text-[10px]'>
-                Copyright © 2025 XSNAPSTER. All rights reserved.
+                Copyright © 2026 XSNAPSTER. All rights reserved.
               </p>
             </div>
           </div>
-        </div>
+        </footer>
       </div>
 
       {/* For Desktop Screen */}
-      <div className='hidden lg:block'>
-        {/* Wave Divider */}
+      <div className='hidden lg:block'>        {/* Wave Divider */}
         <div className='wave-container'>
           <svg
             className='waves'
@@ -271,7 +279,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Container */}
-        <footer className='bg-[#121212] text-gray-300 py-16 px-10 lg:px-24'>
+        <footer className='bg-[#121212] text-gray-300 py-10 px-10 lg:px-24'>
           {/* Categories Data */}
           <div className='flex items-center justify-center w-full border-b pb-5'>
             {isLoading ? (
@@ -415,13 +423,22 @@ const Footer = () => {
               <div className='flex gap-2'>
                 <input
                   type='email'
-                  className='w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-sm placeholder-gray-400 focus:ring-2 focus:ring-sky-400 outline-none'
+                  className='w-full p-2 bg-gray-600 border border-gray-600 rounded-lg text-xs placeholder-gray-400 focus:ring-2 focus:ring-sky-400 outline-none'
                   placeholder='Enter your email'
                 />
-                <button className='bg-sky-500 hover:bg-sky-600 px-4 py-2 text-sm rounded-lg text-white transition'>
+                <button
+                  onClick={() => setOpen(true)}
+                  className='bg-red-600 hover:bg-red-500 cursor-pointer px-4 py-2 text-sm rounded-lg text-white transition'
+                >
                   Subscribe
                 </button>
               </div>
+              <OfferAlert
+                open={open}
+                title='EMAIL SUBSCRIPTION'
+                message='You have successfully subscribed to our email list. You will receive updates about our latest products and offers.'
+                onClose={() => setOpen(false)}
+              />
 
               <div className='mt-6 flex gap-4'>
                 <Link
@@ -459,7 +476,7 @@ const Footer = () => {
           {/* Bottom */}
           <div className='text-center pt-6 '>
             <p className='text-xs text-gray-500'>
-              Copyright © 2025 XSNAPSTER. All rights reserved.
+              Copyright © 2026 XSNAPSTER. All rights reserved.
             </p>
           </div>
         </footer>
