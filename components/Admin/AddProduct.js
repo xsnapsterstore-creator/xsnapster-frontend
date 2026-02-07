@@ -149,7 +149,7 @@ const AddProduct = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="max-w-7xl mx-auto bg-sky-200 backdrop-blur-lg shadow-2xl rounded-3xl p-10"
+        className="max-w-7xl mx-auto bg-sky-200 backdrop-blur-lg rounded-3xl p-10"
       >
         <h1 className="text-3xl font-bold text-gray-800 text-center mb-10">
           Add New Product

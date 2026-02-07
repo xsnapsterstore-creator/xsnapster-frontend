@@ -294,7 +294,7 @@ export default function ProductDetailsPage ({ prod }) {
 
                     {/* Strike-through original price only if discount exists */}
                     {selectedPricing.discounted_price && (
-                      <p className='text-gray-500 text-[13px] md:text-[15px] line-through'>
+                      <p className='text-gray-500 text-[13px] md:text-[15px] pb-0.5 md:pb-1 line-through'>
                         ₹{selectedPricing.price}
                       </p>
                     )}
