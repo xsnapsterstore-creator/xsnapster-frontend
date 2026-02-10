@@ -101,9 +101,9 @@ export default function Poster() {
 
       {/* Content */}
       <div className="absolute left-5 md:left-14 top-1/2 -translate-y-1/2 text-white">
-        <h2 className="text-xl md:text-3xl font-bold">
+        <h4 className="text-xl md:text-3xl font-bold">
           Premium Frames & Offers
-        </h2>
+        </h4>
         <p className="text-xs md:text-sm mt-2 text-gray-200">
           This is your sign to stop living with boring walls.
         </p>

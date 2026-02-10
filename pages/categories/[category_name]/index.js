@@ -1,39 +1,50 @@
-import React from "react";
-import { CategoryID } from "@/components/Data/data";
-import { useRouter } from "next/router";
-import CategoryPage from "@/components/CategoryPage/CategoryPage";
-import { fetchSubCategories, fetchSubCategoriesProduct } from "@/components/API/api";
+import React from 'react'
+import { CategoryID } from '@/components/Data/data'
+import { useRouter } from 'next/router'
+import CategoryPage from '@/components/CategoryPage/CategoryPage'
+import {
+  fetchSubCategories,
+  fetchSubCategoriesProduct
+} from '@/components/API/api'
+import CategSEO from '@/components/SEO/CategSEO'
 
 const CategoryName = ({ sub_category, products }) => {
-  const router = useRouter();
-  const { category_name } = router.query;
+  const router = useRouter()
+  const { category_name, sub_category_name } = router.query
 
   return (
-    <div className="pt-[85px]">
-      <div className="md:m-3">
-        <CategoryPage
-          category={category_name}
-          productName={products}
-          SubCategory={sub_category}
-        />
+    <>
+      <CategSEO
+        product={products}
+        category={sub_category}
+        route={{ category_name, sub_category_name }}
+      />
+      <div className='pt-[85px]'>
+        <div className='md:m-3'>
+          <CategoryPage
+            category={category_name}
+            productName={products}
+            SubCategory={sub_category}
+          />
+        </div>
       </div>
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default CategoryName;
+export default CategoryName
 
-export async function getServerSideProps({ params }) {
-  const { category_name } = params;
-  const res = await fetchSubCategories(CategoryID[category_name]);
-  const data = await res.json();
-  const prod = await fetchSubCategoriesProduct(data[0]?.id);
-  const prodData = await prod.json();
+export async function getServerSideProps ({ params }) {
+  const { category_name } = params
+  const res = await fetchSubCategories(CategoryID[category_name])
+  const data = await res.json()
+  const prod = await fetchSubCategoriesProduct(data[0]?.id)
+  const prodData = await prod.json()
 
   return {
     props: {
       sub_category: data || [],
-      products: prodData || [],
-    },
-  };
+      products: prodData || []
+    }
+  }
 }

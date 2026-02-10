@@ -1,5 +1,3 @@
-import { product } from '@/components/Data/data'
-
 const BASE_URL = 'https://www.xsnapster.store'
 const API_URL = 'https://api.xsnapster.store/v1'
 
@@ -113,7 +111,7 @@ export async function getServerSideProps ({ res }) {
 
     const sitemap = generateSiteMap({ categories, subcategories, products })
 
-    res.setHeader('Content-Type', 'text/xml')
+    res.setHeader('Content-Type', 'application/xml')
     res.write(sitemap)
     res.end()
 
@@ -121,7 +119,7 @@ export async function getServerSideProps ({ res }) {
   } catch (error) {
     console.error('Sitemap generation error:', error)
 
-    res.setHeader('Content-Type', 'text/xml')
+    res.setHeader('Content-Type', 'application/xml')
     res.write(`<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>`)
     res.end()
 

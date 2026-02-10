@@ -82,12 +82,12 @@ const Navbar = () => {
   const pathname = router.pathname
 
   useEffect(() => {
-    const isBlackNavbar = path.includes('premium-categories')
+    const isBlackNavbar = path?.includes('premium-categories')
     setBlackNavbar(isBlackNavbar)
-    const SexyFrames = path.includes('sexy-frames')
-    const HotRightNow = path.includes('hot-right-now')
-    const FrameStars = path.includes('frame-stars')
-    const MostWatchedFrames = path.includes('most-watched-frames')
+    const SexyFrames = path?.includes('sexy-frames')
+    const HotRightNow = path?.includes('hot-right-now')
+    const FrameStars = path?.includes('frame-stars')
+    const MostWatchedFrames = path?.includes('most-watched-frames')
     if (SexyFrames) {
       setPremiumColorChange({
         sexyframes: true,
