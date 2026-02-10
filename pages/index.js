@@ -1,27 +1,31 @@
-import { fetchCategories, fetchHomepage } from "@/components/API/api";
-import Category_Story from "@/components/Category_Story/Category_story";
-import Hero from "@/components/Hero/Hero";
+import { fetchCategories, fetchHomepage } from '@/components/API/api'
+import Category_Story from '@/components/Category_Story/Category_story'
+import Hero from '@/components/Hero/Hero'
+import HomepageSEO from '@/components/SEO/HomepageSEO'
 
-export default function Home({ products, category }) {
+export default function Home ({ products, category }) {
   return (
-    <div>
-      <Category_Story category={category} />
+    <>
+      <HomepageSEO products={products} category={category} />
       <div>
-        <Hero products={products} />
+        <Category_Story category={category} />
+        <div>
+          <Hero products={products} />
+        </div>
       </div>
-    </div>
-  );
+    </>
+  )
 }
 
-export async function getServerSideProps() {
-  const res = await fetchHomepage();
-  const prodData = await res.json();
-  const cat = await fetchCategories();
-  const category = await cat.json();
+export async function getServerSideProps () {
+  const res = await fetchHomepage()
+  const prodData = await res.json()
+  const cat = await fetchCategories()
+  const category = await cat.json()
   return {
     props: {
       products: prodData || [],
-      category: category || [],
-    },
-  };
+      category: category || []
+    }
+  }
 }

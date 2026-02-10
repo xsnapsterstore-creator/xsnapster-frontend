@@ -71,14 +71,14 @@ const Product = ({ product, category_name }) => {
 
       {/* Product Info */}
       <div className='p-2 flex flex-col items-center bg-gray-100'>
-        <h1
+        <h3
           onClick={() => {
             router.push(`/categories/${category}/${subcategory}/${product.id}`)
           }}
           className='text-[11px] md:text-[12px] font-medium text-gray-800 line-clamp-2 h-[36px]'
         >
           {product.title}
-        </h1>
+        </h3>
 
         {/* Price & Size Section */}
         <div className='w-full flex-col justify-between items-end'>
@@ -130,9 +130,9 @@ const Product = ({ product, category_name }) => {
         {/* Content */}
         <div className='p-5'>
           <div className='flex justify-between items-end'>
-            <h3 className='text-lg font-semibold text-gray-900'>
+            <p className='text-lg font-semibold text-gray-900'>
               Please select the size
-            </h3>
+            </p>
             <div className='flex items-end gap-2 justify-center'>
               {/* Sale Price */}
               <p className='text-[17px] md:text-[18px] font-semibold text-green-600'>

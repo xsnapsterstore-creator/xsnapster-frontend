@@ -8,9 +8,9 @@ const Product_Categories = ({ categProd }) => {
   return (
     <div className="mt-5">
       <div className="">
-        <h2 className="text-[30px] font-bold tracking-wide text-center">
+        <h1 className="text-[30px] font-bold tracking-wide text-center">
           #TRENDINGNOW!
-        </h2>
+        </h1>
       </div>
       <div className="flex flex-col gap-10">
         {categProd.map((category) => (
@@ -23,9 +23,9 @@ const Product_Categories = ({ categProd }) => {
 
             {category.products.length === 0 && (
               <div className="flex items-center justify-center">
-                <h1 className="text-gray-400 text-lg text-center">
+                <p className="text-gray-400 text-lg text-center">
                   No Trending Products
-                </h1>
+                </p>
               </div>
             )}
 

@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import { Button } from '@mui/material'
 export default function OrderSuccess () {
   const { data, isLoading } = useQuery({
     queryKey: ['order_id'],

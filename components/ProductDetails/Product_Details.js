@@ -207,7 +207,7 @@ export default function ProductDetailsPage ({ prod }) {
                       alt={`${prod.title} ${index + 1}`}
                       width={600}
                       height={400}
-                      loading='lazy'
+                      loading="eager"
                       quality={75}
                       onClick={() => setFullscreenImage(src)}
                       className='object-cover cursor-pointer w-full h-[450px] md:h-[600px]'
@@ -254,7 +254,7 @@ export default function ProductDetailsPage ({ prod }) {
               <Image
                 src={fullscreenImage}
                 alt='preview'
-                loading='lazy'
+                loading="eager"
                 width={400}
                 height={300}
                 quality={75}
@@ -451,6 +451,7 @@ export default function ProductDetailsPage ({ prod }) {
                 <Image
                   src='/Razorpay.png'
                   alt='Secure Payment'
+                  loading="eager"
                   width={500}
                   height={500}
                   className='w-full mx-auto'
