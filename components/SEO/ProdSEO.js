@@ -68,6 +68,9 @@ const ProdSEO = ({ product }) => {
       <meta property='og:description' content={Desc} />
       <meta property='og:url' content={url} />
       <meta property='og:image' content={product?.image_links?.[0]} />
+      <meta property='og:image:width' content='1200' />
+      <meta property='og:image:height' content='630' />
+      <meta property='og:image:type' content='image/jpeg' />
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:image' content={product?.image_links?.[0]} />
 
