@@ -10,7 +10,7 @@ const HomepageSEO = ({ products, category }) => {
   })
   const finalProd = prod.filter(Boolean)
   const title =
-    'Trending Frames & Posters in India by XSNAPSTER | Your Wall Deserves Better'
+    'Trending Frames & Posters in India | XSNAPSTER'
   const Desc =
     'Elevate your walls with our most-loved premium photo frames and trending posters. From minimalist frames to viral art prints, see what’s transforming homes today. Shop the best-sellers at XSNAPSTER.'
   const url = 'https://www.xsnapster.store/'
