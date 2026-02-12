@@ -92,12 +92,12 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
-          <motion.h3
+          <motion.h2
             className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Features
-          </motion.h3>
+          </motion.h2>
 
           <motion.span
             animate={{ rotate: openIndex === 0 ? 45 : 0 }}
@@ -125,9 +125,9 @@ const ProductDescription = ({ prodDesc }) => {
                     <div key={index} className="">
                       <div className="flex items-center gap-2">
                         <div>{prod.img}</div>
-                        <h3 className="font-semibold text-gray-800 text-sm">
+                        <p className="font-semibold text-gray-800 text-sm">
                           {prod.head}
-                        </h3>
+                        </p>
                       </div>
                       <p className="text-gray-600 text-xs ml-8">{prod.para}</p>
                     </div>
@@ -149,12 +149,12 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
-          <motion.h3
+          <motion.h2
             className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Details
-          </motion.h3>
+          </motion.h2>
 
           <motion.span
             animate={{ rotate: openIndex === 1 ? 45 : 0 }}
@@ -215,12 +215,12 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
-          <motion.h3
+          <motion.h2
             className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Quality
-          </motion.h3>
+          </motion.h2>
 
           <motion.span
             animate={{ rotate: openIndex === 2 ? 45 : 0 }}
@@ -282,12 +282,12 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <button className="flex justify-between items-center w-full text-left cursor-pointer">
-          <motion.h3
+          <motion.h2
             className="text-[15px] font-semibold text-gray-900"
             whileHover={{ scale: 1.02 }}
           >
             Product Specification
-          </motion.h3>
+          </motion.h2>
 
           <motion.span
             animate={{ rotate: openIndex === 3 ? 45 : 0 }}
