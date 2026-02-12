@@ -29,9 +29,9 @@ export default function OfferPopup() {
         </button>
 
         {/* Content */}
-        <h2 className="text-[13px] md:text-[15px] font-semibold text-gray-300 mb-2">
+        <h5 className="text-[13px] md:text-[15px] font-semibold text-gray-300 mb-2">
           🎁 SPECIAL OFFERS
-        </h2>
+        </h5>
 
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">

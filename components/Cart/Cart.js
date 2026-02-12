@@ -61,7 +61,7 @@ const Cart = ({ isOpen, onClose }) => {
     >
       {/* Header */}
       <div className="flex h-[65px] justify-between items-center bg-[#212121] text-white p-4 border-b">
-        <h2 className="text-lg font-bold">Your Wall's Wishlist</h2>
+        <span className="text-lg font-bold">Your Wall's Wishlist</span>
         <button onClick={onClose} className="text-xl font-bold">
           ✕
         </button>
@@ -70,9 +70,9 @@ const Cart = ({ isOpen, onClose }) => {
       {cart.length === 0 && (
         <div className="flex flex-col justify-center items-center h-[calc(100%-65px)] text-center px-4">
           {/* Content */}
-          <h2 className="text-2xl font-semibold text-white tracking-wide">
+          <span className="text-2xl font-semibold text-white tracking-wide">
             Your Cart is Empty
-          </h2>
+          </span>
           <p className="text-gray-400 mt-2 text-sm">
             Looks like you haven't added anything yet.
           </p>
@@ -83,7 +83,7 @@ const Cart = ({ isOpen, onClose }) => {
       <div className="flex flex-col h-[calc(100vh-65px)] text-white bg-grey-900">
         {/* Cart Header */}
         <div className="p-4 border-b border-neutral-800 flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Your Cart</h2>
+          <span className="text-lg font-semibold">Your Cart</span>
           <p className="text-sm text-gray-200">{cart.length || 0} items</p>
         </div>
 
@@ -109,9 +109,9 @@ const Cart = ({ isOpen, onClose }) => {
                   alt={item.title}
                 />
                 <div>
-                  <h3 className="text-sm font-medium line-clamp-2 text-gray-100">
+                  <h5 className="text-sm font-medium line-clamp-2 text-gray-100">
                     {item.title}
-                  </h3>
+                  </h5>
                   <div className="flex items-end gap-1 mt-1">
                     <p className="text-red-600 font-semibold text-sm animate-pulse">
                       ₹{item.discounted_price}
