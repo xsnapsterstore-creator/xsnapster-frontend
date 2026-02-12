@@ -2,9 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 
 const HomepageSEO = ({ products, category }) => {
-  const keyword = category.map(cat => {
-    return ' ' + cat.name + ' ' + 'Frames and Posters'
-  })
+  const keyword = "Trending Frames & Posters in India, Aesthetic Frames & Posters, XSNAPSTER, XSNAPSTER Frames, Frames under 399, Posters under 99, Car Frames & Posters, Anime Frames & Posters, aesthetic wall decor India, Pinterest room decor India, acrylic photo frames India"
   const prod = products.map(pro => {
     return pro.products[0]
   })
