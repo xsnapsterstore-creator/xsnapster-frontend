@@ -4,7 +4,8 @@ import ProductSchema from './AISEO/ProductSchema'
 import FaqSchema from './AISEO/Faq'
 
 const ProdSEO = ({ product }) => {
-  const title = product.title
+  const title = product?.title?.split('|')[0] + '|' + ' ' + 'XSNAPSTER'
+  console.log('This is teh Title;', title)
   const keyword = product.title.split('|')
   const Desc = `Get the complete look with the ${keyword[0]}. This premium Photo Frame and high-definition poster combo arrives ready to hang. Elevate your home decor with professional quality craftsmanship.`
 
