@@ -20,7 +20,7 @@ const CategSEO = ({ product, category, route }) => {
     route.category_name && route.sub_category_name
       ? `${route.category_name}/${route.sub_category_name}`
       : `${route.category_name}`
-  const title = `${key} Frames & Posters online in India | XSNAPSTER | Your Wall Deserves Better`
+  const title = `${key} Frames & Posters online in India | XSNAPSTER`
   const Desc = `Elevate your walls with our premium ${key} photo frames and posters. From minimalist frames to viral art prints, transform your homes and offices today. Shop at XSNAPSTER.`
   const url = `https://www.xsnapster.store/categories/${tempURL}`
   return (
