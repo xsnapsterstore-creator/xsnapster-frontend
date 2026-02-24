@@ -12,6 +12,8 @@ import OfferAlert from '../Alert/OfferAlert'
 const Footer = () => {
   const [activeTag, setActiveTag] = useState(null)
   const [open, setOpen] = useState(false)
+  const [email, setEmail] = useState('')
+  const [msg, setMsg] = useState('')
   const { data, isLoading } = useQuery({
     queryKey: ['subCategories'],
     queryFn: async () => {
@@ -24,6 +26,18 @@ const Footer = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false
   })
+
+  async function Subscribe () {
+    if (email && email.includes('@gmail.com')) {
+      setOpen(true)
+      setMsg(
+        'You have successfully subscribed to our email newsletter. You will receive updates about our latest products and offers.'
+      )
+    } else {
+      setOpen(true)
+      setMsg('Email is not entered or incorrect')
+    }
+  }
 
   return (
     <div>
@@ -189,12 +203,14 @@ const Footer = () => {
             <div className='pt-5'>
               <div className='flex gap-2'>
                 <input
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   type='email'
                   className='w-40 p-2 bg-gray-600 border border-gray-600 rounded-lg text-xs placeholder-gray-400 focus:ring-2 focus:ring-sky-400 outline-none'
                   placeholder='Enter your email'
                 />
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={Subscribe}
                   className='bg-red-600 hover:bg-red-500 cursor-pointer px-4 py-2 text-sm rounded-lg text-white transition'
                 >
                   Subscribe
@@ -203,7 +219,7 @@ const Footer = () => {
               <OfferAlert
                 open={open}
                 title='EMAIL SUBSCRIPTION'
-                message='You have successfully subscribed to our email newsletter. You will receive updates about our latest products and offers.'
+                message={msg}
                 onClose={() => setOpen(false)}
               />
             </div>
@@ -254,7 +270,9 @@ const Footer = () => {
       </div>
 
       {/* For Desktop Screen */}
-      <div className='hidden lg:block'>        {/* Wave Divider */}
+      <div className='hidden lg:block'>
+        {' '}
+        {/* Wave Divider */}
         <div className='wave-container'>
           <svg
             className='waves'
@@ -277,7 +295,6 @@ const Footer = () => {
             </g>
           </svg>
         </div>
-
         {/* Footer Container */}
         <footer className='bg-[#121212] text-gray-300 py-10 px-10 lg:px-24'>
           {/* Categories Data */}
@@ -422,12 +439,14 @@ const Footer = () => {
 
               <div className='flex gap-2'>
                 <input
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   type='email'
                   className='w-full p-2 bg-gray-600 border border-gray-600 rounded-lg text-xs placeholder-gray-400 focus:ring-2 focus:ring-sky-400 outline-none'
                   placeholder='Enter your email'
                 />
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={Subscribe}
                   className='bg-red-600 hover:bg-red-500 cursor-pointer px-4 py-2 text-sm rounded-lg text-white transition'
                 >
                   Subscribe
@@ -436,7 +455,7 @@ const Footer = () => {
               <OfferAlert
                 open={open}
                 title='EMAIL SUBSCRIPTION'
-                message='You have successfully subscribed to our email list. You will receive updates about our latest products and offers.'
+                message={msg}
                 onClose={() => setOpen(false)}
               />
 
