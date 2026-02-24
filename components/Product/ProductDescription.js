@@ -1,99 +1,99 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import Image from "next/image";
-import Grid3x3Icon from "@mui/icons-material/Grid3x3";
-import CropPortraitIcon from "@mui/icons-material/CropPortrait";
-import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import HardwareIcon from "@mui/icons-material/Hardware";
-import StraightenIcon from "@mui/icons-material/Straighten";
+import React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import Image from 'next/image'
+import Grid3x3Icon from '@mui/icons-material/Grid3x3'
+import CropPortraitIcon from '@mui/icons-material/CropPortrait'
+import CropOriginalIcon from '@mui/icons-material/CropOriginal'
+import HardwareIcon from '@mui/icons-material/Hardware'
+import StraightenIcon from '@mui/icons-material/Straighten'
 
 const ProductDescription = ({ prodDesc }) => {
-  const [openIndex, setOpenIndex] = useState(0);
-  const toggle = (i) => {
-    setOpenIndex((prev) => (prev === i ? null : i));
-  };
+  const [openIndex, setOpenIndex] = useState(0)
+  const toggle = i => {
+    setOpenIndex(prev => (prev === i ? null : i))
+  }
 
   const prodQuality = [
     {
       img: <Grid3x3Icon />,
-      head: "Frame Material",
-      para: "Fiberwood",
+      head: 'Frame Material',
+      para: 'Fiberwood'
     },
     {
       img: <CropPortraitIcon />,
-      head: "Frame Style",
-      para: "Flat (For Posters) / Box (For Art)",
+      head: 'Frame Style',
+      para: 'Flat'
     },
     {
       img: <CropPortraitIcon />,
-      head: "Glass Material",
-      para: "Acrylic",
+      head: 'Glass Material',
+      para: 'Acrylic'
     },
     {
       img: <StraightenIcon />,
-      head: "Glass Depth",
-      para: "2 mm",
+      head: 'Glass Depth',
+      para: '2 mm'
     },
     {
       img: <CropPortraitIcon />,
-      head: "Backboard Material",
-      para: "MDF / Wood (For Canvas)",
+      head: 'Backboard Material',
+      para: 'MDF / Wood'
     },
     {
       img: <StraightenIcon />,
-      head: "Backboard Depth",
-      para: "4 mm",
+      head: 'Backboard Depth',
+      para: '15 mm'
     },
     {
       img: <CropOriginalIcon />,
-      head: "Print Material",
-      para: "200 GSM Art Paper / 260 GSM Canvas",
+      head: 'Print Material',
+      para: '200 GSM Paper'
     },
     {
       img: <HardwareIcon />,
-      head: "Hanging Equipment",
-      para: "Sawtooth Hook",
-    },
-  ];
+      head: 'Hanging Equipment',
+      para: 'Sawtooth Hook'
+    }
+  ]
 
   const prodSpecs = [
     {
-      img: "/premium.webp",
-      head: "Premium Quality Frames",
-      para: "Fiber wood frames for durability and protection",
+      img: '/premium.webp',
+      head: 'Premium Quality Frames',
+      para: 'Fiber wood frames for durability and protection'
     },
     {
-      img: "/vibrant.webp",
-      head: "Vibrant Prints",
-      para: "Vibrant colors with UV-resistant inks and High-resolution, fade-resistant prints",
+      img: '/vibrant.webp',
+      head: 'Vibrant Prints',
+      para: 'Vibrant colors with UV-resistant inks and High-resolution, fade-resistant prints'
     },
     {
-      img: "/new.webp",
-      head: "New Frames / Prints Every Time",
-      para: "We prepare your items after you place the order; that means all items are made from scratch",
+      img: '/new.webp',
+      head: 'New Frames / Prints Every Time',
+      para: 'We prepare your items after you place the order; that means all items are made from scratch'
     },
     {
-      img: "/protective.webp",
-      head: "Protective Features",
-      para: "Easy to clean shatterproof acrylic glass in front",
-    },
-  ];
+      img: '/protective.webp',
+      head: 'Protective Features',
+      para: 'Easy to clean shatterproof acrylic glass in front'
+    }
+  ]
 
   return (
-    <div className="grid grid-cols-1 max-w-6xl mx-auto p-2">
+    <div className='grid grid-cols-1 max-w-6xl mx-auto p-2'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(0)}
-        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className="flex justify-between items-center w-full text-left cursor-pointer">
+        <div className='flex justify-between items-center w-full text-left cursor-pointer'>
           <motion.h2
-            className="text-[15px] font-semibold text-gray-900"
+            className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
           >
             Product Features
@@ -102,37 +102,39 @@ const ProductDescription = ({ prodDesc }) => {
           <motion.span
             animate={{ rotate: openIndex === 0 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
-            className="text-red-600 text-2xl font-bold select-none"
+            className='text-red-600 text-2xl font-bold select-none'
           >
             +
           </motion.span>
-        </button>
+        </div>
 
         {/* Answer */}
         <AnimatePresence initial={false}>
           {openIndex === 0 && (
             <motion.div
-              key="content"
+              key='content'
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4 }}
-              className="mt-3 overflow-hidden"
+              className='mt-3 overflow-hidden'
             >
-              <div className="">
-                <div className="grid grid-cols-2 gap-3 mt-1 items-start justify-center">
+              <div className=''>
+                <ul className='grid grid-cols-2 gap-3 mt-1 items-start justify-center'>
                   {prodQuality.map((prod, index) => (
-                    <div key={index} className="">
-                      <div className="flex items-center gap-2">
+                    <div key={index} className=''>
+                      <div className='flex items-center gap-2'>
                         <div>{prod.img}</div>
-                        <p className="font-semibold text-gray-800 text-sm">
+                        <li className='font-semibold text-gray-800 text-sm'>
                           {prod.head}
-                        </p>
+                        </li>
                       </div>
-                      <p className="text-gray-600 text-xs ml-8">{prod.para}</p>
+                      <span className='text-gray-600 text-xs ml-8'>
+                        {prod.para}
+                      </span>
                     </div>
                   ))}
-                </div>
+                </ul>
               </div>
             </motion.div>
           )}
@@ -145,12 +147,12 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(1)}
-        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className="flex justify-between items-center w-full text-left cursor-pointer">
+        <div className='flex justify-between items-center w-full text-left cursor-pointer'>
           <motion.h2
-            className="text-[15px] font-semibold text-gray-900"
+            className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
           >
             Product Details
@@ -159,24 +161,24 @@ const ProductDescription = ({ prodDesc }) => {
           <motion.span
             animate={{ rotate: openIndex === 1 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
-            className="text-red-600 text-2xl font-bold select-none"
+            className='text-red-600 text-2xl font-bold select-none'
           >
             +
           </motion.span>
-        </button>
+        </div>
 
         {/* Answer */}
         <AnimatePresence initial={false}>
           {openIndex === 1 && (
             <motion.div
-              key="content"
+              key='content'
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4 }}
-              className="mt-3 overflow-hidden"
+              className='mt-3 overflow-hidden'
             >
-              <p className="text-[14px] text-gray-700 leading-relaxed">
+              <p className='text-[14px] text-gray-700 leading-relaxed'>
                 This isn't just a frame — it's a statement, a flex, a whole
                 personality upgrade for your wall. Designed for the bold, the
                 aesthetic, and the ones who know good vibes don't come cheap…
@@ -187,14 +189,14 @@ const ProductDescription = ({ prodDesc }) => {
                 <br />
                 <br />
                 Transform your walls into a piece of art with our Premium
-                Aesthetic Photo Frame, crafted for people who love minimal,
-                clean, and modern décor. Whether it's your bedroom, living room,
-                office, workspace, or studio—this frame adds depth, personality,
-                and aesthetic vibes to every corner.
+                Aesthetic Photo Frame & Posters, crafted for people who love
+                minimal, clean, and modern décor. Whether it's your bedroom,
+                living room, office, workspace, or studio—this frame adds depth,
+                personality, and aesthetic vibes to every corner.
                 <br />
-                <br /> Designed and manufactured by{" "}
-                <bold className="font-semibold">
-                  <span className="text-red-500">X</span>SNAPSTER
+                <br /> Designed and manufactured by{' '}
+                <bold className='font-semibold'>
+                  <span className='text-red-500'>X</span>SNAPSTER
                 </bold>
                 , this frame blends premium material, HD-quality prints, and
                 long-lasting durability to give you the perfect décor piece that
@@ -211,12 +213,12 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(2)}
-        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className="flex justify-between items-center w-full text-left cursor-pointer">
+        <button className='flex justify-between items-center w-full text-left cursor-pointer'>
           <motion.h2
-            className="text-[15px] font-semibold text-gray-900"
+            className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
           >
             Product Quality
@@ -225,7 +227,7 @@ const ProductDescription = ({ prodDesc }) => {
           <motion.span
             animate={{ rotate: openIndex === 2 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
-            className="text-red-600 text-2xl font-bold select-none"
+            className='text-red-600 text-2xl font-bold select-none'
           >
             +
           </motion.span>
@@ -235,33 +237,33 @@ const ProductDescription = ({ prodDesc }) => {
         <AnimatePresence initial={false}>
           {openIndex === 2 && (
             <motion.div
-              key="content"
+              key='content'
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4 }}
-              className="mt-3 overflow-hidden"
+              className='mt-3 overflow-hidden'
             >
               <div>
-                <div className="md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-start justify-center">
+                <div className='md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-start justify-center'>
                   {prodSpecs.map((prod, index) => (
                     <div
                       key={index}
-                      className="flex justify-start items-center h-[80px] gap-3"
+                      className='flex justify-start items-center h-[80px] gap-3'
                     >
                       <div>
                         <Image
-                          className="md:w-[80px] w-[70px]"
+                          className='md:w-[80px] w-[70px]'
                           src={prod.img}
                           width={80}
                           height={80}
                         />
                       </div>
-                      <div className="flex flex-col justify-center gap-1 w-[250px] lg:w-[350px]">
-                        <h3 className="font-semibold text-gray-800 text-md">
+                      <div className='flex flex-col justify-center gap-1 w-[250px] lg:w-[350px]'>
+                        <h3 className='font-semibold text-gray-800 text-md'>
                           {prod.head}
                         </h3>
-                        <p className="text-gray-600 text-xs">{prod.para}</p>
+                        <p className='text-gray-600 text-xs'>{prod.para}</p>
                       </div>
                     </div>
                   ))}
@@ -278,12 +280,12 @@ const ProductDescription = ({ prodDesc }) => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
         onClick={() => toggle(3)}
-        className="bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300"
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className="flex justify-between items-center w-full text-left cursor-pointer">
+        <button className='flex justify-between items-center w-full text-left cursor-pointer'>
           <motion.h2
-            className="text-[15px] font-semibold text-gray-900"
+            className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
           >
             Product Specification
@@ -292,7 +294,7 @@ const ProductDescription = ({ prodDesc }) => {
           <motion.span
             animate={{ rotate: openIndex === 3 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
-            className="text-red-600 text-2xl font-bold select-none"
+            className='text-red-600 text-2xl font-bold select-none'
           >
             +
           </motion.span>
@@ -302,17 +304,17 @@ const ProductDescription = ({ prodDesc }) => {
         <AnimatePresence initial={false}>
           {openIndex === 3 && (
             <motion.div
-              key="content"
+              key='content'
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4 }}
-              className="mt-3 overflow-hidden"
+              className='mt-3 overflow-hidden'
             >
-              <div className="">
-                <div className="">
+              <div className=''>
+                <div className=''>
                   <div>
-                    <ul className="list-disc ml-5 text-[14px] text-gray-600">
+                    <ul className='list-disc ml-5 text-[14px] text-gray-600'>
                       <li>
                         200 GSM Art Board Matte Paper / 350 GSM Poly-cotton
                         inkjet canvas
@@ -325,7 +327,7 @@ const ProductDescription = ({ prodDesc }) => {
                         Style & Depth : Box Frame (Starting from 0.75 inch)
                       </li>
                       <li>
-                        2-mm thick acrylic glass for strength and maximum
+                        2-mm thick acrylic sheet for strength and maximum
                         shatter resistance
                       </li>
                       <li>Strong MDF Back board for long life and support</li>
@@ -340,7 +342,7 @@ const ProductDescription = ({ prodDesc }) => {
         </AnimatePresence>
       </motion.div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductDescription;
+export default ProductDescription

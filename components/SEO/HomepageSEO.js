@@ -38,7 +38,6 @@ const HomepageSEO = ({ products, category }) => {
       <meta property='og:image:height' content='630' />
       <meta property='og:image:type' content='image/svg' />
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:card' content='summary_large_image' />
       <meta
         name='twitter:image'
         content={'https://www.xsnapster.store/logo.svg'}
