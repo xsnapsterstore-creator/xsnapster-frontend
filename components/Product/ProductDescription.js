@@ -179,6 +179,9 @@ const ProductDescription = ({ prodDesc }) => {
               className='mt-3 overflow-hidden'
             >
               <p className='text-[14px] text-gray-700 leading-relaxed'>
+                {prodDesc}
+                <br />
+                <br />
                 This isn't just a frame — it's a statement, a flex, a whole
                 personality upgrade for your wall. Designed for the bold, the
                 aesthetic, and the ones who know good vibes don't come cheap…
