@@ -210,7 +210,7 @@ export default function ProductDetailsPage ({ prod }) {
                       loading="eager"
                       quality={75}
                       onClick={() => setFullscreenImage(src)}
-                      className='object-cover cursor-pointer w-full h-[450px] md:h-[600px]'
+                      className='object-cover cursor-pointer w-full h-[450px] md:h-[500px]'
                     />
                   </div>
                 ))}
@@ -272,7 +272,7 @@ export default function ProductDetailsPage ({ prod }) {
               transition={{ duration: 0.4 }}
             >
               <div className='md:mt-0 mt-2 text-left'>
-                <h1 className='text-[15px] md:text-[20px] text-gray-900 tracking-wide'>
+                <h1 className='text-[15px] md:text-[22px] text-gray-900 tracking-wide'>
                   {prod.title}
                 </h1>
                 <h2 className='text-[11px] animate-pulse text-red-600 mt-2'>
