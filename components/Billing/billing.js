@@ -26,6 +26,7 @@ const BillingTemplate = () => {
   const [showBilling, setShowBilling] = useState(false)
   const [deliveryCharge, setDeliveryCharge] = useState('Free')
   const [order, setOrder] = useState([])
+  const [OfferPrice, setOfferPrice] = useState(0)
   const [customAlert, setCustomAlert] = useState({
     open: false,
     title: '',
@@ -76,31 +77,143 @@ const BillingTemplate = () => {
       ? JSON.parse(localStorage.getItem('address_details') || '{}')
       : {}
 
+  const PosterOffer = [
+    { id: 'p1', buy: 5, get: 5 },
+    { id: 'p2', buy: 10, get: 15 }
+  ]
+  const FrameOffer = [
+    { id: 'F1', buy: 3, get: 1 },
+    { id: 'F2', buy: 6, get: 3 },
+    { id: 'F3', buy: 9, get: 5 }
+  ]
+
+  //For Poster Total Count
+  const isPoster = cart.filter(item => item.dimensions === 'Poster')
+  const PosterTotal = isPoster.reduce((sum, item) => sum + item.quantity, 0)
+  //For Frame Tatal Count
+  const isFrame = cart.filter(
+    item =>
+      item.dimensions === 'A4' ||
+      item.dimensions === 'A3' ||
+      item.dimensions === 'A2'
+  )
+  const FrameTotal = isFrame.reduce((sum, item) => sum + item.quantity, 0)
+
   // Load cart items from localStorage
   useEffect(() => {
     if (typeof window === 'undefined') return
     setLoading(true)
     const cartData = localStorage.getItem('cart')
 
-    //Poster Offer Logic
-    const data = JSON.parse(localStorage.getItem('cart'))
-    const isPoster = data.filter(item => item.dimensions === 'Poster')
-    const PosterTotal = isPoster.reduce((sum, item) => sum + item.quantity, 0)
-
     if (PosterTotal) {
-      if (PosterTotal < 10) {
+      const offer1 = PosterOffer[0]
+      const offer2 = PosterOffer[1]
+
+      // FIRST OFFER
+      if (PosterTotal < offer1.buy) {
         setCustomAlert({
           open: true,
-          title: 'POSTER OFFER !',
-          message: `Add ${
-            10 - PosterTotal
-          } more POSTERS and GET 10 POSTERS For Free`
+          title: 'POSTER OFFER!',
+          message: `Add ${offer1.buy - PosterTotal} more POSTER to GET ${
+            offer1.get
+          } POSTER FREE. Check your updated total at checkout.`
         })
-      } else {
+      } else if (PosterTotal < offer1.buy + offer1.get) {
         setCustomAlert({
           open: true,
           title: 'POSTER OFFER UNLOCKED',
-          message: `Add ${20 - PosterTotal} POSTERS for Free`
+          message: `Add ${
+            offer1.buy + offer1.get - PosterTotal
+          } more POSTER to GET it FREE. Check your updated total at checkout.`
+        })
+      }
+
+      // SECOND OFFER
+      else if (PosterTotal < offer2.buy) {
+        setCustomAlert({
+          open: true,
+          title: 'POSTER OFFER!',
+          message: `Add ${offer2.buy - PosterTotal} more POSTER to GET ${
+            offer2.get
+          } POSTER FREE. Check your updated total at checkout.`
+        })
+      } else if (PosterTotal < offer2.buy + offer2.get) {
+        setCustomAlert({
+          open: true,
+          title: 'POSTER OFFER UNLOCKED',
+          message: `Add ${
+            offer2.buy + offer2.get - PosterTotal
+          } more POSTER to GET it FREE. Check your updated total at checkout.`
+        })
+      }
+    }
+
+    // Frame ALert Offer Logic
+    if (FrameTotal) {
+      const offer1 = FrameOffer[0]
+      const offer2 = FrameOffer[1]
+      const offer3 = FrameOffer[2]
+
+      // OFFER 1
+      if (FrameTotal < offer1.buy) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER!',
+          message: `Add ${offer1.buy - FrameTotal} more FRAME to GET ${
+            offer1.get
+          } FRAME FREE. Check your updated total at checkout.`
+        })
+      } else if (FrameTotal < offer1.buy + offer1.get) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER UNLOCKED',
+          message: `Add ${
+            offer1.buy + offer1.get - FrameTotal
+          } more FRAME for FREE. Check your updated total at checkout.`
+        })
+      }
+
+      // OFFER 2
+      else if (
+        FrameTotal < offer2.buy &&
+        FrameTotal > offer1.buy + offer1.get
+      ) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER!',
+          message: `Add ${offer2.buy - FrameTotal} more FRAME to GET ${
+            offer2.get
+          } FRAME FREE. Check your updated total at checkout.`
+        })
+      } else if (
+        FrameTotal < offer2.buy + offer2.get &&
+        FrameTotal > offer1.buy + offer1.get
+      ) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER UNLOCKED',
+          message: `Add ${
+            offer2.buy + offer2.get - FrameTotal
+          } more FRAME to GET it FREE. Check your updated total at checkout.`
+        })
+      }
+
+      // OFFER 3
+      else if (FrameTotal < offer3.buy) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER!',
+          message: `Add ${offer3.buy - FrameTotal} more FRAME to GET ${
+            offer3.get
+          } FRAME FREE. Check your updated total at checkout.`
+        })
+      } else if (FrameTotal < offer3.buy + offer3.get) {
+        setCustomAlert({
+          open: true,
+          title: 'FRAME OFFER UNLOCKED',
+          message: `Add ${
+            offer3.buy + offer3.get - FrameTotal
+          } more FRAME to GET it FREE. Check your updated total at checkout.`
         })
       }
     }
@@ -125,14 +238,65 @@ const BillingTemplate = () => {
 
   // 🔢 Compute totals (memoized)
   const total = useMemo(() => {
-    return Math.floor(
-      cart.reduce((sum, item) => sum + item.discounted_price * item.quantity, 0)
-    )
+    if (PosterTotal === PosterOffer[0].buy + PosterOffer[0].get) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(645)
+      return temp - 645
+    } else if (PosterTotal === PosterOffer[1].buy + PosterOffer[1].get) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(1935)
+      return temp - 1935
+    } else if (FrameTotal === FrameOffer[0].buy + FrameOffer[0].get) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(399)
+      return temp - 399
+    } else if (FrameTotal === FrameOffer[1].buy + FrameOffer[1].get) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(1197)
+      return temp - 1197
+    } else if (FrameTotal === FrameOffer[2].buy + FrameOffer[2].get) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(1995)
+      return temp - 1995
+    } else {
+      setOfferPrice(0)
+      return Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+    }
   }, [cart])
 
   // 🚚 Delivery charge logic
   useEffect(() => {
-    setDeliveryCharge(total > 500 ? 0 : 70)
+    setDeliveryCharge(total > 500 ? 0 : 99)
   }, [total])
   // 🧮 Grand total
   const grandTotal = total + deliveryCharge
@@ -278,7 +442,7 @@ const BillingTemplate = () => {
         }
         // 👉 CALL THE PAYMENT WINDOW
         await startPayment()
-        setIsLoading(false);
+        setIsLoading(false)
       }
     } catch (error) {
       console.error('❌ ProceedPayment Error:', error)
@@ -475,7 +639,7 @@ const BillingTemplate = () => {
                 {/* Subtotal */}
                 <div className='flex justify-between text-gray-700'>
                   <span>Subtotal</span>
-                  <span>₹{total}</span>
+                  <span>₹{total + OfferPrice}</span>
                 </div>
 
                 {/* Delivery Charges */}
@@ -484,6 +648,12 @@ const BillingTemplate = () => {
                   <span className='text-green-600 font-medium'>
                     ₹{deliveryCharge}
                   </span>
+                </div>
+
+                {/* Offer Prices */}
+                <div className='flex justify-between text-gray-700'>
+                  <span>Free Worth</span>
+                  <span className='text-gray-600'>-₹{OfferPrice}</span>
                 </div>
 
                 <hr className='my-4' />
