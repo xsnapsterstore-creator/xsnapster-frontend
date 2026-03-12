@@ -253,27 +253,27 @@ const Navbar = () => {
     `}
               >
                 <div className='flex flex-col p-3 space-y-2'>
-                  <Link
+                  <a
                     href={'/categories/for-him'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Him</span>
                     <MaleIcon />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     href={'/categories/for-her'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Her</span>
                     <FemaleIcon />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     href={'/categories/others'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>Others</span>
                     <TransgenderIcon />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -363,27 +363,27 @@ const Navbar = () => {
     `}
               >
                 <div className='flex flex-col p-3 space-y-2'>
-                  <Link
+                  <a
                     href={'/categories/for-him'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Him</span>
                     <MaleIcon />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     href={'/categories/for-her'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>For Her</span>
                     <FemaleIcon />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     href={'/categories/others'}
                     className='hover:text-red-500 hover:cursor-pointer transition flex justify-center items-center'
                   >
                     <span>Others</span>
                     <TransgenderIcon />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

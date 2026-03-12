@@ -30,13 +30,13 @@ export default function OfferPopup() {
 
         {/* Content */}
         <h5 className="text-[13px] md:text-[15px] font-semibold text-gray-300 mb-2">
-          🎁 SPECIAL OFFERS
+          🎁 FRAME OFFERS
         </h5>
 
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
-              Buy <span className="font-semibold text-gray-400">3 Frames</span>
+              Buy <span className="font-semibold text-gray-400">2 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
               Get 1 Frame Free
@@ -45,19 +45,19 @@ export default function OfferPopup() {
 
           <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
-              Buy <span className="font-semibold text-gray-400">6 Frames</span>
+              Buy <span className="font-semibold text-gray-400">4 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
-              Get 2 Frames Free
+              Get 3 Frames Free
             </p>
           </div>
 
           <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
-              Buy <span className="font-semibold text-gray-400">9 Frames</span>
+              Buy <span className="font-semibold text-gray-400">6 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
-              Get 3 Frames Free
+              Get 5 Frames Free
             </p>
           </div>
         </div>

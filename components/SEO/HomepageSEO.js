@@ -2,13 +2,13 @@ import React from 'react'
 import Head from 'next/head'
 
 const HomepageSEO = ({ products, category }) => {
-  const keyword = "Trending Frames & Posters in India, Aesthetic Frames & Posters, XSNAPSTER, XSNAPSTER Frames, Frames under 399, Posters under 99, Car Frames & Posters, Anime Frames & Posters, aesthetic wall decor India, Pinterest room decor India, acrylic photo frames India"
+  const keyword =
+    'Trending Frames & Posters in India, Aesthetic Frames & Posters, XSNAPSTER, XSNAPSTER Frames, Frames under 399, Posters under 99, Car Frames & Posters, Anime Frames & Posters, aesthetic wall decor India, Pinterest room decor India, acrylic photo frames India'
   const prod = products.map(pro => {
     return pro.products[0]
   })
   const finalProd = prod.filter(Boolean)
-  const title =
-    'Trending Frames & Posters in India | XSNAPSTER'
+  const title = 'Trending Frames & Posters in India | XSNAPSTER'
   const Desc =
     'Elevate your walls with our most-loved premium photo frames and trending posters. From minimalist frames to viral art prints, see what’s transforming homes today. Shop the best-sellers at XSNAPSTER.'
   const url = 'https://www.xsnapster.store/'
@@ -52,6 +52,7 @@ const HomepageSEO = ({ products, category }) => {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'ItemList',
+            name: 'XSNAPSTER',
             numberOfItems: finalProd.length,
             itemListOrder: 'https://schema.org/ItemListOrderAscending',
             itemListElement: finalProd.map((pro, index) => ({
@@ -59,8 +60,21 @@ const HomepageSEO = ({ products, category }) => {
               position: index + 1,
               item: {
                 '@type': 'Product',
+                sku: pro?.id,
                 name: pro?.title,
                 image: pro?.image_link,
+                description:
+                  pro?.title +
+                  'Perfect for home decor and gifting. Offer for limited time. Shop now!',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'XSNAPSTER'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.8',
+                  ratingCount: pro?.id || 61
+                },
                 url: `https://www.xsnapster.store/categories/${pro?.category
                   ?.toLowerCase()
                   .replace(/\s+/g, '-')}/${pro?.subcategory
@@ -70,7 +84,30 @@ const HomepageSEO = ({ products, category }) => {
                   '@type': 'Offer',
                   priceCurrency: 'INR',
                   price: pro?.discounted_price || pro?.price,
-                  availability: 'https://schema.org/InStock'
+                  availability: 'https://schema.org/InStock',
+                  itemCondition: 'https://schema.org/NewCondition',
+                  shippingDetails: {
+                    '@type': 'ShippingDetails',
+                    shippingRate: {
+                      '@type': 'MonetaryAmount',
+                      value: '99',
+                      currency: 'INR'
+                    },
+                    shippingDestination: {
+                      '@type': 'DefinedRegion',
+                      addressCountry: 'IN'
+                    }
+                  },
+                  hasMerchantReturnPolicy: {
+                    '@type': 'MerchantReturnPolicy',
+                    applicableCountry: 'IN',
+                    returnPolicyCategory:
+                      'https://schema.org/MerchantReturnFiniteReturnWindow',
+                    merchantReturnDays: 7,
+                    returnMethod: 'https://schema.org/ReturnByMail',
+                    returnFees: 'https://schema.org/FreeReturn',
+                    url: 'https://www.xsnapster.store/return-and-refund'
+                  }
                 }
               }
             }))
