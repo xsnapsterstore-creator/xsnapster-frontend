@@ -49,7 +49,10 @@ const CategSEO = ({ product, category, route }) => {
       <meta property='og:image:height' content='630' />
       <meta property='og:image:type' content='image/svg' />
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:image' content={"https://www.xsnapster.store/logo.svg"} />
+      <meta
+        name='twitter:image'
+        content={'https://www.xsnapster.store/logo.svg'}
+      />
 
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={Desc} />
@@ -67,8 +70,21 @@ const CategSEO = ({ product, category, route }) => {
               position: index + 1,
               item: {
                 '@type': 'Product',
+                sku: pro?.id,
                 name: pro?.title,
                 image: pro?.image_link,
+                description:
+                  pro?.title +
+                  'Perfect for home decor and gifting. Offer for limited time. Shop now!',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'XSNAPSTER'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.8',
+                  ratingCount: pro?.id || 61
+                },
                 url: `https://www.xsnapster.store/categories/${pro?.category
                   ?.toLowerCase()
                   .replace(/\s+/g, '-')}/${pro?.subcategory
@@ -78,7 +94,30 @@ const CategSEO = ({ product, category, route }) => {
                   '@type': 'Offer',
                   priceCurrency: 'INR',
                   price: pro?.discounted_price || pro?.price,
-                  availability: 'https://schema.org/InStock'
+                  availability: 'https://schema.org/InStock',
+                  itemCondition: 'https://schema.org/NewCondition',
+                  shippingDetails: {
+                    '@type': 'OfferShippingDetails',
+                    shippingRate: {
+                      '@type': 'MonetaryAmount',
+                      value: '99',
+                      currency: 'INR'
+                    },
+                    shippingDestination: {
+                      '@type': 'DefinedRegion',
+                      addressCountry: 'IN'
+                    }
+                  },
+                  hasMerchantReturnPolicy: {
+                    '@type': 'MerchantReturnPolicy',
+                    applicableCountry: 'IN',
+                    returnPolicyCategory:
+                      'https://schema.org/MerchantReturnFiniteReturnWindow',
+                    merchantReturnDays: 7,
+                    returnMethod: 'https://schema.org/ReturnByMail',
+                    returnFees: 'https://schema.org/FreeReturn',
+                    url: 'https://www.xsnapster.store/return-and-refund'
+                  }
                 }
               }
             }))

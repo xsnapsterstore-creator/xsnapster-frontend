@@ -385,7 +385,7 @@ export default function ProductDetailsPage ({ prod }) {
                     <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
                       <p className='md:text-xs text-[10px] font-medium text-gray-700'>
                         Buy{' '}
-                        <span className='font-semibold text-gray-900'>3</span>
+                        <span className='font-semibold text-gray-900'>2</span>
                       </p>
                       <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
                         Get 1 Free
@@ -395,20 +395,20 @@ export default function ProductDetailsPage ({ prod }) {
                     <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
                       <p className='md:text-xs text-[10px] font-medium text-gray-700'>
                         Buy{' '}
-                        <span className='font-semibold text-gray-900'>6</span>
+                        <span className='font-semibold text-gray-900'>4</span>
                       </p>
                       <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
-                        Get 2 Free
+                        Get 3 Free
                       </p>
                     </div>
 
                     <div className='rounded-lg bg-[#B8F1FF] h-10 p-1 shadow-sm'>
                       <p className='md:text-xs text-[10px] font-medium text-gray-700'>
                         Buy{' '}
-                        <span className='font-semibold text-gray-900'>9</span>
+                        <span className='font-semibold text-gray-900'>6</span>
                       </p>
                       <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
-                        Get 3 Free
+                        Get 5 Free
                       </p>
                     </div>
                   </div>
@@ -436,10 +436,10 @@ export default function ProductDetailsPage ({ prod }) {
                     <div className='rounded-lg bg-[#B8DFFF] h-10 p-1 shadow-sm'>
                       <p className='md:text-xs text-[10px] font-medium text-gray-700'>
                         Buy{' '}
-                        <span className='font-semibold text-gray-900'>15</span>
+                        <span className='font-semibold text-gray-900'>10</span>
                       </p>
                       <p className='md:text-xs text-[10px] text-red-600 animate-pulse font-semibold'>
-                        Get 20 Free
+                        Get 15 Free
                       </p>
                     </div>
                   </div>

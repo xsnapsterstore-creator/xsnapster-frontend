@@ -82,9 +82,9 @@ const BillingTemplate = () => {
     { id: 'p2', buy: 10, get: 15 }
   ]
   const FrameOffer = [
-    { id: 'F1', buy: 3, get: 1 },
-    { id: 'F2', buy: 6, get: 3 },
-    { id: 'F3', buy: 9, get: 5 }
+    { id: 'F1', buy: 2, get: 1 },
+    { id: 'F2', buy: 4, get: 3 },
+    { id: 'F3', buy: 6, get: 5 }
   ]
 
   //For Poster Total Count
