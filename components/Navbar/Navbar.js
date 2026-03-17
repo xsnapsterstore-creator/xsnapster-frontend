@@ -179,6 +179,7 @@ const Navbar = () => {
     e.preventDefault()
     console.log('This is search Item:', mobileSearchTerm)
     setMobileSearchTerm('')
+    setShowMobileSearch(false)
   }
 
   return (
@@ -625,16 +626,16 @@ const Navbar = () => {
       {/* Search Bar */}
       {showMobileSearch && (
         <div
-          className='lg:hidden px-2 pt-26 absolute bg-white w-full
+          className='lg:hidden pt-26 absolute bg-white w-full
       transition-all duration-300 ease-out
-      animate-slide-down flex itme justify-start gap-3 p-2'
+      animate-slide-down flex justify-center gap-4 p-2'
         >
-          <form onSubmit={searchItem} type='submit' action='submit'>
+          <form className='w-full' onSubmit={searchItem} type='submit' action='submit'>
             <input
               value={mobileSearchTerm}
               onChange={e => setMobileSearchTerm(e.target.value)}
               placeholder='Search products'
-              className='border rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-500'
+              className='border rounded-md w-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-500'
               autoFocus
               onKeyDown={e => {
                 if (e.key === 'Enter') {
@@ -653,7 +654,7 @@ const Navbar = () => {
               padding: '2px 2px'
             }}
             variant='contained'
-            className='w-[95px] rounded-lg shadow-md text-xl font-semibold bg-black text-white hover:bg-gray-900 transition'
+            className='w-[95px] rounded-lg shadow-md bg-black text-white hover:bg-gray-900 transition'
           >
             Search
           </Button>

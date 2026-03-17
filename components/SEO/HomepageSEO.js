@@ -87,7 +87,7 @@ const HomepageSEO = ({ products, category }) => {
                   availability: 'https://schema.org/InStock',
                   itemCondition: 'https://schema.org/NewCondition',
                   shippingDetails: {
-                    '@type': 'ShippingDetails',
+                    '@type': 'OfferShippingDetails',
                     shippingRate: {
                       '@type': 'MonetaryAmount',
                       value: '99',
