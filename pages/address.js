@@ -175,21 +175,22 @@ export default function AddressForm () {
 
     // Compute default address logic using a local variable
     const isDefault = !Array.isArray(UserAddress) || UserAddress.length === 0
-    const res = await addUserAddress(form, isDefault)
-    if (res && res.ok) {
-      const newAddress = await res.json()
-      setCustomAlert({
-        open: true,
-        message: 'Address Added successfully'
-      })
-      setUserAddress(prev => [...(Array.isArray(prev) ? prev : []), newAddress])
-      setShowForm(false)
-    } else {
-      setCustomAlert({
-        open: true,
-        message: 'Failed to Add Address'
-      })
-    }
+    console.log('This is the address:', form)
+    // const res = await addUserAddress(form, isDefault)
+    // if (res && res.ok) {
+    //   const newAddress = await res.json()
+    //   setCustomAlert({
+    //     open: true,
+    //     message: 'Address Added successfully'
+    //   })
+    //   setUserAddress(prev => [...(Array.isArray(prev) ? prev : []), newAddress])
+    //   setShowForm(false)
+    // } else {
+    //   setCustomAlert({
+    //     open: true,
+    //     message: 'Failed to Add Address'
+    //   })
+    // }
   }
 
   useEffect(() => {
@@ -463,14 +464,24 @@ export default function AddressForm () {
             </div>
 
             {/* Address fields */}
-            <div>
-              <label className='text-sm font-medium'>Address Type</label>
-              <input
+            <div className='flex gap-5 items-center'>
+              <label className='text-sm font-medium'>Address Type :</label>
+              <select
                 name='address_type'
+                className='border w-[100px] md:w-[145px] rounded-md px-1 py-1'
                 value={form.address_type}
                 onChange={handleChange}
-                className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-              />
+              >
+                <option key='1' value='Home'>
+                  Home
+                </option>
+                <option key='2' value='Office'>
+                  Office
+                </option>
+                <option key='3' value='Other'>
+                  Other
+                </option>
+              </select>
             </div>
 
             <div>
