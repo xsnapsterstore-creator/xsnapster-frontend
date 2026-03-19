@@ -36,7 +36,7 @@ const HomepageSEO = ({ products, category }) => {
       />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
-      <meta property='og:image:type' content='image/svg' />
+      <meta property='og:image:type' content='image/svg+xml' />
       <meta name='twitter:card' content='summary_large_image' />
       <meta
         name='twitter:image'
@@ -65,7 +65,7 @@ const HomepageSEO = ({ products, category }) => {
                 image: pro?.image_link,
                 description:
                   pro?.title +
-                  'Perfect for home decor and gifting. Offer for limited time. Shop now!',
+                  ' Perfect for home decor and gifting. Offer for limited time. Shop now!',
                 brand: {
                   '@type': 'Brand',
                   name: 'XSNAPSTER'

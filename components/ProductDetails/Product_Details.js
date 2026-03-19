@@ -44,9 +44,6 @@ export default function ProductDetailsPage ({ prod }) {
     discounted_price: selectedPricing.discounted_price
   }
 
-  const keyword = product.title
-  const finalKeyword = keyword.split('|')
-
   async function BuyNow () {
     dispatch(addToCart({ ...product, quantity: prodQuantity }))
     const userID = localStorage.getItem('userID')
@@ -121,15 +118,11 @@ export default function ProductDetailsPage ({ prod }) {
 
   const handleShare = () => {
     if (navigator.share) {
-      const message = `💥 Check out this Premium Aesthetic Frame from XSNAPSTER !
-  
-  🖼️ : ${prod.title}
-  
-  👇 View it here:
-  ${shareUrl}`
+      const message = `💥 Check out this Premium Aesthetic Frame & Poster from XSNAPSTER !
+    
+    ${shareUrl}`
 
       navigator.share({
-        title: prod.title,
         text: message
       })
     } else {
@@ -207,7 +200,7 @@ export default function ProductDetailsPage ({ prod }) {
                       alt={`${prod.title} ${index + 1}`}
                       width={600}
                       height={400}
-                      loading="eager"
+                      loading='eager'
                       quality={75}
                       onClick={() => setFullscreenImage(src)}
                       className='object-cover cursor-pointer w-full h-[450px] md:h-[500px]'
@@ -254,7 +247,7 @@ export default function ProductDetailsPage ({ prod }) {
               <Image
                 src={fullscreenImage}
                 alt='preview'
-                loading="eager"
+                loading='eager'
                 width={400}
                 height={300}
                 quality={75}
@@ -451,7 +444,7 @@ export default function ProductDetailsPage ({ prod }) {
                 <Image
                   src='/Razorpay.png'
                   alt='Secure Payment'
-                  loading="eager"
+                  loading='eager'
                   width={500}
                   height={500}
                   className='w-full mx-auto'
