@@ -256,7 +256,10 @@ const BillingTemplate = () => {
       )
       setOfferPrice(1935)
       return temp - 1935
-    } else if (FrameTotal === FrameOffer[0].buy + FrameOffer[0].get) {
+    } else if (
+      FrameTotal === FrameOffer[0].buy + FrameOffer[0].get &&
+      cart.every(item => item.dimensions === 'A4')
+    ) {
       const temp = Math.floor(
         cart.reduce(
           (sum, item) => sum + item.discounted_price * item.quantity,
@@ -265,7 +268,10 @@ const BillingTemplate = () => {
       )
       setOfferPrice(399)
       return temp - 399
-    } else if (FrameTotal === FrameOffer[1].buy + FrameOffer[1].get) {
+    } else if (
+      FrameTotal === FrameOffer[1].buy + FrameOffer[1].get &&
+      cart.every(item => item.dimensions === 'A4')
+    ) {
       const temp = Math.floor(
         cart.reduce(
           (sum, item) => sum + item.discounted_price * item.quantity,
@@ -274,7 +280,10 @@ const BillingTemplate = () => {
       )
       setOfferPrice(1197)
       return temp - 1197
-    } else if (FrameTotal === FrameOffer[2].buy + FrameOffer[2].get) {
+    } else if (
+      FrameTotal === FrameOffer[2].buy + FrameOffer[2].get &&
+      cart.every(item => item.dimensions === 'A4')
+    ) {
       const temp = Math.floor(
         cart.reduce(
           (sum, item) => sum + item.discounted_price * item.quantity,
@@ -283,6 +292,78 @@ const BillingTemplate = () => {
       )
       setOfferPrice(1995)
       return temp - 1995
+    } else if (
+      FrameTotal === FrameOffer[0].buy + FrameOffer[0].get &&
+      cart.every(item => item.dimensions === 'A3')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(599)
+      return temp - 599
+    } else if (
+      FrameTotal === FrameOffer[1].buy + FrameOffer[1].get &&
+      cart.every(item => item.dimensions === 'A3')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(1797)
+      return temp - 1797
+    } else if (
+      FrameTotal === FrameOffer[2].buy + FrameOffer[2].get &&
+      cart.every(item => item.dimensions === 'A3')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(2995)
+      return temp - 2995
+    } else if (
+      FrameTotal === FrameOffer[0].buy + FrameOffer[0].get &&
+      cart.every(item => item.dimensions === 'A2')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(799)
+      return temp - 799
+    } else if (
+      FrameTotal === FrameOffer[1].buy + FrameOffer[1].get &&
+      cart.every(item => item.dimensions === 'A2')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(2397)
+      return temp - 2397
+    } else if (
+      FrameTotal === FrameOffer[2].buy + FrameOffer[2].get &&
+      cart.every(item => item.dimensions === 'A2')
+    ) {
+      const temp = Math.floor(
+        cart.reduce(
+          (sum, item) => sum + item.discounted_price * item.quantity,
+          0
+        )
+      )
+      setOfferPrice(3995)
+      return temp - 3995
     } else {
       setOfferPrice(0)
       return Math.floor(
