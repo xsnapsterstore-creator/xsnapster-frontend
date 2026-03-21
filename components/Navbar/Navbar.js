@@ -468,6 +468,10 @@ const Navbar = () => {
                     <div className='flex flex-col p-4 space-y-2'>
                       {[
                         {
+                          name: "OFFERS",
+                          link: '/offers'
+                        },
+                        {
                           name: "Who's Behind The Camera",
                           link: '/who-is-behind-the-camera'
                         },
@@ -630,7 +634,12 @@ const Navbar = () => {
       transition-all duration-300 ease-out
       animate-slide-down flex justify-center gap-4 p-2'
         >
-          <form className='w-full' onSubmit={searchItem} type='submit' action='submit'>
+          <form
+            className='w-full'
+            onSubmit={searchItem}
+            type='submit'
+            action='submit'
+          >
             <input
               value={mobileSearchTerm}
               onChange={e => setMobileSearchTerm(e.target.value)}
@@ -739,6 +748,18 @@ const Navbar = () => {
 
         <div className='flex flex-col'>
           <div className='flex-1 text-[13px] scrollbar-hide overflow-y-auto p-5 text-white/80 bg-[#212121] rounded-2xl m-3'>
+            <Link
+              onClick={toggleSidebar}
+              href={'/offers'}
+              className='flex items-center justify-between h-[50px] border-b'
+            >
+              <span>
+                OFFERS
+                <sup className='text-red-500 text-[10px] animate-pulse p-[4px] rounded-xl'>
+                  New
+                </sup>
+              </span>
+            </Link>
             <Link
               className='flex items-center justify-between h-[50px] border-b'
               onClick={toggleSidebar}

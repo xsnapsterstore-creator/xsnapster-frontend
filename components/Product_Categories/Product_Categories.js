@@ -12,7 +12,7 @@ const Product_Categories = ({ categProd }) => {
           #TRENDINGNOW!
         </h1>
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4">
         {categProd.map((category) => (
           <div key={category.id}>
             {/* Category Title */}
@@ -50,7 +50,7 @@ const Product_Categories = ({ categProd }) => {
                 .trim()
                 .replace(/\s+/g, "-")
                 .toLowerCase()}`}
-              className="flex justify-center items-center mt-5 mb-5"
+              className="flex justify-center items-center mt-3 mb-5"
             >
               <ExpandMoreIcon
                 className=""

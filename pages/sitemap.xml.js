@@ -26,7 +26,8 @@ function generateSiteMap ({
     '/shipping-policy',
     '/terms-and-conditions',
     '/privacy-policy',
-    '/who-is-behind-the-camera'
+    '/who-is-behind-the-camera',
+    '/offers'
   ]
 
   return `<?xml version="1.0" encoding="UTF-8"?>
