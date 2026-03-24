@@ -2,6 +2,8 @@ import React from 'react'
 import Head from 'next/head'
 
 const CategSEO = ({ product, category, route }) => {
+  const imgLink =
+    product[0]?.image_link || 'https://www.xsnapster.store/logo.png'
   const keyword = category.map(cat => {
     return ' ' + cat.name + ' ' + 'Frames and Posters'
   })
@@ -41,18 +43,14 @@ const CategSEO = ({ product, category, route }) => {
       <meta property='og:title' content={title} />
       <meta property='og:description' content={Desc} />
       <meta property='og:url' content={url} />
-      <meta
-        property='og:image'
-        content={'https://www.xsnapster.store/logo.svg'}
-      />
+      <meta property='og:image' content={imgLink} />
+      <meta property='og:image:secure_url' content={imgLink} />
+      <meta property='og:image:alt' content={title} />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
-      <meta property='og:image:type' content='image/svg' />
+      <meta property='og:image:type' content='image/jpeg' />
       <meta name='twitter:card' content='summary_large_image' />
-      <meta
-        name='twitter:image'
-        content={'https://www.xsnapster.store/logo.svg'}
-      />
+      <meta name='twitter:image' content={imgLink} />
 
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={Desc} />
