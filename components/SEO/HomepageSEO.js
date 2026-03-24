@@ -2,6 +2,11 @@ import React from 'react'
 import Head from 'next/head'
 
 const HomepageSEO = ({ products, category }) => {
+  const min = 0
+  const max = category?.length || 0
+  const ind = Math.floor(Math.random() * (max - min + 1)) + min
+  const imgLink =
+    category[ind]?.image_links[0] || 'https://www.xsnapster.store/logo.png'
   const keyword =
     'Trending Frames & Posters in India, Aesthetic Frames & Posters, XSNAPSTER, XSNAPSTER Frames, Frames under 399, Posters under 99, Car Frames & Posters, Anime Frames & Posters, aesthetic wall decor India, Pinterest room decor India, acrylic photo frames India'
   const prod = products.map(pro => {
@@ -30,18 +35,14 @@ const HomepageSEO = ({ products, category }) => {
       <meta property='og:title' content={title} />
       <meta property='og:description' content={Desc} />
       <meta property='og:url' content={url} />
-      <meta
-        property='og:image'
-        content={'https://www.xsnapster.store/logo.svg'}
-      />
+      <meta property='og:image' content={imgLink} />
+      <meta property='og:image:secure_url' content={imgLink} />
+      <meta property='og:image:alt' content={title} />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
-      <meta property='og:image:type' content='image/svg+xml' />
+      <meta property='og:image:type' content='image/jpeg' />
       <meta name='twitter:card' content='summary_large_image' />
-      <meta
-        name='twitter:image'
-        content={'https://www.xsnapster.store/logo.svg'}
-      />
+      <meta name='twitter:image' content={imgLink} />
 
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={Desc} />
