@@ -18,10 +18,15 @@ const desktopBanners = [
   '/ferrari_desktop.png'
 ]
 
-export default function Poster () {
+export default function Poster ({ categories }) {
   const [current, setCurrent] = useState(0)
   const intervalRef = useRef(null)
   const touchStartX = useRef(0)
+
+  const min = 0
+  const max = categories?.length - 1 || 0
+  const temp = Math.floor(Math.random() * (max - min + 1) + min) || 0
+  const link = categories[temp]?.slug || 'cars'
 
   const startAutoSlide = () => {
     clearInterval(intervalRef.current)
@@ -91,9 +96,9 @@ export default function Poster () {
               src={src}
               alt={`Homepage promotional banner ${index + 1}`}
               fill
-              sizes="100vw"
+              sizes='100vw'
               priority={index === 0}
-              className="object-cover"
+              className='object-cover'
             />
           </div>
         ))}
@@ -111,7 +116,7 @@ export default function Poster () {
           This is your sign to stop living with boring walls.
         </p>
 
-        <Link href='/categories/movies'>
+        <Link href={`/categories/${link}`}>
           <button className='mt-4 px-5 py-2 rounded-xl bg-white text-black text-sm font-semibold'>
             Shop Now
           </button>
