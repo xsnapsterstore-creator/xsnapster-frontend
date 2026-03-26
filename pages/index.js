@@ -10,7 +10,7 @@ export default function Home ({ products, category }) {
       <div>
         <Category_Story category={category} />
         <div>
-          <Hero products={products} />
+          <Hero products={products} categories={category} />
         </div>
       </div>
     </>
