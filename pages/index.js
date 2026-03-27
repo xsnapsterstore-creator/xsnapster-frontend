@@ -17,7 +17,7 @@ export default function Home ({ products, category }) {
   )
 }
 
-export async function getServerSideProps () {
+export async function getStaticProps () {
   const res = await fetchHomepage()
   const prodData = await res.json()
   const cat = await fetchCategories()
@@ -26,6 +26,7 @@ export async function getServerSideProps () {
     props: {
       products: prodData || [],
       category: category || []
-    }
+    },
+    revalidate: 180
   }
 }
