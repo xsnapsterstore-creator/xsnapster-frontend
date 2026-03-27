@@ -87,11 +87,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        onClick={() => toggle(0)}
         className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <div className='flex justify-between items-center w-full text-left cursor-pointer'>
+        <div
+          onClick={() => toggle(0)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
           <motion.h2
             className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
@@ -146,11 +148,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        onClick={() => toggle(1)}
         className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <div className='flex justify-between items-center w-full text-left cursor-pointer'>
+        <div
+          onClick={() => toggle(1)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
           <motion.h2
             className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
@@ -215,11 +219,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        onClick={() => toggle(2)}
         className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className='flex justify-between items-center w-full text-left cursor-pointer'>
+        <div
+          onClick={() => toggle(2)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
           <motion.h2
             className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
@@ -234,7 +240,7 @@ const ProductDescription = ({ prodDesc }) => {
           >
             +
           </motion.span>
-        </button>
+        </div>
 
         {/* Answer */}
         <AnimatePresence initial={false}>
@@ -282,11 +288,13 @@ const ProductDescription = ({ prodDesc }) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        onClick={() => toggle(3)}
         className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
       >
         {/* Question */}
-        <button className='flex justify-between items-center w-full text-left cursor-pointer'>
+        <div
+          onClick={() => toggle(3)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
           <motion.h2
             className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
@@ -301,7 +309,7 @@ const ProductDescription = ({ prodDesc }) => {
           >
             +
           </motion.span>
-        </button>
+        </div>
 
         {/* Answer */}
         <AnimatePresence initial={false}>
@@ -318,13 +326,10 @@ const ProductDescription = ({ prodDesc }) => {
                 <div className=''>
                   <div>
                     <ul className='list-disc ml-5 text-[14px] text-gray-600'>
+                      <li>300 GSM Art Board Paper</li>
                       <li>
-                        200 GSM Art Board Matte Paper / 350 GSM Poly-cotton
-                        inkjet canvas
-                      </li>
-                      <li>
-                        Width : 0.75-inch (For A2) / 0.5 inch (A3, A4) wide
-                        fiberwood frames for edge
+                        Width : 0.50-inch (For A4) / 0.75-inch (For A3) /
+                        1.00-inch (For A2) wide fiberwood frames for edge
                       </li>
                       <li>
                         Style & Depth : Box Frame (Starting from 0.75 inch)
