@@ -176,21 +176,21 @@ export default function AddressForm () {
     // Compute default address logic using a local variable
     const isDefault = !Array.isArray(UserAddress) || UserAddress.length === 0
     console.log('This is the address:', form)
-    // const res = await addUserAddress(form, isDefault)
-    // if (res && res.ok) {
-    //   const newAddress = await res.json()
-    //   setCustomAlert({
-    //     open: true,
-    //     message: 'Address Added successfully'
-    //   })
-    //   setUserAddress(prev => [...(Array.isArray(prev) ? prev : []), newAddress])
-    //   setShowForm(false)
-    // } else {
-    //   setCustomAlert({
-    //     open: true,
-    //     message: 'Failed to Add Address'
-    //   })
-    // }
+    const res = await addUserAddress(form, isDefault)
+    if (res && res.ok) {
+      const newAddress = await res.json()
+      setCustomAlert({
+        open: true,
+        message: 'Address Added successfully'
+      })
+      setUserAddress(prev => [...(Array.isArray(prev) ? prev : []), newAddress])
+      setShowForm(false)
+    } else {
+      setCustomAlert({
+        open: true,
+        message: 'Failed to Add Address'
+      })
+    }
   }
 
   useEffect(() => {
