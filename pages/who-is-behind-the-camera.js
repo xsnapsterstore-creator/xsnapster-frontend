@@ -18,7 +18,7 @@ export default function AboutPage () {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
+      <div className='pt-[120px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
         {/* Header */}
         <motion.div
           className='text-center mb-12'

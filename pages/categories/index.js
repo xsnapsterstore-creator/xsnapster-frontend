@@ -69,7 +69,7 @@ const Categories = ({ categories }) => {
           }}
         />
       </Head>
-      <div className='pt-[95px] px-3 pb-3'>
+      <div className='pt-[105px] px-3 pb-3'>
         <h1 className='text-xl font-semibold text-center mt-4 mb-2'>
           Shop by Category
         </h1>

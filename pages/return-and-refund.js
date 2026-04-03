@@ -23,7 +23,7 @@ const ReturnAndRefund = () => {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px] bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen'>
+      <div className='pt-[120px] bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen'>
         <div className='max-w-3xl mx-auto px-8 flex flex-col gap-12'>
           {/* Header */}
           <motion.div

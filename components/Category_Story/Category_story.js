@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Category_Story = ({ category }) => {
   const router = useRouter();
   return (
-    <div className="pt-[82px]">
+    <div className="pt-[97px]">
       <div className="mt-3 ml-2">
         <p className="text-sm font-medium text-gray-700">
           Buy with <bold className="text-red-500">x</bold>Snapster

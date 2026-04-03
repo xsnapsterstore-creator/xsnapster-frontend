@@ -52,7 +52,7 @@ const Faqs = () => {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px] pb-20 px-6 lg:px-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen'>
+      <div className='pt-[120px] pb-20 px-6 lg:px-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 min-h-screen'>
         {/* Header */}
         <motion.div
           className='text-center mb-14'
@@ -60,7 +60,7 @@ const Faqs = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className='text-[35px] font-extrabold text-gray-900 leading-tight'>
+          <h1 className='text-[30px] font-extrabold text-gray-900 leading-tight'>
             FAQ –{' '}
             <span className='text-red-600 animate-pulse'>
               Frequently Asked Questions

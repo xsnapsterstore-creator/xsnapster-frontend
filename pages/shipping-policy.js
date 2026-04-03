@@ -18,7 +18,7 @@ const ShippingPolicy = () => {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px] pb-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
+      <div className='pt-[120px] pb-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
         <div className='max-w-3xl mx-auto px-8'>
           {/* Header */}
           <motion.div

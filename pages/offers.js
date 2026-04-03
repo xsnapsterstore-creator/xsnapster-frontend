@@ -93,7 +93,7 @@ const offers = [
 
 const OfferPage = () => {
   return (
-    <div className='min-h-screen bg-gray-50 p-4 md:p-10 pt-[110px] md:pt-[110px]'>
+    <div className='min-h-screen bg-gray-50 p-4 md:p-10 pt-[120px] md:pt-[120px]'>
       <h1 className='text-2xl md:text-3xl font-bold mb-6 text-gray-800'>
         🎉 Available Offers
       </h1>
