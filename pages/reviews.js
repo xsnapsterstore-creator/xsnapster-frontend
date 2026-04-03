@@ -13,7 +13,7 @@ const Reviews = () => {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px]'>
+      <div className='pt-[120px]'>
         <ReviewCarousel />
       </div>
     </>

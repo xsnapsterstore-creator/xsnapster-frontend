@@ -11,7 +11,7 @@ const ProductId = ({ product }) => {
   return (
     <>
       <ProdSEO product={product} />
-      <div className='pt-[85px]'>
+      <div className='pt-[95px]'>
         <div className=''>
           <ProductDetailsPage prod={product} />
         </div>

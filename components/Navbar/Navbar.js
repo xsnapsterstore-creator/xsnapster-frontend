@@ -24,6 +24,7 @@ import FemaleIcon from '@mui/icons-material/Female'
 import TransgenderIcon from '@mui/icons-material/Transgender'
 import { Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
+import Marquee from 'react-fast-marquee'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -79,7 +80,53 @@ const Navbar = () => {
     refetchOnWindowFocus: false
   })
 
-  const pathname = router.pathname
+  const reviews = [
+    {
+      offer: 'Buy 2 Frames Get 1 Free'
+    },
+    {
+      offer: 'Buy 4 Frames Get 3 Free'
+    },
+    {
+      offer: 'Buy 6 Frames Get 5 Free'
+    },
+    {
+      offer: 'Buy 5 Posters Get 5 Free'
+    },
+    {
+      offer: 'Buy 10 Posters Get 15 Free'
+    },
+    {
+      offer: 'Buy 2 Frames Get 1 Free'
+    },
+    {
+      offer: 'Buy 4 Frames Get 3 Free'
+    },
+    {
+      offer: 'Buy 6 Frames Get 5 Free'
+    },
+    {
+      offer: 'Buy 5 Posters Get 5 Free'
+    },
+    {
+      offer: 'Buy 10 Posters Get 15 Free'
+    },
+    {
+      offer: 'Buy 2 Frames Get 1 Free'
+    },
+    {
+      offer: 'Buy 4 Frames Get 3 Free'
+    },
+    {
+      offer: 'Buy 6 Frames Get 5 Free'
+    },
+    {
+      offer: 'Buy 5 Posters Get 5 Free'
+    },
+    {
+      offer: 'Buy 10 Posters Get 15 Free'
+    }
+  ]
 
   useEffect(() => {
     const isBlackNavbar = path?.includes('premium-categories')
@@ -468,7 +515,7 @@ const Navbar = () => {
                     <div className='flex flex-col p-4 space-y-2'>
                       {[
                         {
-                          name: "OFFERS",
+                          name: 'OFFERS',
                           link: '/offers'
                         },
                         {
@@ -558,6 +605,27 @@ const Navbar = () => {
               />
             </div>
           </div>
+        </div>
+
+        <div className='w-full flex items-center bg-black text-white'>
+          <Marquee
+            gradient={false}
+            speed={50}
+            pauseOnHover={true}
+            pauseOnClick={true}
+            delay={0}
+            play={true}
+            direction='left'
+            className=''
+          >
+            {reviews.map((item, i) => (
+              <div key={i} className=''>
+                <Link href={'/offers'} className='inset-0 text-gray-300 flex items-center justify-center text-center text-[10px] px-2.5'>
+                  {item.offer}
+                </Link>
+              </div>
+            ))}
+          </Marquee>
         </div>
 
         {/* Premium Links  */}

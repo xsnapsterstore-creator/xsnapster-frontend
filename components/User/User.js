@@ -475,7 +475,7 @@ const User = () => {
     )
   } else {
     return (
-      <div className='pt-[90px] min-h-screen bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 py-10'>
+      <div className='pt-[95px] min-h-screen bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60 py-10'>
         <div className='w-full max-w-full mx-auto bg-black text-white shadow-xl overflow-hidden'>
           {/* Top Profile Card */}
           <div className='relative p-6 bg-gradient-to-br from-[#0f0f0f] via-[#151515] to-black'>

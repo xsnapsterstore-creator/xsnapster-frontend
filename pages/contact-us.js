@@ -14,7 +14,7 @@ const ContactUs = () => {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[110px] pb-20 px-6 md:px-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
+      <div className='pt-[115px] pb-20 px-6 md:px-20 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}

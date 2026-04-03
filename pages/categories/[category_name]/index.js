@@ -19,7 +19,7 @@ const CategoryName = ({ sub_category, products }) => {
         category={sub_category}
         route={{ category_name, sub_category_name }}
       />
-      <div className='pt-[85px]'>
+      <div className='pt-[95px]'>
         <div className='md:m-3'>
           <CategoryPage
             category={category_name}
