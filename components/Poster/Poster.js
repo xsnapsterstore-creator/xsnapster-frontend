@@ -70,19 +70,27 @@ export default function Poster ({ categories }) {
     >
       {/* Slides */}
       {/* For Mobile Screen */}
-      <div
-        className='flex md:hidden transition-transform duration-700 ease-in-out'
-        style={{ transform: `translateX(-${current * 100}%)` }}
-      >
-        {banners.map((src, index) => (
-          <div key={index} className='min-w-full h-[480px] md:h-[600px]'>
-            <img
-              src={src}
-              alt={`Banner ${index + 1}`}
-              className='w-full h-full object-cover'
-            />
-          </div>
-        ))}
+      <div className='overflow-hidden md:hidden'>
+        <div
+          className='flex transition-transform duration-700 ease-in-out'
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {banners.map((src, index) => (
+            <div
+              key={index}
+              className='relative min-w-full flex-shrink-0 h-[480px]'
+            >
+              <Image
+                src={src}
+                alt={`Banner ${index + 1}`}
+                fill
+                sizes='100vw'
+                className='object-cover'
+                priority={index === 0} // only first image is LCP
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* For Desktop Screen */}
