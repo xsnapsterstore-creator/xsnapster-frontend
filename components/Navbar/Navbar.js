@@ -607,7 +607,11 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className='w-full flex items-center bg-black text-white'>
+        <div
+          className={`${
+            blackNavbar ? 'bg-white/60 text-black' : 'bg-black text-white'
+          }`}
+        >
           <Marquee
             gradient={false}
             speed={50}
@@ -620,7 +624,10 @@ const Navbar = () => {
           >
             {reviews.map((item, i) => (
               <div key={i} className=''>
-                <Link href={'/offers'} className='inset-0 text-gray-300 flex items-center justify-center text-center text-[10px] px-2.5'>
+                <Link
+                  href={'/offers'}
+                  className='inset-0 flex items-center justify-center text-center text-[10px] px-2.5'
+                >
                   {item.offer}
                 </Link>
               </div>

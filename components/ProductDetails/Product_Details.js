@@ -200,7 +200,7 @@ export default function ProductDetailsPage ({ prod }) {
                       alt={`${prod.title} ${index + 1}`}
                       width={600}
                       height={400}
-                      loading='eager'
+                      priority={index === 0}
                       quality={75}
                       onClick={() => setFullscreenImage(src)}
                       className='object-cover cursor-pointer w-full h-[450px] md:h-[500px]'
@@ -247,10 +247,8 @@ export default function ProductDetailsPage ({ prod }) {
               <Image
                 src={fullscreenImage}
                 alt='preview'
-                loading='eager'
                 width={400}
                 height={300}
-                quality={75}
                 className='max-w-[90%] max-h-[100%] rounded-lg shadow-xl animate-fadeIn'
                 onClick={e => e.stopPropagation()} // prevents closing when clicking image
               />
@@ -444,7 +442,6 @@ export default function ProductDetailsPage ({ prod }) {
                 <Image
                   src='/Razorpay.png'
                   alt='Secure Payment'
-                  loading='eager'
                   width={500}
                   height={500}
                   className='w-full mx-auto'

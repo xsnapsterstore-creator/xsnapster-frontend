@@ -8,9 +8,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'khnbsjuczeylcjrlrtni.storage.supabase.co',
-        pathname: '/storage/v1/object/public/**'
+        pathname: '/storage/v1/object/public/**',
       }
-    ]
+    ],
+    formats: ['image/avif', 'image/webp']
   },
   reactStrictMode: false,
   async rewrites () {

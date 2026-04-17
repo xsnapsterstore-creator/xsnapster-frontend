@@ -47,8 +47,6 @@ const HomepageSEO = ({ products, category }) => {
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={Desc} />
       <meta property='og:site_name' content='XSNAPSTER' />
-      <link rel='preconnect' href='https://fonts.googleapis.com' />
-      <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{

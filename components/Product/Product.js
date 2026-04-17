@@ -46,7 +46,7 @@ const Product = ({ product, category_name }) => {
   return (
     <div className='relative cursor-pointer rounded-lg shadow hover:shadow-lg transition-all duration-300 overflow-hidden w-[175px] md:w-[200px] m-auto'>
       {/* Discount Badge */}
-      <span className='absolute top-2 left-2 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10'>
+      <span className='absolute top-2 left-2 md:left-4 bg-red-500 text-white text-[11px] font-semibold px-2 py-1 rounded-lg z-10'>
         Sale
       </span>
 
@@ -60,10 +60,9 @@ const Product = ({ product, category_name }) => {
         <Image
           src={product.image_link}
           alt={product.title}
-          width={100}
-          height={100}
-          priority
-          fetchPriority='high'
+          width={200}
+          height={200}
+          sizes='(max-width: 768px) 175px, 200px'
           quality={75}
           className='object-cover w-[175px] md:w-[200px] h-[200px] transform group-hover:scale-105 transition duration-500'
         />
