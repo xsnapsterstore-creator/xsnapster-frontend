@@ -18,7 +18,7 @@ export default function OfferPopup() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 z-50 w-full flex items-end md:items-center justify-center md:justify-start">
+    <div className="fixed bottom-0 z-50 w-full md:w-auto flex items-end md:items-center justify-center md:justify-start">
       <div className="relative max-w-md w-full bg-[#333333] md:rounded-t-lg p-3 shadow-2xl animate-scaleIn">
         {/* Close Button */}
         <button

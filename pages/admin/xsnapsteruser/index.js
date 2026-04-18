@@ -9,7 +9,7 @@ const XsnapsterUser = () => {
   const [activeTab, setActiveTab] = useState("product");
 
   return (
-    <div className="pt-[95px]">
+    <div className="pt-[115px]">
       <div className="m-3">
         <div className="m-1">
           <h1 className="text-[30px] font-semibold tracking-wide text-center">
