@@ -431,3 +431,34 @@ export const fetchUserOrder = async () => {
     console.error('Network/Parse Error:', e)
   }
 }
+
+export const ListCoupons = async () => {
+  try {
+    const res = await secureFetch(`/coupons/available`, {
+      method: 'GET'
+    })
+    if (!res.ok) {
+      const err = await res.json()
+      return err
+    }
+    return await res.json()
+  } catch (e) {
+    return e
+  }
+}
+
+export const AddCoupons = async data => {
+  console.log("This is the Data:", data)
+  try {
+    const res = await secureFetch(`/admin/coupons/bogo`, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+    if (!res.ok) {
+      const err = await res.json()
+      return err
+    }
+  } catch (e) {
+    return e
+  }
+}

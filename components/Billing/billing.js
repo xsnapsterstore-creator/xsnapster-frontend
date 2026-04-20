@@ -13,6 +13,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { UserOrder, verifyUserPayment, fetchUserAddress } from '../API/api'
 import OfferAlert from '../Alert/OfferAlert'
+import Coupons from '../Coupons/ListCoupon'
 
 const BillingTemplate = () => {
   const router = useRouter()
@@ -25,7 +26,42 @@ const BillingTemplate = () => {
   const [isloading, setIsLoading] = useState(false)
   const [showBilling, setShowBilling] = useState(false)
   const [deliveryCharge, setDeliveryCharge] = useState('Free')
-  const [order, setOrder] = useState([])
+  const [listCoupons, setListCoupons] = useState([
+    {
+      id: 0,
+      code: 'BUY2GET1',
+      type: 'Offer',
+      description: 'string',
+      is_active: true,
+      discount_percentage: 0
+    },
+    {
+      id: 1,
+      code: 'BUY4GET3',
+      type: 'Offer',
+      description: 'string',
+      is_active: true,
+      discount_percentage: 0
+    },
+    {
+      id: 2,
+      code: 'BUY6GET5',
+      type: 'Offer',
+      description: 'string',
+      is_active: true,
+      discount_percentage: 0
+    },
+    {
+      id: 3,
+      code: 'BUY5GET5',
+      type: 'Poster Offer',
+      description: 'string',
+      is_active: true,
+      discount_percentage: 0
+    }
+  ])
+  const [selectedCoupon, setSelectedCoupon] = useState(null)
+  const [status, setStatus] = useState(null) // "success" | "error" | null
   const [OfferPrice, setOfferPrice] = useState(0)
   const [customAlert, setCustomAlert] = useState({
     open: false,
@@ -545,6 +581,33 @@ const BillingTemplate = () => {
     refetchOnWindowFocus: false
   })
 
+  const handleApplyCoupon = async code => {
+    setSelectedCoupon(code)
+    setStatus(null) // reset before validation
+
+    try {
+      console.log('This is the Coupon:', code)
+
+      // 🔥 Replace this with your real API
+      const isValid = code === 'BUY2GET1' // demo logic
+
+      if (isValid) {
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
+    } catch (err) {
+      setStatus('error')
+      console.error(err)
+    }
+  }
+
+  async function GetCoupons () {
+    const res = await ListCoupons()
+    // return res
+    console.log('THis is the Coupon:', res)
+  }
+
   return (
     <div className='min-h-screen bg-gray-50 p-4 md:p-8 pb-24 md:pb-36'>
       <div className='max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8'>
@@ -744,6 +807,18 @@ const BillingTemplate = () => {
                   <span>Total Amount</span>
                   <span>₹{grandTotal}</span>
                 </div>
+              </div>
+
+              <hr className='my-4' />
+
+              {/* Coupons */}
+              <div>
+                <Coupons
+                  listCoupons={listCoupons}
+                  onApplyCoupon={handleApplyCoupon}
+                  selectedCoupon={selectedCoupon}
+                  status={status}
+                />
               </div>
 
               <hr className='my-4' />
