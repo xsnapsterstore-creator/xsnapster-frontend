@@ -4,89 +4,89 @@ const offers = [
   {
     id: 1,
     title: 'A4 Size Frame Offer',
-    description: 'Buy 2 Get 1 Free',
+    description: 'Buy2Get1',
     condition:
-      'Offer applies when you add 3 A4 size frames (auto-applied at checkout).',
+      'Offer applies when you add 3 A4 size frames and then apply valid coupon.',
     discount: '₹399 OFF'
   },
   {
     id: 2,
     title: 'A3 Size Frame Offer',
-    description: 'Buy 2 Get 1 Free',
+    description: 'Buy2Get1',
     condition:
-      'Offer applies when you add 3 A3 size frames (auto-applied at checkout).',
+      'Offer applies when you add 3 A3 size frames and then apply valid coupon.',
     discount: '₹599 OFF'
   },
   {
     id: 3,
     title: 'A2 Size Frame Offer',
-    description: 'Buy 2 Get 1 Free',
+    description: 'Buy2Get1',
     condition:
-      'Offer applies when you add 3 A2 size frames (auto-applied at checkout).',
+      'Offer applies when you add 3 A2 size frames and then apply valid coupon.',
     discount: '₹799 OFF'
   },
   {
     id: 4,
     title: 'Poster Offer',
-    description: 'Buy 5 Get 5 Free',
+    description: 'Buy5Get5',
     condition:
-      'Offer applies when you add 10 Posters (auto-applied at checkout).',
+      'Offer applies when you add 10 Posters and then apply valid coupon.',
     discount: '₹645 OFF'
   },
   {
     id: 5,
     title: 'A4 Size Frame Offer',
-    description: 'Buy 4 Get 3 Free',
+    description: 'Buy4Get3',
     condition:
-      'Offer applies when you add 7 A4 size frames (auto-applied at checkout).',
+      'Offer applies when you add 7 A4 size frames and then apply valid coupon.',
     discount: '₹1197 OFF'
   },
   {
     id: 6,
     title: 'A3 Size Frame Offer',
-    description: 'Buy 4 Get 3 Free',
+    description: 'Buy4Get3',
     condition:
-      'Offer applies when you add 7 A3 size frames (auto-applied at checkout).',
+      'Offer applies when you add 7 A3 size frames and then apply valid coupon.',
     discount: '₹1797 OFF'
   },
   {
     id: 7,
     title: 'A2 Size Frame Offer',
-    description: 'Buy 4 Get 3 Free',
+    description: 'Buy4Get3',
     condition:
-      'Offer applies when you add 7 A2 size frames (auto-applied at checkout).',
+      'Offer applies when you add 7 A2 size frames and then apply valid coupon.',
     discount: '₹2397 OFF'
   },
   {
     id: 8,
     title: 'Poster Offer',
-    description: 'Buy 10 Get 15 Free',
+    description: 'Buy10Get15',
     condition:
-      'Offer applies when you add 25 Posters (auto-applied at checkout).',
+      'Offer applies when you add 25 Posters and then apply valid coupon.',
     discount: '₹1935 OFF'
   },
   {
     id: 9,
     title: 'A4 Size Frame Offer',
-    description: 'Buy 6 Get 5 Free',
+    description: 'Buy6Get5',
     condition:
-      'Offer applies when you add 11 A4 size frames (auto-applied at checkout).',
+      'Offer applies when you add 11 A4 size frames and then apply valid coupon.',
     discount: '₹1995 OFF'
   },
   {
     id: 10,
     title: 'A3 Size Frame Offer',
-    description: 'Buy 6 Get 5 Free',
+    description: 'Buy6Get5',
     condition:
-      'Offer applies when you add 11 A3 size frames (auto-applied at checkout).',
+      'Offer applies when you add 11 A3 size frames and then apply valid coupon.',
     discount: '₹2995 OFF'
   },
   {
     id: 11,
     title: 'A2 Size Frame Offer',
-    description: 'Buy 6 Get 5 Free',
+    description: 'Buy6Get5',
     condition:
-      'Offer applies when you add 11 A2 size frames (auto-applied at checkout).',
+      'Offer applies when you add 11 A2 size frames and then apply valid coupon.',
     discount: '₹3995 OFF'
   }
 ]
@@ -112,7 +112,12 @@ const OfferPage = () => {
               </span>
             </div>
 
-            <p className='text-gray-600 text-sm'>{offer.description}</p>
+            <div className='flex justify-start items-center gap-3'>
+              <p className='text-sm font-semibold'>COUPON CODE:</p>
+              <span className='px-2 py-1 border border-dashed rounded-lg text-sm transition uppercase text-red-600'>
+                {offer.description}
+              </span>
+            </div>
 
             <p className='text-gray-500 text-xs'>{offer.condition}</p>
           </div>
@@ -121,7 +126,7 @@ const OfferPage = () => {
 
       {/* Footer Note */}
       <div className='mt-6 text-xs md:text-sm text-red-500'>
-        * Offers are automatically applied at checkout if eligible. T&C apply.
+        * Coupons are applied at checkout if eligible. T&C apply.
       </div>
     </div>
   )

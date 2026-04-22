@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function OfferPopup() {
   const [show, setShow] = useState(false);
@@ -34,32 +35,32 @@ export default function OfferPopup() {
         </h5>
 
         <div className="grid grid-cols-3 gap-2 text-center">
-          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+          <Link href={'/offers'} className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
               Buy <span className="font-semibold text-gray-400">2 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
               Get 1 Frame Free
             </p>
-          </div>
+          </Link>
 
-          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+          <Link href={'/offers'} className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
               Buy <span className="font-semibold text-gray-400">4 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
               Get 3 Frames Free
             </p>
-          </div>
+          </Link>
 
-          <div className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
+          <Link href={'/offers'} className="bg-[#212121] rounded-lg py-2 px-3 shadow-sm">
             <p className="text-[10px] font-medium text-gray-400">
               Buy <span className="font-semibold text-gray-400">6 Frames</span>
             </p>
             <p className="text-[11px] text-red-600 italic animate-pulse font-semibold">
               Get 5 Frames Free
             </p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
