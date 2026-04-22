@@ -9,7 +9,7 @@ const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
     <div>
       <div>
         {SubCategory.length > 0 && (
-          <div className="hide-scrollbar mt-1 flex items-center gap-3 overflow-x-auto py-3">
+          <div className="hide-scrollbar mt-1 pl-2 flex items-center gap-3 overflow-x-auto py-3">
             {SubCategory.map((cat) => {
               const isActive =
                 sub_category_name === cat.slug ||

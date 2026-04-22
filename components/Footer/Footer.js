@@ -121,9 +121,9 @@ const Footer = () => {
             </div>
 
             <div className='text-center pt-5'>
-              <h3 className='text-[15px] tracking-wide font-semibold'>
+              <h2 className='text-[15px] tracking-wide font-semibold'>
                 About Us
-              </h3>
+              </h2>
               <p className='text-[12px] text-center p-3'>
                 Welcome to The <bold className='text-red-500'>X</bold>SNAPSTER -
                 where creativity meets artistry in the form of stunning
@@ -341,7 +341,7 @@ const Footer = () => {
 
           {/* About */}
           <div>
-            <h4 className='text-lg font-semibold mb-1 mt-5'>About Us</h4>
+            <h2 className='text-lg font-semibold mb-1 mt-5'>About Us</h2>
             <p className='text-sm leading-6 text-gray-400'>
               Welcome to The <span className='text-red-500'>X</span>
               SNAPSTER — where creativity meets artistry in the form of stunning
@@ -357,7 +357,7 @@ const Footer = () => {
           <div className='grid lg:grid-cols-3 gap-10 mt-5'>
             {/* Quick Links */}
             <div>
-              <h4 className='text-lg font-semibold mb-3'>Quick Links</h4>
+              <h3 className='text-lg font-semibold mb-3'>Quick Links</h3>
               <ul className='space-y-2 text-sm'>
                 <li>
                   <Link

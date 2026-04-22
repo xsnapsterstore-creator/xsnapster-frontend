@@ -172,10 +172,16 @@ const Product = ({ product, category_name }) => {
                 e.stopPropagation()
                 dispatch(addToCart(pro))
                 setAdded(true)
-                setTimeout(() => setAdded(false), 1200)
-                setOpen(false)
+                setTimeout(() => {
+                  setOpen(false)
+                  setAdded(false)
+                }, 600)
               }}
-              className='flex-1 py-2 rounded-lg bg-black text-white cursor-pointer'
+              className={
+                added
+                  ? 'Added flex-1 py-2 rounded-lg bg-green-600 text-white cursor-pointer'
+                  : 'flex-1 py-2 rounded-lg bg-black text-white cursor-pointer'
+              }
             >
               {added ? 'Added' : 'Add To Cart'}
             </button>

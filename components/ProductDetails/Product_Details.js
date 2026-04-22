@@ -343,7 +343,7 @@ export default function ProductDetailsPage ({ prod }) {
                   }}
                   className={`px-8 py-2 w-full rounded-lg shadow-md text-lg transition ${
                     added
-                      ? 'bg-black text-white'
+                      ? 'bg-green-600 text-white'
                       : 'bg-gray-900 hover:bg-gray-700 text-white'
                   }`}
                 >
