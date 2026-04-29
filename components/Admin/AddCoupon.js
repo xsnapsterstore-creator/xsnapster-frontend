@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { AddCoupons } from '../API/api'
 
 export default function AddCoupon () {
   const [form, setForm] = useState({
@@ -28,7 +27,7 @@ export default function AddCoupon () {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const res = await AddCoupons(form)
+    // const res = await AddCoupons(form)
     console.log('Submit Coupon:', res)
   }
 
