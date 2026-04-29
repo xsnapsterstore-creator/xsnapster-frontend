@@ -33,10 +33,6 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      console.log(
-        "This error comes in while fetching products for sub-category."
-      );
-      // Optionally revert to initial products on error
       setProducts(productName);
     } finally {
       setLoading(false);

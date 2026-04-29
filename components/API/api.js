@@ -434,7 +434,7 @@ export const fetchUserOrder = async () => {
 
 export const ListCoupons = async () => {
   try {
-    const res = await secureFetch(`/coupons/available`, {
+    const res = await secureFetch(`/coupons/`, {
       method: 'GET'
     })
     if (!res.ok) {
@@ -447,17 +447,21 @@ export const ListCoupons = async () => {
   }
 }
 
-export const AddCoupons = async data => {
-  console.log("This is the Data:", data)
+export const ValidateCoupon = async data => {
+  console.log('This is the Data:', data)
   try {
-    const res = await secureFetch(`/admin/coupons/bogo`, {
+    const res = await secureFetch(`/coupons/validate`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(data)
     })
     if (!res.ok) {
       const err = await res.json()
       return err
     }
+    return await res.json()
   } catch (e) {
     return e
   }

@@ -14,7 +14,6 @@ const SubCategoryChips = ({ SubCategory, selected, onSelect }) => {
               const isActive =
                 sub_category_name === cat.slug ||
                 (!sub_category_name && cat.slug === "all");
-
               return (
                 <button
                   key={cat.id}
