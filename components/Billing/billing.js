@@ -161,7 +161,8 @@ const BillingTemplate = () => {
           })),
           address_id: address_id,
           payment_method: 'COD',
-          idempotency_key: idempotency
+          idempotency_key: idempotency,
+          coupon_code: selectedCoupon
         }
 
         const res = await UserOrder(payload)
@@ -204,7 +205,8 @@ const BillingTemplate = () => {
             })),
             address_id: address_id,
             payment_method: 'RAZORPAY',
-            idempotency_key: idempotency
+            idempotency_key: idempotency,
+            coupon_code: selectedCoupon
           }
           const res = await UserOrder(payload)
 
@@ -332,7 +334,6 @@ const BillingTemplate = () => {
           message: `${res.message}`
         })
       }
-      console.log('This is the Response:', res)
     } catch (err) {
       setStatus('error')
       console.error(err)
