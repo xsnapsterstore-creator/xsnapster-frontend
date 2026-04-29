@@ -20,7 +20,6 @@ export default function Coupons ({
   return (
     <div className='flex justify-start items-center overflow-auto gap-2 p-3'>
       {listCoupons
-        .filter(coupon => coupon.is_active)
         .map(coupon => (
           <button
             key={coupon.id}
