@@ -20,6 +20,7 @@ import {
 } from '../API/api'
 import OfferAlert from '../Alert/OfferAlert'
 import Coupons from '../Coupons/ListCoupon'
+import Celebration from '../Alert/Celebration'
 
 const BillingTemplate = () => {
   const router = useRouter()
@@ -43,6 +44,7 @@ const BillingTemplate = () => {
     title: '',
     message: ''
   })
+  const [couponSuccess, setCouponSuccess] = useState(false)
   const paymentOptions = [
     { value: '', label: 'Select a payment method', isDisabled: true },
     { value: 'cod', label: '💵 Cash on Delivery' },
@@ -317,6 +319,7 @@ const BillingTemplate = () => {
       const res = await ValidateCoupon(data)
       if (true === res.valid) {
         setSelectedCoupon(code)
+        setCouponSuccess(true)
         setOfferPrice(res.coupon_discount_amount)
         setStatus('success')
         setCustomAlert({
@@ -326,6 +329,7 @@ const BillingTemplate = () => {
         })
       } else {
         setSelectedCoupon(code)
+        setCouponSuccess(false)
         setOfferPrice(0)
         setStatus('error')
         setCustomAlert({
@@ -645,6 +649,8 @@ const BillingTemplate = () => {
         message={customAlert.message}
         onClose={() => setCustomAlert({ open: false, message: '' })}
       />
+
+      <Celebration isSuccess={couponSuccess} />
     </div>
   )
 }

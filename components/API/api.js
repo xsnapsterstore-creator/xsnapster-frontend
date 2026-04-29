@@ -448,7 +448,6 @@ export const ListCoupons = async () => {
 }
 
 export const ValidateCoupon = async data => {
-  console.log('This is the Data:', data)
   try {
     const res = await secureFetch(`/coupons/validate`, {
       method: 'POST',

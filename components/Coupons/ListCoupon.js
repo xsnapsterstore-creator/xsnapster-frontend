@@ -18,19 +18,43 @@ export default function Coupons ({
   }
 
   return (
-    <div className='flex justify-start items-center overflow-auto gap-2 p-3'>
-      {listCoupons
-        .map(coupon => (
-          <button
+    <div className='w-full max-w-2xl mx-auto'>
+      <h2 className='text-lg font-semibold mb-4 text-gray-800'>
+        Available Offers
+      </h2>
+
+      <div className='flex flex-col gap-4'>
+        {listCoupons.map(coupon => (
+          <div
             key={coupon.id}
-            onClick={() => onApplyCoupon(coupon.code)}
-            className={`px-2.5 py-2 border border-dashed rounded-lg text-sm font-medium transition ${getStyle(
-              coupon.code
-            )}`}
+            className='flex items-center justify-between p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition'
           >
-            {coupon.code}
-          </button>
+            {/* LEFT CONTENT */}
+            <div className='flex flex-col'>
+              <span className='text-sm font-semibold text-gray-800'>
+                {coupon.code}
+              </span>
+              <p className='text-xs text-gray-500 mt-1'>
+                Applicable on {coupon.required_qty} items of the same size in
+                cart.
+              </p>
+            </div>
+
+            {/* RIGHT ACTION */}
+            <button
+              onClick={() => onApplyCoupon(coupon.code)}
+              className={`px-4 py-2 border border-dashed rounded-xl text-sm font-medium transition-all duration-200 
+            ${
+              getStyle(coupon.code) ||
+              'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }
+          `}
+            >
+              Apply
+            </button>
+          </div>
         ))}
+      </div>
     </div>
   )
 }
