@@ -15,11 +15,11 @@ import {
   UserOrder,
   verifyUserPayment,
   fetchUserAddress,
-  ValidateCoupon
+  ValidateCoupon,
+  ListCoupons
 } from '../API/api'
 import OfferAlert from '../Alert/OfferAlert'
 import Coupons from '../Coupons/ListCoupon'
-import { ListCoupons } from '../API/api'
 
 const BillingTemplate = () => {
   const router = useRouter()
