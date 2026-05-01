@@ -328,7 +328,7 @@ const BillingTemplate = () => {
           message: `You save ₹${res.coupon_discount_amount}.`
         })
       } else {
-        setSelectedCoupon(code)
+        setSelectedCoupon(null)
         setCouponSuccess(false)
         setOfferPrice(0)
         setStatus('error')
