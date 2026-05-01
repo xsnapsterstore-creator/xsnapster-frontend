@@ -232,6 +232,8 @@ const BillingTemplate = () => {
           return res
         }
 
+        console.log('THis is the API Key:', process.env.RAZORPAY_KEY_ID)
+
         const startPayment = async () => {
           const loaded = await loadRazorpay()
           if (!loaded) {
@@ -242,7 +244,7 @@ const BillingTemplate = () => {
           const order = await createOrder()
 
           const options = {
-            key: 'rzp_test_Rc3r0uTkowIjsF',
+            key: process.env.RAZORPAY_KEY_ID,
             amount: order.amount * 100,
             currency: 'INR',
             order_id: order.payment_gateway_order_id,
