@@ -138,7 +138,7 @@ const Cart = ({ isOpen, onClose }) => {
                           })
                         );
                       }}
-                      className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                      className="w-[25px] flex justify-center text-lg cursor-pointer font-semibold text-gray-700 hover:text-black active:scale-90 transition"
                     >
                       -
                     </button>
@@ -157,7 +157,7 @@ const Cart = ({ isOpen, onClose }) => {
                           })
                         );
                       }}
-                      className="w-[25px] flex justify-center text-lg font-semibold text-gray-700 hover:text-black active:scale-90 transition"
+                      className="w-[25px] flex justify-center text-lg cursor-pointer font-semibold text-gray-700 hover:text-black active:scale-90 transition"
                     >
                       +
                     </button>
