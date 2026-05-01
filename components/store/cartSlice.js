@@ -56,15 +56,22 @@ const cartSlice = createSlice({
     },
     decreaseQuantity: (state, action) => {
       const { id, dimensions } = action.payload;
-
-      const item = state.items.find(
+    
+      const index = state.items.findIndex(
         (i) => i.id === id && i.dimensions === dimensions
       );
-
-      if (item) {
-        item.quantity = Math.max(1, (item.quantity || 1) - 1);
+    
+      if (index !== -1) {
+        const item = state.items[index];
+    
+        if ((item.quantity || 1) > 1) {
+          item.quantity -= 1;
+        } else {
+          // 🔥 Remove item when quantity is 1 and user decreases
+          state.items.splice(index, 1);
+        }
       }
-
+    
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
     loadCartFromStorage: (state) => {

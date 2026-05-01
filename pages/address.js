@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Image from 'next/image'
 import Alert from '@/components/Alert/alert'
 import { v4 as uuidv4 } from 'uuid'
+import Head from 'next/head'
 
 export default function AddressForm () {
   const router = useRouter()
@@ -217,59 +218,63 @@ export default function AddressForm () {
   }, [UserAddress])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className='min-h-screen pt-[135px] pb-10 px-4'
-    >
-      {/*   Existing Addresses Section */}
-      {loading ? (
-        <div className='h-[70vh] flex items-center justify-center'>
-          <div className='relative'>
-            <div className='fixed inset-0 flex items-center justify-center z-10'>
-              <Image
-                src={'/logo.svg'}
-                alt='Loading...'
-                width={100}
-                height={100}
-                unoptimized
-                className='opacity-25'
-              />
+    <>
+      <Head>
+        <meta name='robots' content='noindex, nofollow' />
+      </Head>
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className='min-h-screen pt-[135px] pb-10 px-4'
+      >
+        {/*   Existing Addresses Section */}
+        {loading ? (
+          <div className='h-[70vh] flex items-center justify-center'>
+            <div className='relative'>
+              <div className='fixed inset-0 flex items-center justify-center z-10'>
+                <Image
+                  src={'/logo.svg'}
+                  alt='Loading...'
+                  width={100}
+                  height={100}
+                  unoptimized
+                  className='opacity-25'
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        UserAddress.length > 0 && (
-          <div className='max-w-2xl mx-auto mb-6'>
-            <h2 className='text-xl font-bold mb-3 text-gray-800'>
-              Your Addresses
-            </h2>
+        ) : (
+          UserAddress.length > 0 && (
+            <div className='max-w-2xl mx-auto mb-6'>
+              <h2 className='text-xl font-bold mb-3 text-gray-800'>
+                Your Addresses
+              </h2>
 
-            <div className='space-y-4'>
-              {UserAddress.map((address, index) => (
-                <div
-                  key={address.id}
-                  onClick={() => {
-                    setSelectedId(address.id)
-                    setShowForm(false)
-                  }}
-                  className={`border rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
+              <div className='space-y-4'>
+                {UserAddress.map((address, index) => (
+                  <div
+                    key={address.id}
+                    onClick={() => {
+                      setSelectedId(address.id)
+                      setShowForm(false)
+                    }}
+                    className={`border rounded-xl p-4 flex justify-between items-start shadow-sm hover:shadow-md transition cursor-pointer
                   ${
                     selectedId === address.id
                       ? 'border-black ring-1 bg-gray-100 ring-black'
                       : 'border-gray-200'
                   }
                 `}
-                >
-                  <div className='flex gap-2'>
-                    <div>
-                      <input
-                        type='radio'
-                        name='selectedAddress'
-                        checked={selectedId === address.id}
-                        onChange={() => setSelectedId(address.id)}
-                        className={`w-3 h-3 rounded-full border-2 cursor-pointer transition
+                  >
+                    <div className='flex gap-2'>
+                      <div>
+                        <input
+                          type='radio'
+                          name='selectedAddress'
+                          checked={selectedId === address.id}
+                          onChange={() => setSelectedId(address.id)}
+                          className={`w-3 h-3 rounded-full border-2 cursor-pointer transition
       appearance-none
       ${
         selectedId === address.id
@@ -277,145 +282,218 @@ export default function AddressForm () {
           : 'bg-white border-gray-300'
       }
     `}
-                      />
-                    </div>
-                    <div>
-                      <p className='font-semibold text-gray-900 mb-1'>
-                        {address.name}
-                      </p>
-                      <p className='font-semibold text-sm text-gray-900 mb-1'>
-                        {address.phone_number}
-                      </p>
+                        />
+                      </div>
+                      <div>
+                        <p className='font-semibold text-gray-900 mb-1'>
+                          {address.name}
+                        </p>
+                        <p className='font-semibold text-sm text-gray-900 mb-1'>
+                          {address.phone_number}
+                        </p>
 
-                      <p className='text-sm text-gray-600 leading-relaxed'>
-                        {address.address_line}
-                        <br />
-                        {address.city}, {address.state} ({address.zip_code})
-                      </p>
+                        <p className='text-sm text-gray-600 leading-relaxed'>
+                          {address.address_line}
+                          <br />
+                          {address.city}, {address.state} ({address.zip_code})
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className='flex flex-col gap-2'>
+                      {/* Edit */}
+                      <button
+                        className='px-4 py-1 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600'
+                        onClick={e => {
+                          e.stopPropagation()
+                          handleEdit({ address, index })
+                        }}
+                      >
+                        <EditIcon fontSize='small' />
+                      </button>
+
+                      {/* Delete */}
+                      <button
+                        className='px-4 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600'
+                        onClick={e => {
+                          e.stopPropagation()
+                          setConfirmDelete({
+                            open: true,
+                            id: address.id,
+                            default: address.is_default
+                          })
+                        }}
+                      >
+                        <DeleteIcon fontSize='small' />
+                      </button>
                     </div>
                   </div>
+                ))}
+              </div>
 
-                  <div className='flex flex-col gap-2'>
-                    {/* Edit */}
-                    <button
-                      className='px-4 py-1 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600'
-                      onClick={e => {
-                        e.stopPropagation()
-                        handleEdit({ address, index })
-                      }}
-                    >
-                      <EditIcon fontSize='small' />
-                    </button>
+              {/* Confirmation to Delete The Product */}
+              {confirmDelete.open && (
+                <div className='fixed inset-0 flex items-center justify-center bg-black/50 z-50'>
+                  <div className='bg-white p-6 rounded-lg shadow-xl w-80'>
+                    <h3 className='text-lg font-semibold text-gray-800 mb-2'>
+                      Delete Address
+                    </h3>
+                    <p className='text-sm text-gray-600 mb-5'>
+                      Are you sure you want to delete this address? This action
+                      cannot be undone.
+                    </p>
 
-                    {/* Delete */}
-                    <button
-                      className='px-4 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600'
-                      onClick={e => {
-                        e.stopPropagation()
-                        setConfirmDelete({
-                          open: true,
-                          id: address.id,
-                          default: address.is_default
-                        })
-                      }}
-                    >
-                      <DeleteIcon fontSize='small' />
-                    </button>
+                    <div className='flex justify-end gap-3'>
+                      <button
+                        className='px-4 py-2 bg-gray-200 rounded hover:bg-gray-300'
+                        onClick={() =>
+                          setConfirmDelete({ open: false, id: null })
+                        }
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        className='px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700'
+                        onClick={() => {
+                          handleDelete(confirmDelete)
+                          setConfirmDelete({
+                            open: false,
+                            id: null,
+                            default: false
+                          })
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              ))}
+              )}
+
+              <Alert
+                open={customAlert.open}
+                message={customAlert.message}
+                onClose={() => setCustomAlert({ open: false, message: '' })}
+              />
+
+              {/* Save & Continue (Only when selected) */}
+              {selectedId && !showForm && (
+                <button
+                  onClick={handleSaveContinue}
+                  className='w-full mt-5 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900'
+                >
+                  Save & Continue
+                </button>
+              )}
             </div>
+          )
+        )}
 
-            {/* Confirmation to Delete The Product */}
-            {confirmDelete.open && (
-              <div className='fixed inset-0 flex items-center justify-center bg-black/50 z-50'>
-                <div className='bg-white p-6 rounded-lg shadow-xl w-80'>
-                  <h3 className='text-lg font-semibold text-gray-800 mb-2'>
-                    Delete Address
-                  </h3>
-                  <p className='text-sm text-gray-600 mb-5'>
-                    Are you sure you want to delete this address? This action
-                    cannot be undone.
-                  </p>
+        {/*  Address Form */}
+        {showForm && (
+          <div className='flex justify-center'>
+            <form
+              onSubmit={handleSubmit}
+              className='w-full max-w-lg bg-white p-6 sm:p-8 rounded-2xl shadow-xl space-y-5'
+            >
+              <h2 className='text-2xl font-bold text-gray-800 text-center'>
+                {formHeading}
+              </h2>
 
-                  <div className='flex justify-end gap-3'>
-                    <button
-                      className='px-4 py-2 bg-gray-200 rounded hover:bg-gray-300'
-                      onClick={() =>
-                        setConfirmDelete({ open: false, id: null })
-                      }
-                    >
-                      Cancel
-                    </button>
+              {/* Full Name */}
+              <div>
+                <label className='text-sm font-medium'>Full Name</label>
+                <input
+                  name='name'
+                  value={form.name}
+                  onChange={handleChange}
+                  className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
+                  required
+                />
+              </div>
 
-                    <button
-                      className='px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700'
-                      onClick={() => {
-                        handleDelete(confirmDelete)
-                        setConfirmDelete({
-                          open: false,
-                          id: null,
-                          default: false
-                        })
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
+              {/* Mobile + Pincode */}
+              <div className='grid grid-cols-2 gap-4'>
+                <div>
+                  <label className='text-sm font-medium'>Mobile Number</label>
+                  <input
+                    type='tel'
+                    name='phone'
+                    value={form.phone}
+                    onChange={handleChange}
+                    className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className='text-sm font-medium'>Pincode</label>
+                  {invalidPincode && (
+                    <p className='text-red-500 text-xs m-1'>Invalid Pincode</p>
+                  )}
+                  <input
+                    name='pincode'
+                    value={form.pincode}
+                    onChange={handlePincodeChange}
+                    className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
+                    placeholder='110001'
+                    required
+                  />
                 </div>
               </div>
-            )}
 
-            <Alert
-              open={customAlert.open}
-              message={customAlert.message}
-              onClose={() => setCustomAlert({ open: false, message: '' })}
-            />
+              {/* City / State */}
+              <div className='grid grid-cols-2 gap-4'>
+                <div>
+                  <label className='text-sm font-medium'>City</label>
+                  <input
+                    name='city'
+                    value={city}
+                    onChange={e => setCity(e.target.value)}
+                    className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
+                    required
+                  />
+                </div>
 
-            {/* Save & Continue (Only when selected) */}
-            {selectedId && !showForm && (
-              <button
-                onClick={handleSaveContinue}
-                className='w-full mt-5 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900'
-              >
-                Save & Continue
-              </button>
-            )}
-          </div>
-        )
-      )}
+                <div>
+                  <label className='text-sm font-medium'>State</label>
+                  <input
+                    name='state'
+                    value={state}
+                    onChange={e => setState(e.target.value)}
+                    className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
+                    required
+                  />
+                </div>
+              </div>
 
-      {/*  Address Form */}
-      {showForm && (
-        <div className='flex justify-center'>
-          <form
-            onSubmit={handleSubmit}
-            className='w-full max-w-lg bg-white p-6 sm:p-8 rounded-2xl shadow-xl space-y-5'
-          >
-            <h2 className='text-2xl font-bold text-gray-800 text-center'>
-              {formHeading}
-            </h2>
+              {/* Address fields */}
+              <div className='flex gap-5 items-center'>
+                <label className='text-sm font-medium'>Address Type :</label>
+                <select
+                  name='address_type'
+                  className='border w-[100px] md:w-[145px] rounded-md px-1 py-1'
+                  value={form.address_type}
+                  onChange={handleChange}
+                >
+                  <option key='1' value='Home'>
+                    Home
+                  </option>
+                  <option key='2' value='Office'>
+                    Office
+                  </option>
+                  <option key='3' value='Other'>
+                    Other
+                  </option>
+                </select>
+              </div>
 
-            {/* Full Name */}
-            <div>
-              <label className='text-sm font-medium'>Full Name</label>
-              <input
-                name='name'
-                value={form.name}
-                onChange={handleChange}
-                className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-                required
-              />
-            </div>
-
-            {/* Mobile + Pincode */}
-            <div className='grid grid-cols-2 gap-4'>
               <div>
-                <label className='text-sm font-medium'>Mobile Number</label>
+                <label className='text-sm font-medium'>House / Flat</label>
                 <input
-                  type='tel'
-                  name='phone'
-                  value={form.phone}
+                  name='house'
+                  value={form.house}
                   onChange={handleChange}
                   className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                   required
@@ -423,137 +501,65 @@ export default function AddressForm () {
               </div>
 
               <div>
-                <label className='text-sm font-medium'>Pincode</label>
-                {invalidPincode && (
-                  <p className='text-red-500 text-xs m-1'>Invalid Pincode</p>
-                )}
+                <label className='text-sm font-medium'>Street / Area</label>
                 <input
-                  name='pincode'
-                  value={form.pincode}
-                  onChange={handlePincodeChange}
-                  className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-                  placeholder='110001'
-                  required
-                />
-              </div>
-            </div>
-
-            {/* City / State */}
-            <div className='grid grid-cols-2 gap-4'>
-              <div>
-                <label className='text-sm font-medium'>City</label>
-                <input
-                  name='city'
-                  value={city}
-                  onChange={e => setCity(e.target.value)}
+                  name='street'
+                  value={form.street}
+                  onChange={handleChange}
                   className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                   required
                 />
               </div>
 
               <div>
-                <label className='text-sm font-medium'>State</label>
+                <label className='text-sm font-medium'>Landmark</label>
                 <input
-                  name='state'
-                  value={state}
-                  onChange={e => setState(e.target.value)}
+                  name='landmark'
+                  value={form.landmark}
+                  onChange={handleChange}
                   className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-                  required
                 />
               </div>
-            </div>
 
-            {/* Address fields */}
-            <div className='flex gap-5 items-center'>
-              <label className='text-sm font-medium'>Address Type :</label>
-              <select
-                name='address_type'
-                className='border w-[100px] md:w-[145px] rounded-md px-1 py-1'
-                value={form.address_type}
-                onChange={handleChange}
+              {/* Submit */}
+              <button
+                type='submit'
+                className='w-full bg-black text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all'
               >
-                <option key='1' value='Home'>
-                  Home
-                </option>
-                <option key='2' value='Office'>
-                  Office
-                </option>
-                <option key='3' value='Other'>
-                  Other
-                </option>
-              </select>
-            </div>
+                Save Address
+              </button>
+            </form>
+          </div>
+        )}
 
-            <div>
-              <label className='text-sm font-medium'>House / Flat</label>
-              <input
-                name='house'
-                value={form.house}
-                onChange={handleChange}
-                className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-                required
-              />
-            </div>
-
-            <div>
-              <label className='text-sm font-medium'>Street / Area</label>
-              <input
-                name='street'
-                value={form.street}
-                onChange={handleChange}
-                className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-                required
-              />
-            </div>
-
-            <div>
-              <label className='text-sm font-medium'>Landmark</label>
-              <input
-                name='landmark'
-                value={form.landmark}
-                onChange={handleChange}
-                className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
-              />
-            </div>
-
-            {/* Submit */}
+        {/* Add New Address Button */}
+        {!showForm && (
+          <div className='mt-5 max-w-2xl mx-auto'>
             <button
-              type='submit'
-              className='w-full bg-black text-white py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-all'
+              onClick={() => {
+                setForm({
+                  name: '',
+                  phone: '',
+                  house: '',
+                  street: '',
+                  landmark: '',
+                  pincode: '',
+                  city: '',
+                  state: ''
+                })
+                setCity('')
+                setState('')
+                setPincode('')
+                setSelectedId(null)
+                setShowForm(true)
+              }}
+              className='w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-all'
             >
-              Save Address
+              + Add New Address
             </button>
-          </form>
-        </div>
-      )}
-
-      {/* Add New Address Button */}
-      {!showForm && (
-        <div className='mt-5 max-w-2xl mx-auto'>
-          <button
-            onClick={() => {
-              setForm({
-                name: '',
-                phone: '',
-                house: '',
-                street: '',
-                landmark: '',
-                pincode: '',
-                city: '',
-                state: ''
-              })
-              setCity('')
-              setState('')
-              setPincode('')
-              setSelectedId(null)
-              setShowForm(true)
-            }}
-            className='w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-all'
-          >
-            + Add New Address
-          </button>
-        </div>
-      )}
-    </motion.div>
+          </div>
+        )}
+      </motion.div>
+    </>
   )
 }

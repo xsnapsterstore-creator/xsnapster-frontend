@@ -1,12 +1,16 @@
-import User from "@/components/User/User";
-import React from "react";
+import User from '@/components/User/User'
+import React from 'react'
+import Head from 'next/head'
 
 const UserDetails = () => {
   return (
-    <div>
+    <>
+      <Head>
+        <meta name='robots' content='noindex, nofollow' />
+      </Head>
       <User />
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default UserDetails;
+export default UserDetails

@@ -529,7 +529,7 @@ const User = () => {
                 onClick={toggleEdit}
                 className='w-full sm:w-auto min-w-[160px] px-6 py-3 rounded-xl
                   text-white font-medium text-sm
-                 hover:bg-gray-900 bg-black active:scale-95 transition'
+                 hover:bg-black bg-gray-900 active:scale-95 transition'
               >
                 {isEditing ? 'Close Editor' : 'Edit Profile'}
               </button>
@@ -538,7 +538,7 @@ const User = () => {
                 onClick={GetOrders}
                 className='w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-xl
                  text-white font-medium text-sm
-                 hover:bg-gray-900 bg-black active:scale-95 transition'
+                 hover:bg-black bg-gray-900 active:scale-95 transition'
               >
                 {showOrders ? 'Hide Orders' : 'See Your Orders'}
               </button>
