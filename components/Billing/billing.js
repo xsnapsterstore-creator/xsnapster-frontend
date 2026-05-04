@@ -214,7 +214,7 @@ const BillingTemplate = () => {
           const res = await UserOrder(payload)
 
           if (!res.ok) {
-            alert('Network error. Please try again.')
+            alert('Refresh the page and try again.')
             return
           }
 
@@ -226,7 +226,7 @@ const BillingTemplate = () => {
           const res = await verifyUserPayment(data)
 
           if (!res) {
-            alert('Network error. Please try again.')
+            alert('Refresh the page and try again.')
             return
           }
 
@@ -287,7 +287,7 @@ const BillingTemplate = () => {
       }
     } catch (error) {
       console.error('❌ ProceedPayment Error:', error)
-      alert('Something went wrong while processing your order.')
+      alert('Refresh the page and try again.')
     }
     setIsLoading(false)
   }
