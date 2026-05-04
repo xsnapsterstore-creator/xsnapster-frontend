@@ -12,7 +12,6 @@ import { useRouter } from 'next/router'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Image from 'next/image'
 import Alert from '@/components/Alert/alert'
-import { v4 as uuidv4 } from 'uuid'
 import Head from 'next/head'
 
 export default function AddressForm () {
@@ -147,7 +146,6 @@ export default function AddressForm () {
     if (typeof window !== 'undefined') {
       localStorage.setItem('address_details', JSON.stringify(userAdd))
       localStorage.setItem('address_id', selectedId)
-      localStorage.setItem('idempotency', uuidv4())
     }
     router.push('/billing')
   }
