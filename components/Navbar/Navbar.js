@@ -209,6 +209,10 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [prevScrollPos])
 
+  useEffect(() => {
+    setVisible(true)
+  }, [cart])
+
   if (!isMounted) return null
 
   async function CheckLogin (toggle) {

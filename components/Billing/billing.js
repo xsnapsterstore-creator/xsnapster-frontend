@@ -18,6 +18,7 @@ import {
   ValidateCoupon,
   ListCoupons
 } from '../API/api'
+import { v4 as uuidv4 } from 'uuid'
 import OfferAlert from '../Alert/OfferAlert'
 import Coupons from '../Coupons/ListCoupon'
 import Celebration from '../Alert/Celebration'
@@ -143,7 +144,7 @@ const BillingTemplate = () => {
   async function ProceedPayment () {
     setIsLoading(true)
     const address_id = localStorage.getItem('address_id')
-    const idempotency = localStorage.getItem('idempotency')
+    const idempotency = uuidv4()
     try {
       // Prevent checkout if cart is empty
       if (!cart || cart.length === 0) {
@@ -232,8 +233,6 @@ const BillingTemplate = () => {
           return res
         }
 
-        console.log('THis is the API Key:', process.env.RAZORPAY_KEY_ID)
-
         const startPayment = async () => {
           const loaded = await loadRazorpay()
           if (!loaded) {
@@ -285,12 +284,12 @@ const BillingTemplate = () => {
         }
         // 👉 CALL THE PAYMENT WINDOW
         await startPayment()
-        setIsLoading(false)
       }
     } catch (error) {
       console.error('❌ ProceedPayment Error:', error)
       alert('Something went wrong while processing your order.')
     }
+    setIsLoading(false)
   }
 
   const { data, isLoading } = useQuery({
@@ -605,8 +604,14 @@ const BillingTemplate = () => {
 
               {/* Payment Button */}
               <button
+                type='button'
+                disabled={isloading}
                 onClick={ProceedPayment}
-                className='w-full mt-6 py-3 cursor-pointer bg-black text-white rounded-xl text-sm font-medium active:scale-95 transition'
+                className={`w-full mt-6 py-3 rounded-xl text-sm font-medium transition ${
+                  isloading
+                    ? 'cursor-not-allowed bg-gray-700 text-white/80 opacity-80'
+                    : 'cursor-pointer bg-black text-white active:scale-95'
+                }`}
               >
                 {isloading
                   ? 'Processing Order...'
