@@ -33,7 +33,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleSidebar = () => setIsOpen(!isOpen)
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true)
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isHelpCenterOpen, setIsHelpCenterOpen] = useState(false)
   const [visible, setVisible] = useState(true)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
