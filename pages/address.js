@@ -172,6 +172,11 @@ export default function AddressForm () {
       return
     }
 
+    if( form.name === '' || form.phone === '' || form.pincode === '' || form.city === '' || form.state === '' || form.house === '' || form.street === '' || form.landmark === '' || form.address_type === '' ) {
+      alert('Please fill all the fields')
+      return
+    }
+
     // Compute default address logic using a local variable
     const isDefault = !Array.isArray(UserAddress) || UserAddress.length === 0
     console.log('This is the address:', form)

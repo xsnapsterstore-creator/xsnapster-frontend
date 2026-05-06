@@ -43,7 +43,7 @@ const User = () => {
     city: '',
     state: '',
     is_default: true,
-    address_type: ''
+    address_type: 'Home'
   })
 
   useEffect(() => {
@@ -109,19 +109,35 @@ const User = () => {
   async function handleSubmit (e) {
     setLoading(true)
     e.preventDefault()
-    const res = await addUserAddress(form, form.is_default)
-    if (res && res.ok) {
-      const newAddress = await res.json()
-      console.log('THis is the address:', newAddress)
-      setCustomAlert({
-        open: true,
-        message: 'Address Added Successfully'
-      })
+    if (
+      form.name === '' ||
+      form.phone === '' ||
+      form.pincode === '' ||
+      form.city === '' ||
+      form.state === '' ||
+      form.house === '' ||
+      form.street === '' ||
+      form.landmark === '' ||
+      form.address_type === ''
+    ) {
+      alert('Please fill all the fields')
+      setLoading(false)
+      return
     } else {
-      setCustomAlert({
-        open: true,
-        message: 'Failed to Add Address'
-      })
+      const res = await addUserAddress(form, form.is_default)
+      if (res && res.ok) {
+        const newAddress = await res.json()
+        console.log('THis is the address:', newAddress)
+        setCustomAlert({
+          open: true,
+          message: 'Address Added Successfully'
+        })
+      } else {
+        setCustomAlert({
+          open: true,
+          message: 'Failed to Add Address'
+        })
+      }
     }
     setLoading(false)
   }
