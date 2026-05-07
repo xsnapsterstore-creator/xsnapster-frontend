@@ -14,6 +14,29 @@ const ProductDescription = ({ prodDesc }) => {
     setOpenIndex(prev => (prev === i ? null : i))
   }
 
+  const sizeChart = [
+    {
+      img: <CropPortraitIcon />,
+      head: 'A4 Size',
+      para: 'Fiberwood'
+    },
+    {
+      img: <CropPortraitIcon />,
+      head: 'A3 Size',
+      para: 'Fiberwood'
+    },
+    {
+      img: <CropPortraitIcon />,
+      head: '13x19 inches',
+      para: 'Fiberwood'
+    },
+    {
+      img: <CropOriginalIcon />,
+      head: 'Poster (13x19)',
+      para: '300 GSM Paper'
+    }
+  ]
+
   const prodQuality = [
     {
       img: <Grid3x3Icon />,
@@ -48,7 +71,7 @@ const ProductDescription = ({ prodDesc }) => {
     {
       img: <CropOriginalIcon />,
       head: 'Print Material',
-      para: '200 GSM Paper'
+      para: '300 GSM Paper'
     },
     {
       img: <HardwareIcon />,
@@ -82,6 +105,67 @@ const ProductDescription = ({ prodDesc }) => {
 
   return (
     <div className='grid grid-cols-1 max-w-6xl mx-auto p-2'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
+      >
+        {/* Question */}
+        <div
+          onClick={() => toggle(4)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
+          <motion.h2
+            className='text-[15px] font-semibold text-gray-900'
+            whileHover={{ scale: 1.02 }}
+          >
+            Size Chart
+          </motion.h2>
+
+          <motion.span
+            animate={{ rotate: openIndex ===  4? 45 : 4 }}
+            transition={{ duration: 0.3 }}
+            className='text-red-600 text-2xl font-bold select-none'
+          >
+            +
+          </motion.span>
+        </div>
+
+        {/* Answer */}
+        <AnimatePresence initial={false}>
+          {openIndex === 4 && (
+            <motion.div
+              key='content'
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4 }}
+              className='mt-3 overflow-hidden'
+            >
+              <div className=''>
+                <ul className='grid grid-cols-2 gap-3 mt-1 items-start justify-center'>
+                  {sizeChart.map((prod, index) => (
+                    <div key={index} className=''>
+                      <div className='flex items-center gap-2'>
+                        <div>{prod.img}</div>
+                        <li className='font-semibold text-gray-800 text-sm'>
+                          {prod.head}
+                        </li>
+                      </div>
+                      <span className='text-gray-600 text-xs ml-8'>
+                        {prod.para}
+                      </span>
+                    </div>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -326,13 +410,13 @@ const ProductDescription = ({ prodDesc }) => {
                 <div className=''>
                   <div>
                     <ul className='list-disc ml-5 text-[14px] text-gray-600'>
-                      <li>300 GSM Art Board Paper</li>
+                      <li>300 GSM Paper</li>
                       <li>
                         Width : 0.50-inch (For A4) / 0.75-inch (For A3) /
-                        1.00-inch (For A2) wide fiberwood frames for edge
+                        1.00-inch (For 13x19 inches) wide fiberwood frames for edge
                       </li>
                       <li>
-                        Style & Depth : Box Frame (Starting from 0.75 inch)
+                        Style & Depth : Box Frame (Starting from 0.50 inch)
                       </li>
                       <li>
                         2-mm thick acrylic sheet for strength and maximum
