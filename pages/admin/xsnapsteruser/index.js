@@ -5,6 +5,7 @@ import ActiveProducts from '@/components/Admin/ActiveProducts'
 import Orders from '@/components/Admin/Orders'
 import { useState } from 'react'
 import AddCoupon from '@/components/Admin/AddCoupon'
+import DeleteSubcategory from '@/components/Admin/DeleteSubcategory'
 
 const XsnapsterUser = () => {
   const [activeTab, setActiveTab] = useState('product')
@@ -74,6 +75,17 @@ const XsnapsterUser = () => {
           >
             Add Coupons
           </button>
+
+          <button
+            onClick={() => setActiveTab('deleteSubcategory')}
+            className={`lg:px-5 lg:py-2 py-2 px-4 text-xs font-medium rounded-lg transition-all ${
+              activeTab === 'deleteSubcategory'
+                ? 'bg-black text-white scale-105'
+                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            Delete Subcategory
+          </button>
         </div>
 
         {/* ===== Conditional Rendering ===== */}
@@ -83,6 +95,7 @@ const XsnapsterUser = () => {
           {activeTab === 'price' && <ActiveProducts />}
           {activeTab === 'orders' && <Orders />}
           {activeTab === 'coupons' && <AddCoupon />}
+          {activeTab === 'deleteSubcategory' && <DeleteSubcategory />}
         </div>
       </div>
     </div>
