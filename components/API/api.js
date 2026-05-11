@@ -176,6 +176,14 @@ export const AddSubCategories = async data => {
   return res
 }
 
+// Delete Sub-Categories API
+export const DeleteSub_category = async id => {
+  const res = await secureFetch(`/subcategory/${id}`, {
+    method: 'DELETE'
+  })
+  return res
+}
+
 // Adding Product
 export const addProduct = async data => {
   const formData = new FormData()
