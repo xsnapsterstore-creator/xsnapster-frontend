@@ -7,6 +7,10 @@ import CropPortraitIcon from '@mui/icons-material/CropPortrait'
 import CropOriginalIcon from '@mui/icons-material/CropOriginal'
 import HardwareIcon from '@mui/icons-material/Hardware'
 import StraightenIcon from '@mui/icons-material/Straighten'
+import img1 from './../../public/ProdFeat1.png'
+import img2 from './../../public/ProdFeat2.png'
+import img3 from './../../public/ProdFeat3.png'
+import img4 from './../../public/ProdFeat4.jpg'
 
 const ProductDescription = ({ prodDesc }) => {
   const [openIndex, setOpenIndex] = useState(0)
@@ -22,17 +26,17 @@ const ProductDescription = ({ prodDesc }) => {
     },
     {
       img: <CropPortraitIcon />,
-      head: 'A3 Size',
-      para: 'Fiberwood'
-    },
-    {
-      img: <CropPortraitIcon />,
       head: '13x19 inches',
       para: 'Fiberwood'
     },
     {
+      img: <CropPortraitIcon />,
+      head: 'A2 Size',
+      para: 'Fiberwood'
+    },
+    {
       img: <CropOriginalIcon />,
-      head: 'Poster (13x19)',
+      head: 'Poster (A2)',
       para: '300 GSM Paper'
     }
   ]
@@ -61,7 +65,7 @@ const ProductDescription = ({ prodDesc }) => {
     {
       img: <CropPortraitIcon />,
       head: 'Backboard Material',
-      para: 'MDF / Wood'
+      para: 'Synthetic Wooden'
     },
     {
       img: <StraightenIcon />,
@@ -84,7 +88,7 @@ const ProductDescription = ({ prodDesc }) => {
     {
       img: '/premium.webp',
       head: 'Premium Quality Frames',
-      para: 'Fiber wood frames for durability and protection'
+      para: 'Fiberwood frames for durability and protection'
     },
     {
       img: '/vibrant.webp',
@@ -114,18 +118,18 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <div
-          onClick={() => toggle(4)}
+          onClick={() => toggle(0)}
           className='flex justify-between items-center w-full text-left cursor-pointer'
         >
           <motion.h2
             className='text-[15px] font-semibold text-gray-900'
             whileHover={{ scale: 1.02 }}
           >
-            Size Chart
+            Product Quality
           </motion.h2>
 
           <motion.span
-            animate={{ rotate: openIndex ===  4? 45 : 4 }}
+            animate={{ rotate: openIndex === 0 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
             className='text-red-600 text-2xl font-bold select-none'
           >
@@ -135,7 +139,7 @@ const ProductDescription = ({ prodDesc }) => {
 
         {/* Answer */}
         <AnimatePresence initial={false}>
-          {openIndex === 4 && (
+          {openIndex === 0 && (
             <motion.div
               key='content'
               initial={{ opacity: 0, height: 0 }}
@@ -144,22 +148,33 @@ const ProductDescription = ({ prodDesc }) => {
               transition={{ duration: 0.4 }}
               className='mt-3 overflow-hidden'
             >
-              <div className=''>
-                <ul className='grid grid-cols-2 gap-3 mt-1 items-start justify-center'>
-                  {sizeChart.map((prod, index) => (
-                    <div key={index} className=''>
-                      <div className='flex items-center gap-2'>
-                        <div>{prod.img}</div>
-                        <li className='font-semibold text-gray-800 text-sm'>
-                          {prod.head}
-                        </li>
-                      </div>
-                      <span className='text-gray-600 text-xs ml-8'>
-                        {prod.para}
-                      </span>
-                    </div>
-                  ))}
-                </ul>
+              <div>
+                <div className='grid grid-cols-2 gap-3 mt-1'>
+                  <img
+                    className='w-full h-full rounded-xl'
+                    src={img1.src}
+                    width={80}
+                    height={80}
+                  />
+                  <img
+                    className='w-full h-full rounded-xl'
+                    src={img2.src}
+                    width={80}
+                    height={80}
+                  />
+                  <img
+                    className='w-full h-full rounded-xl'
+                    src={img3.src}
+                    width={80}
+                    height={80}
+                  />
+                  <img
+                    className='w-full h-full rounded-xl'
+                    src={img4.src}
+                    width={80}
+                    height={80}
+                  />
+                </div>
               </div>
             </motion.div>
           )}
@@ -175,7 +190,7 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <div
-          onClick={() => toggle(0)}
+          onClick={() => toggle(1)}
           className='flex justify-between items-center w-full text-left cursor-pointer'
         >
           <motion.h2
@@ -186,7 +201,7 @@ const ProductDescription = ({ prodDesc }) => {
           </motion.h2>
 
           <motion.span
-            animate={{ rotate: openIndex === 0 ? 45 : 0 }}
+            animate={{ rotate: openIndex === 1 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
             className='text-red-600 text-2xl font-bold select-none'
           >
@@ -196,7 +211,7 @@ const ProductDescription = ({ prodDesc }) => {
 
         {/* Answer */}
         <AnimatePresence initial={false}>
-          {openIndex === 0 && (
+          {openIndex === 1 && (
             <motion.div
               key='content'
               initial={{ opacity: 0, height: 0 }}
@@ -236,7 +251,68 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <div
-          onClick={() => toggle(1)}
+          onClick={() => toggle(2)}
+          className='flex justify-between items-center w-full text-left cursor-pointer'
+        >
+          <motion.h2
+            className='text-[15px] font-semibold text-gray-900'
+            whileHover={{ scale: 1.02 }}
+          >
+            Size Chart
+          </motion.h2>
+
+          <motion.span
+            animate={{ rotate: openIndex === 2 ? 45 : 0 }}
+            transition={{ duration: 0.3 }}
+            className='text-red-600 text-2xl font-bold select-none'
+          >
+            +
+          </motion.span>
+        </div>
+
+        {/* Answer */}
+        <AnimatePresence initial={false}>
+          {openIndex === 2 && (
+            <motion.div
+              key='content'
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4 }}
+              className='mt-3 overflow-hidden'
+            >
+              <div className=''>
+                <ul className='grid grid-cols-2 gap-3 mt-1 items-start justify-center'>
+                  {sizeChart.map((prod, index) => (
+                    <div key={index} className=''>
+                      <div className='flex items-center gap-2'>
+                        <div>{prod.img}</div>
+                        <li className='font-semibold text-gray-800 text-sm'>
+                          {prod.head}
+                        </li>
+                      </div>
+                      <span className='text-gray-600 text-xs ml-8'>
+                        {prod.para}
+                      </span>
+                    </div>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
+      >
+        {/* Question */}
+        <div
+          onClick={() => toggle(3)}
           className='flex justify-between items-center w-full text-left cursor-pointer'
         >
           <motion.h2
@@ -247,7 +323,7 @@ const ProductDescription = ({ prodDesc }) => {
           </motion.h2>
 
           <motion.span
-            animate={{ rotate: openIndex === 1 ? 45 : 0 }}
+            animate={{ rotate: openIndex === 3 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
             className='text-red-600 text-2xl font-bold select-none'
           >
@@ -257,7 +333,7 @@ const ProductDescription = ({ prodDesc }) => {
 
         {/* Answer */}
         <AnimatePresence initial={false}>
-          {openIndex === 1 && (
+          {openIndex === 3 && (
             <motion.div
               key='content'
               initial={{ opacity: 0, height: 0 }}
@@ -307,76 +383,7 @@ const ProductDescription = ({ prodDesc }) => {
       >
         {/* Question */}
         <div
-          onClick={() => toggle(2)}
-          className='flex justify-between items-center w-full text-left cursor-pointer'
-        >
-          <motion.h2
-            className='text-[15px] font-semibold text-gray-900'
-            whileHover={{ scale: 1.02 }}
-          >
-            Product Quality
-          </motion.h2>
-
-          <motion.span
-            animate={{ rotate: openIndex === 2 ? 45 : 0 }}
-            transition={{ duration: 0.3 }}
-            className='text-red-600 text-2xl font-bold select-none'
-          >
-            +
-          </motion.span>
-        </div>
-
-        {/* Answer */}
-        <AnimatePresence initial={false}>
-          {openIndex === 2 && (
-            <motion.div
-              key='content'
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4 }}
-              className='mt-3 overflow-hidden'
-            >
-              <div>
-                <div className='md:grid md:grid-cols-2 flex flex-col gap-3 mt-1 items-start justify-center'>
-                  {prodSpecs.map((prod, index) => (
-                    <div
-                      key={index}
-                      className='flex justify-start items-center h-[80px] gap-3'
-                    >
-                      <div>
-                        <Image
-                          className='md:w-[80px] w-[70px]'
-                          src={prod.img}
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                      <div className='flex flex-col justify-center gap-1 w-[250px] lg:w-[350px]'>
-                        <h3 className='font-semibold text-gray-800 text-md'>
-                          {prod.head}
-                        </h3>
-                        <p className='text-gray-600 text-xs'>{prod.para}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className='bg-white border rounded-sm cursor-pointer border-gray-200 shadow-md p-3 hover:shadow-lg hover:scale-[1.0] transition-all duration-300'
-      >
-        {/* Question */}
-        <div
-          onClick={() => toggle(3)}
+          onClick={() => toggle(4)}
           className='flex justify-between items-center w-full text-left cursor-pointer'
         >
           <motion.h2
@@ -387,7 +394,7 @@ const ProductDescription = ({ prodDesc }) => {
           </motion.h2>
 
           <motion.span
-            animate={{ rotate: openIndex === 3 ? 45 : 0 }}
+            animate={{ rotate: openIndex === 4 ? 45 : 0 }}
             transition={{ duration: 0.3 }}
             className='text-red-600 text-2xl font-bold select-none'
           >
@@ -397,7 +404,7 @@ const ProductDescription = ({ prodDesc }) => {
 
         {/* Answer */}
         <AnimatePresence initial={false}>
-          {openIndex === 3 && (
+          {openIndex === 4 && (
             <motion.div
               key='content'
               initial={{ opacity: 0, height: 0 }}
@@ -413,7 +420,8 @@ const ProductDescription = ({ prodDesc }) => {
                       <li>300 GSM Paper</li>
                       <li>
                         Width : 0.50-inch (For A4) / 0.75-inch (For A3) /
-                        1.00-inch (For 13x19 inches) wide fiberwood frames for edge
+                        1.00-inch (For 13x19 inches) wide fiberwood frames for
+                        edge
                       </li>
                       <li>
                         Style & Depth : Box Frame (Starting from 0.50 inch)
@@ -422,7 +430,7 @@ const ProductDescription = ({ prodDesc }) => {
                         2-mm thick acrylic sheet for strength and maximum
                         shatter resistance
                       </li>
-                      <li>Strong MDF Back board for long life and support</li>
+                      <li>Strong Synthetic Wooden Back board for long life and support</li>
                       <li>Comes with hanging equipment attached</li>
                       <li>Made in India ❤️</li>
                     </ul>
