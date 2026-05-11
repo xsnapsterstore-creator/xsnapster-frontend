@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { useSwipeable } from 'react-swipeable'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import { ArrowDownwardRounded } from '@mui/icons-material'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
@@ -13,9 +12,8 @@ import { useDispatch } from 'react-redux'
 import { addToCart } from '../store/cartSlice'
 import Link from 'next/link'
 import ProductDescription from '../Product/ProductDescription'
-import ShareIcon from '@mui/icons-material/Share'
+import IosShareIcon from '@mui/icons-material/IosShare'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 
 export default function ProductDetailsPage ({ prod }) {
   const dispatch = useDispatch()
@@ -183,30 +181,39 @@ export default function ProductDetailsPage ({ prod }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <div
-                className='flex transition-transform duration-500 ease-in-out'
-                style={{
-                  transform: `translateX(-${currentIndex * 100}%)`
-                }}
-              >
-                {prod.image_links.map((src, index) => (
-                  <div
-                    key={index}
-                    className='w-full flex-shrink-0'
-                    style={{ flex: '0 0 100%' }}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${prod.title} ${index + 1}`}
-                      width={600}
-                      height={400}
-                      priority={index === 0}
-                      quality={75}
-                      onClick={() => setFullscreenImage(src)}
-                      className='object-cover cursor-pointer w-full h-[450px] md:h-[500px]'
-                    />
-                  </div>
-                ))}
+              <div className='relative'>
+                {/* Share Button */}
+                <button
+                  onClick={handleShare}
+                  className='absolute top-3 right-3 z-10 backdrop-blur-sm hover:bg-white transition p-2 rounded-full shadow-md'
+                >
+                  <IosShareIcon fontSize='small' />
+                </button>
+                <div
+                  className='flex transition-transform duration-500 ease-in-out'
+                  style={{
+                    transform: `translateX(-${currentIndex * 100}%)`
+                  }}
+                >
+                  {prod.image_links.map((src, index) => (
+                    <div
+                      key={index}
+                      className='w-full flex-shrink-0'
+                      style={{ flex: '0 0 100%' }}
+                    >
+                      <Image
+                        src={src}
+                        alt={`${prod.title} ${index + 1}`}
+                        width={600}
+                        height={400}
+                        priority={index === 0}
+                        quality={75}
+                        onClick={() => setFullscreenImage(src)}
+                        className='object-cover cursor-pointer w-full h-[450px] md:h-[500px]'
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
 
@@ -292,17 +299,6 @@ export default function ProductDetailsPage ({ prod }) {
                   </div>
                   <div className='text-gray-500 text-[10px] md:text-[12px]'>
                     <p>Price inclusive of all taxes</p>
-                  </div>
-                </div>
-                <div className='flex flex-col items-end'>
-                  <div
-                    className='flex items-center gap-0.5 cursor-pointer'
-                    onClick={handleShare}
-                  >
-                    <ShareIcon sx={{ fontSize: '14px' }} fontSize='small' />
-                    <span className='text-[14px] text-gray-700 underline font-semibold'>
-                      Share
-                    </span>
                   </div>
                 </div>
               </div>
