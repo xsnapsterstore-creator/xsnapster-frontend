@@ -30,11 +30,6 @@ const ProductDescription = ({ prodDesc }) => {
       para: 'Fiberwood'
     },
     {
-      img: <CropPortraitIcon />,
-      head: 'A2 Size',
-      para: 'Fiberwood'
-    },
-    {
       img: <CropOriginalIcon />,
       head: 'Poster (A2)',
       para: '300 GSM Paper'
@@ -419,9 +414,8 @@ const ProductDescription = ({ prodDesc }) => {
                     <ul className='list-disc ml-5 text-[14px] text-gray-600'>
                       <li>300 GSM Paper</li>
                       <li>
-                        Width : 0.50-inch (For A4) / 0.75-inch (For A3) /
-                        1.00-inch (For 13x19 inches) wide fiberwood frames for
-                        edge
+                        Width : 0.50-inch (For A4) / 1.00-inch (For 13x19
+                        inches) wide fiberwood frames for edge
                       </li>
                       <li>
                         Style & Depth : Box Frame (Starting from 0.50 inch)
@@ -430,7 +424,10 @@ const ProductDescription = ({ prodDesc }) => {
                         2-mm thick acrylic sheet for strength and maximum
                         shatter resistance
                       </li>
-                      <li>Strong Synthetic Wooden Back board for long life and support</li>
+                      <li>
+                        Strong Synthetic Wooden Back board for long life and
+                        support
+                      </li>
                       <li>Comes with hanging equipment attached</li>
                       <li>Made in India ❤️</li>
                     </ul>
