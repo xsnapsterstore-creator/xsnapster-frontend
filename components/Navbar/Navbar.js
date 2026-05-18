@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import PersonIcon from '@mui/icons-material/Person'
 import CloseIcon from '@mui/icons-material/Close'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -9,7 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Image from 'next/image'
 import PaidIcon from '@mui/icons-material/Paid'
 import Cart from '../Cart/Cart'
-import { useEffect } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchCategories } from '../API/api'
@@ -36,17 +36,9 @@ const Navbar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isHelpCenterOpen, setIsHelpCenterOpen] = useState(false)
   const [visible, setVisible] = useState(true)
-  const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [showMobileSearch, setShowMobileSearch] = useState(false)
   const [mobileSearchTerm, setMobileSearchTerm] = useState('')
   const [isGenderOpen, setIsGenderOpen] = useState(false)
-  const [blackNavbar, setBlackNavbar] = useState(false)
-  const [premiumColorChange, setPremiumColorChange] = useState({
-    sexyframes: false,
-    hotrightnow: false,
-    framestars: false,
-    mostwatchedframes: false
-  })
 
   let toggle = false
   const router = useRouter()
@@ -128,54 +120,21 @@ const Navbar = () => {
     }
   ]
 
-  useEffect(() => {
-    const isBlackNavbar = path?.includes('premium-categories')
-    setBlackNavbar(isBlackNavbar)
-    const SexyFrames = path?.includes('sexy-frames')
-    const HotRightNow = path?.includes('hot-right-now')
-    const FrameStars = path?.includes('frame-stars')
-    const MostWatchedFrames = path?.includes('most-watched-frames')
-    if (SexyFrames) {
-      setPremiumColorChange({
-        sexyframes: true,
-        hotrightnow: false,
-        framestars: false,
-        mostwatchedframes: false
-      })
-    } else if (HotRightNow) {
-      setPremiumColorChange({
-        sexyframes: false,
-        hotrightnow: true,
-        framestars: false,
-        mostwatchedframes: false
-      })
-    } else if (FrameStars) {
-      setPremiumColorChange({
-        sexyframes: false,
-        hotrightnow: false,
-        framestars: true,
-        mostwatchedframes: false
-      })
-    } else if (MostWatchedFrames) {
-      setPremiumColorChange({
-        sexyframes: false,
-        hotrightnow: false,
-        framestars: false,
-        mostwatchedframes: true
-      })
-    } else {
-      setPremiumColorChange({
-        sexyframes: false,
-        hotrightnow: false,
-        framestars: false,
-        mostwatchedframes: false
-      })
+  const blackNavbar = path?.includes('premium-categories')
+  const premiumColorChange = useMemo(() => {
+    const p = path ?? ''
+    return {
+      sexyframes: p.includes('sexy-frames'),
+      hotrightnow: p.includes('hot-right-now'),
+      framestars: p.includes('frame-stars'),
+      mostwatchedframes: p.includes('most-watched-frames')
     }
   }, [path])
 
   useEffect(() => {
     dispatch(setUserDetails())
-  }, [])
+    setIsMounted(true)
+  }, [dispatch])
 
   useEffect(() => {
     if (isOpen) {
@@ -189,25 +148,18 @@ const Navbar = () => {
     }
   }, [isOpen])
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
+  const prevScrollRef = useRef(0)
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY
-
-      setVisible(
-        prevScrollPos > currentScrollPos || // Scrolling up
-          currentScrollPos < 10 // At the top
-      )
-
-      setPrevScrollPos(currentScrollPos)
+      const current = window.scrollY
+      const prev = prevScrollRef.current
+      setVisible(prev > current || current < 10)
+      prevScrollRef.current = current
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [prevScrollPos])
+  }, [])
 
   useEffect(() => {
     setVisible(true)
@@ -232,6 +184,11 @@ const Navbar = () => {
     setMobileSearchTerm('')
     setShowMobileSearch(false)
   }
+
+  const cartItemCount = cart.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0
+  )
 
   return (
     <>
@@ -341,7 +298,7 @@ const Navbar = () => {
             </div>
             <div className='relative inline-block'>
               <span className='absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs'>
-                {cart.length}
+                {cartItemCount}
               </span>
               <ShoppingCartIcon
                 sx={{ fontSize: '28px' }}
@@ -601,7 +558,7 @@ const Navbar = () => {
           <div className='pr-7'>
             <div className='relative inline-block'>
               <span className='absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-xs'>
-                {cart.length}
+                {cartItemCount}
               </span>
               <ShoppingCartIcon
                 onClick={() => setIsCartOpen(true)}

@@ -122,6 +122,7 @@ const BillingTemplate = () => {
       const qty = item.quantity || 0
       return acc + price * qty
     }, 0)
+    setSelectedCoupon(null)
     setTotal(tempTotal)
     setDeliveryCharge(tempTotal > 500 ? 0 : 99)
   }, [cart])
@@ -345,6 +346,13 @@ const BillingTemplate = () => {
     }
   }
 
+  const handleCancelCoupon = () => {
+    setSelectedCoupon(null)
+    setStatus(null)
+    setOfferPrice(0)
+    setCouponSuccess(false)
+  }
+
   return (
     <div className='min-h-screen bg-gray-50 p-4 md:p-8 pb-24 md:pb-36'>
       <div className='max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8'>
@@ -553,6 +561,7 @@ const BillingTemplate = () => {
                 <Coupons
                   listCoupons={listCoupons}
                   onApplyCoupon={handleApplyCoupon}
+                  onCancelCoupon={handleCancelCoupon}
                   selectedCoupon={selectedCoupon}
                   status={status}
                 />

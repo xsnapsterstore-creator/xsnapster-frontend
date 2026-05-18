@@ -11,19 +11,11 @@ const offers = [
   },
   {
     id: 2,
-    title: 'A3 Size Frame Offer',
+    title: '13x19 Size Frame Offer',
     description: 'Buy2Get1',
     condition:
       'Offer applies when you add 3 A3 size frames and then apply valid coupon.',
     discount: '₹599 OFF'
-  },
-  {
-    id: 3,
-    title: 'A2 Size Frame Offer',
-    description: 'Buy2Get1',
-    condition:
-      'Offer applies when you add 3 A2 size frames and then apply valid coupon.',
-    discount: '₹799 OFF'
   },
   {
     id: 4,
@@ -43,19 +35,11 @@ const offers = [
   },
   {
     id: 6,
-    title: 'A3 Size Frame Offer',
+    title: '13x19 Size Frame Offer',
     description: 'Buy4Get3',
     condition:
       'Offer applies when you add 7 A3 size frames and then apply valid coupon.',
     discount: '₹1797 OFF'
-  },
-  {
-    id: 7,
-    title: 'A2 Size Frame Offer',
-    description: 'Buy4Get3',
-    condition:
-      'Offer applies when you add 7 A2 size frames and then apply valid coupon.',
-    discount: '₹2397 OFF'
   },
   {
     id: 8,
@@ -75,20 +59,12 @@ const offers = [
   },
   {
     id: 10,
-    title: 'A3 Size Frame Offer',
+    title: '13x19 Size Frame Offer',
     description: 'Buy6Get5',
     condition:
       'Offer applies when you add 11 A3 size frames and then apply valid coupon.',
     discount: '₹2995 OFF'
   },
-  {
-    id: 11,
-    title: 'A2 Size Frame Offer',
-    description: 'Buy6Get5',
-    condition:
-      'Offer applies when you add 11 A2 size frames and then apply valid coupon.',
-    discount: '₹3995 OFF'
-  }
 ]
 
 const OfferPage = () => {
