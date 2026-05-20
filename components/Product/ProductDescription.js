@@ -31,7 +31,7 @@ const ProductDescription = ({ prodDesc }) => {
     },
     {
       img: <CropOriginalIcon />,
-      head: 'Poster (A2)',
+      head: 'Poster (13x19)',
       para: '300 GSM Paper'
     }
   ]
@@ -76,29 +76,6 @@ const ProductDescription = ({ prodDesc }) => {
       img: <HardwareIcon />,
       head: 'Hanging Equipment',
       para: 'Sawtooth Hook'
-    }
-  ]
-
-  const prodSpecs = [
-    {
-      img: '/premium.webp',
-      head: 'Premium Quality Frames',
-      para: 'Fiberwood frames for durability and protection'
-    },
-    {
-      img: '/vibrant.webp',
-      head: 'Vibrant Prints',
-      para: 'Vibrant colors with UV-resistant inks and High-resolution, fade-resistant prints'
-    },
-    {
-      img: '/new.webp',
-      head: 'New Frames / Prints Every Time',
-      para: 'We prepare your items after you place the order; that means all items are made from scratch'
-    },
-    {
-      img: '/protective.webp',
-      head: 'Protective Features',
-      para: 'Easy to clean shatterproof acrylic glass in front'
     }
   ]
 
@@ -414,7 +391,7 @@ const ProductDescription = ({ prodDesc }) => {
                     <ul className='list-disc ml-5 text-[14px] text-gray-600'>
                       <li>300 GSM Paper</li>
                       <li>
-                        Width : 0.50-inch (For A4) / 1.00-inch (For 13x19
+                        Width : 1.00-inch (For A4) / 1.00-inch (For 13x19
                         inches) wide fiberwood frames for edge
                       </li>
                       <li>

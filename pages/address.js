@@ -172,7 +172,17 @@ export default function AddressForm () {
       return
     }
 
-    if( form.name === '' || form.phone === '' || form.pincode === '' || form.city === '' || form.state === '' || form.house === '' || form.street === '' || form.landmark === '' || form.address_type === '' ) {
+    if (
+      form.name === '' ||
+      form.phone === '' ||
+      form.pincode === '' ||
+      form.city === '' ||
+      form.state === '' ||
+      form.house === '' ||
+      form.street === '' ||
+      form.landmark === '' ||
+      form.address_type === ''
+    ) {
       alert('Please fill all the fields')
       return
     }
@@ -423,6 +433,8 @@ export default function AddressForm () {
                     type='tel'
                     name='phone'
                     value={form.phone}
+                    inputMode='numeric'
+                    maxLength={10}
                     onChange={handleChange}
                     className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                     required
@@ -437,6 +449,8 @@ export default function AddressForm () {
                   <input
                     name='pincode'
                     value={form.pincode}
+                    inputMode='numeric'
+                    maxLength={6}
                     onChange={handlePincodeChange}
                     className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                     placeholder='110001'
@@ -451,8 +465,10 @@ export default function AddressForm () {
                   <label className='text-sm font-medium'>City</label>
                   <input
                     name='city'
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
+                    value={form.city}
+                    onChange={e =>
+                      setForm(prev => ({ ...prev, city: e.target.value }))
+                    }
                     className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                     required
                   />
@@ -462,8 +478,10 @@ export default function AddressForm () {
                   <label className='text-sm font-medium'>State</label>
                   <input
                     name='state'
-                    value={state}
-                    onChange={e => setState(e.target.value)}
+                    value={form.state}
+                    onChange={e =>
+                      setForm(prev => ({ ...prev, state: e.target.value }))
+                    }
                     className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                     required
                   />

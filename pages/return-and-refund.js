@@ -14,7 +14,7 @@ const sectionVariant = {
 const ReturnAndRefund = () => {
   const data = {
     title:
-      'Return & Refund Policy: No Drama, Just Redemption | XSNAPSTER',
+      'Return & Refund Policy | XSNAPSTER',
     desc: 'Not every frame is - the one. If your wall decor did not vibe or arrived looking like abstract art (in a bad way), XSNAPSTER has your back. Easy returns, no ghosts.',
     keyword:
       'XSNAPSTER returns, refund policy, damaged frame replacement, cancel order, photo frame warranty, customer satisfaction',
