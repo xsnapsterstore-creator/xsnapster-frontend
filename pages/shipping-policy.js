@@ -9,7 +9,7 @@ const fadeInUp = {
 
 const ShippingPolicy = () => {
   const data = {
-    title: 'Shipping & Delivery: Your Wall’s About to Get Lucky | XSNAPSTER',
+    title: 'Shipping & Delivery | XSNAPSTER',
     desc: 'Good things take a little teasing. Track your aesthetic upgrade from our lair to your wall. Pan-India shipping, free delivery on orders over ₹500, and zero ghosting. Get the deets on your orders journey.',
     keyword:
       'XSNAPSTER shipping, free delivery India, track my frame, photo frame delivery time, wall decor shipping charges, XSNAPSTER order tracking, premium poster delivery.',

@@ -127,7 +127,6 @@ const User = () => {
       const res = await addUserAddress(form, form.is_default)
       if (res && res.ok) {
         const newAddress = await res.json()
-        console.log('THis is the address:', newAddress)
         setCustomAlert({
           open: true,
           message: 'Address Added Successfully'
@@ -151,9 +150,23 @@ const User = () => {
         id: userData.default_address.id
       }
     }
-    // console.log("This is the Old User update his details:", data);
+    if (
+      formData.name === '' ||
+      formData.phone === '' ||
+      formData.pincode === '' ||
+      formData.city === '' ||
+      formData.state === '' ||
+      formData.house === '' ||
+      formData.street === '' ||
+      formData.landmark === '' ||
+      formData.address_type === ''
+    ) {
+      alert('Please fill all the fields')
+      setLoading(false)
+      return
+    }
     const res = await updateUserAddress(data)
-    if (res.ok) {
+    if (res?.ok) {
       setCustomAlert({
         open: true,
         message: 'Address Updated Successfully'
@@ -343,6 +356,8 @@ const User = () => {
                     <input
                       type='tel'
                       name='phone'
+                      inputMode='numeric'
+                      maxLength={10}
                       value={form.phone}
                       onChange={e =>
                         setForm(prev => ({
@@ -365,6 +380,8 @@ const User = () => {
                     <input
                       name='pincode'
                       value={pincode}
+                      inputMode='numeric'
+                      maxLength={6}
                       onChange={handlePincodeChange}
                       className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                       placeholder='110001'
@@ -379,8 +396,10 @@ const User = () => {
                     <label className='text-sm font-medium'>City</label>
                     <input
                       name='city'
-                      value={city}
-                      onChange={e => setCity(e.target.value)}
+                      value={form.city}
+                      onChange={e =>
+                        setForm(prev => ({ ...prev, city: e.target.value }))
+                      }
                       className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                       required
                     />
@@ -390,8 +409,10 @@ const User = () => {
                     <label className='text-sm font-medium'>State</label>
                     <input
                       name='state'
-                      value={state}
-                      onChange={e => setState(e.target.value)}
+                      value={form.state}
+                      onChange={e =>
+                        setForm(prev => ({ ...prev, state: e.target.value }))
+                      }
                       className='border border-gray-300 w-full p-2.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-black'
                       required
                     />
@@ -615,6 +636,8 @@ const User = () => {
               <input
                 type='text'
                 name='phone'
+                inputMode='numeric'
+                maxLength={10}
                 value={formData.phone}
                 onChange={handleChange}
                 className='w-full mt-1 p-3 rounded-lg border bg-white text-sm'
@@ -628,6 +651,8 @@ const User = () => {
                 <input
                   type='text'
                   name='pincode'
+                  inputMode='numeric'
+                  maxLength={6}
                   value={formData.pincode}
                   onChange={handlePincodeChange}
                   className='w-full mt-1 p-3 rounded-lg border bg-white text-sm'

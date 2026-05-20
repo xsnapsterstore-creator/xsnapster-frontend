@@ -9,7 +9,7 @@ const fadeInUp = {
 
 export default function AboutPage () {
   const data = {
-    title: 'Who’s Behind the Camera: The XSNAPSTER Story | OnlyFrames',
+    title: 'Who’s Behind the Camera | XSNAPSTER',
     desc: 'The site that looks dirty but is actually… just about aesthetic frames. Meet XSNAPSTER, the innocent cousin making your walls hotter than your search history. Read our story.',
     keyword:
       'About XSNAPSTER, aesthetic wall decor brand, premium frame shop, anime posters India, car lover wall art, gym motivation frames, XSNAPSTER story, about us.',
@@ -18,7 +18,7 @@ export default function AboutPage () {
   return (
     <>
       <StaticPageSEO data={data} />
-      <div className='pt-[120px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
+      <div className='pt-[130px] px-6 lg:px-20 pb-16 bg-gradient-to-b from-[#F2F2F2] via-[#F2F2F2]/60'>
         {/* Header */}
         <motion.div
           className='text-center mb-12'
@@ -32,10 +32,10 @@ export default function AboutPage () {
             Who's Behind The{' '}
             <span className='text-red-500 animate-pulse'>Camera</span>
           </h1>
-          <p className='text-gray-600 text-sm mt-2'>
+          <h2 className='text-gray-600 text-sm mt-2'>
             The story, sarcasm & chaos behind{' '}
             <span className='text-red-500'>X</span>SNAPSTER
-          </p>
+          </h2>
           <div className='w-16 h-1 bg-red-500 mx-auto mt-3 rounded-full'></div>
         </motion.div>
 
@@ -49,15 +49,15 @@ export default function AboutPage () {
                 </>
               ),
               content: (
-                <>
+                <p>
                   Welcome to{' '}
                   <span className='font-semibold text-gray-900'>
                     <span className='text-red-500'>X</span>SNAPSTER.STORE
                   </span>
                   — the site that looks dirty at first glance, but is actually…
-                  just about <strong>Aesthetic Frames</strong>. The only thing
+                  just about <strong>Aesthetic Frames & Posters</strong>. The only thing
                   getting nailed here is your wall.
-                </>
+                </p>
               )
             },
             {
@@ -67,14 +67,14 @@ export default function AboutPage () {
                 </>
               ),
               content: (
-                <>
+                <p>
                   We sell aesthetic photo frames — Cars, Anime, Music Albums,
-                  Sports, you name it. Our job? To make your walls look{' '}
+                  Sports, B&W Aesthetics, Movies you name it. Our job? To make your walls look{' '}
                   <span className='text-red-500 font-semibold'>hotter</span>{' '}
                   than your search history. Think of us as{' '}
                   <span className='text-red-500 font-semibold'>XHAM$TER</span>'s
                   innocent cousin.
-                </>
+                </p>
               )
             },
             {
@@ -88,12 +88,12 @@ export default function AboutPage () {
                   <ul className='list-disc ml-5 text-[16px] text-gray-700 leading-relaxed'>
                     <li>Because bare walls are depressing.</li>
                     <li>Because posters with tape are for teenagers.</li>
-                    <li>Because a little sarcasm makes shopping fun.</li>
+                    <li>Because your wall deserves better.</li>
                   </ul>
 
-                  <p className='mt-3 text-[16px] text-gray-700'>
+                  <h3 className='mt-3 text-[16px] text-gray-700'>
                     We believe Frames should be:
-                  </p>
+                  </h3>
                   <ul className='list-disc ml-5 text-[16px] text-gray-700 leading-relaxed'>
                     <li>
                       <span className='text-red-500 font-semibold'>Sexy</span> –
@@ -198,7 +198,7 @@ export default function AboutPage () {
             <p className='text-gray-100 text-[15px] leading-relaxed mb-5'>
               So go ahead. Browse around. Laugh a little. Buy a frame or ten.
               <br />
-              Your walls deserve some attention.
+              Your wall deserves some attention.
             </p>
             <div className='flex justify-center'>
               <Image
