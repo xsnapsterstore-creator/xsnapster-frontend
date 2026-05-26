@@ -112,7 +112,7 @@ export default function ProductDetailsPage ({ prod }) {
 
   const categSlug = prod.category.toLowerCase().replace(/\s+/g, '-')
   const subCategSlug = prod.subcategory.toLowerCase().replace(/\s+/g, '-')
-  const shareUrl = `https://xsnapster.store/categories/${categSlug}/${subCategSlug}/${prod.id}`
+  const shareUrl = `https://www.xsnapster.store/categories/${categSlug}/${subCategSlug}/${prod.id}`
 
   const handleShare = () => {
     if (navigator.share) {
@@ -263,7 +263,7 @@ export default function ProductDetailsPage ({ prod }) {
           )}
 
           {/* Product Info */}
-          <div className='lg:h-screen lg:w-full lg:overflow-y-auto scrollbar-hide'>
+          <div className='lg:sticky lg:top-34 lg:w-full lg:overflow-y-auto scrollbar-hide'>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
