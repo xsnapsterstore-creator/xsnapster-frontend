@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Product from '../Product/Product'
 import SubCategoryChips from './SubCategoryChips'
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { fetchSubCategoriesProduct } from '../API/api'
-import { motion } from 'framer-motion'
 import { CategoryTitle } from '../Data/data'
 import { CategorySubtitle } from '../Data/data'
 import ProductCardSkeleton from '../Product_Skeleton/ProductSkeleton'
@@ -16,28 +14,51 @@ const CategoryPage = ({ category, productName, SubCategory }) => {
   const [products, setProducts] = useState(productName)
   const router = useRouter()
   const { category_name, sub_category_name } = router.query
-  let subCateg = SubCategory
+  const prevSubCategoryRef = useRef()
+  const isFirstReadyRef = useRef(true)
+
+  useEffect(() => {
+    if (!router.isReady) return
+
+    setSelectedCategory(sub_category_name || null)
+
+    if (isFirstReadyRef.current) {
+      isFirstReadyRef.current = false
+      prevSubCategoryRef.current = sub_category_name
+      return
+    }
+
+    if (prevSubCategoryRef.current === sub_category_name) return
+    prevSubCategoryRef.current = sub_category_name
+
+    const subCat = sub_category_name
+      ? SubCategory.find(cat => cat.slug === sub_category_name)
+      : SubCategory[0]
+
+    if (!subCat?.id) return
+
+    const loadProducts = async () => {
+      setLoading(true)
+      try {
+        const res = await fetchSubCategoriesProduct(subCat.id)
+        const data = await res.json()
+        setProducts(data)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setProducts(productName)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProducts()
+  }, [sub_category_name, router.isReady, SubCategory, productName])
 
   const handleSubCategorySelect = async cat => {
-    setLoading(true)
-    setSelectedCategory(cat.slug)
-
     await router.push(`/categories/${category}/${cat.slug}`, undefined, {
       shallow: true,
       scroll: false
     })
-
-    try {
-      const res = await fetchSubCategoriesProduct(cat.id)
-      const data = await res.json()
-
-      setProducts(data)
-    } catch (error) {
-      console.error('Error fetching products:', error)
-      setProducts(productName)
-    } finally {
-      setLoading(false)
-    }
   }
 
   return (
