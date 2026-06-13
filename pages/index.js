@@ -17,16 +17,25 @@ export default function Home ({ products, category }) {
   )
 }
 
-export async function getStaticProps () {
-  const res = await fetchHomepage()
-  const prodData = await res.json()
-  const cat = await fetchCategories()
-  const category = await cat.json()
-  return {
-    props: {
-      products: prodData || [],
-      category: category || []
-    },
-    revalidate: 180
+export async function getServerSideProps () {
+  try {
+    const res = await fetchHomepage()
+    const prodData = await res.json()
+    const cat = await fetchCategories()
+    const category = await cat.json()
+    return {
+      props: {
+        products: prodData || [],
+        category: category || []
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch homepage data:', error)
+    return {
+      props: {
+        products: [],
+        category: []
+      }
+    }
   }
 }
