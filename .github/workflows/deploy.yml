@@ -45,3 +45,8 @@ jobs:
 
             docker compose pull frontend
             docker compose up -d frontend
+
+            docker image prune -af
+
+            echo "Deployment successful"
+            docker ps

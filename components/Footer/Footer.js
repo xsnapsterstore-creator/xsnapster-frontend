@@ -191,11 +191,6 @@ const Footer = () => {
                       <MailOutlineIcon className='cursor-pointer hover:text-white scale-110 transition' />
                     </Link>
                   </li>
-                  <li>
-                    <Link href='tel:+918177046231'>
-                      <CallIcon className='cursor-pointer hover:text-white scale-110 transition' />
-                    </Link>
-                  </li>
                 </ul>
               </div>
             </div>
@@ -471,9 +466,6 @@ const Footer = () => {
                 </Link>
                 <Link href='mailto:contact@xsnapster.store'>
                   <MailOutlineIcon className='cursor-pointer hover:text-white scale-110 transition' />
-                </Link>
-                <Link href='tel:+918177046231'>
-                  <CallIcon className='cursor-pointer hover:text-white scale-110 transition' />
                 </Link>
               </div>
             </div>
