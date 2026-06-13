@@ -17,7 +17,7 @@ export default function Home ({ products, category }) {
   )
 }
 
-export async function getServerSideProps () {
+export async function getStaticProps () {
   try {
     const res = await fetchHomepage()
     const prodData = await res.json()
@@ -27,15 +27,17 @@ export async function getServerSideProps () {
       props: {
         products: prodData || [],
         category: category || []
-      }
+      },
+      revalidate: 180
     }
   } catch (error) {
-    console.error('Failed to fetch homepage data:', error)
+    console.error('Build-time fetch failed, using empty fallback:', error)
     return {
       props: {
         products: [],
         category: []
-      }
+      },
+      revalidate: 60 // retry sooner since we have no data
     }
   }
 }
