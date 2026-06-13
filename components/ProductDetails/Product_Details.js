@@ -116,12 +116,8 @@ export default function ProductDetailsPage ({ prod }) {
 
   const handleShare = () => {
     if (navigator.share) {
-      const message = `💥 Check out this Premium Aesthetic Frame & Poster from XSNAPSTER !
-    
-    ${shareUrl}`
-
       navigator.share({
-        text: message
+        text: shareUrl
       })
     } else {
       alert('Sharing is not supported on this device.')
