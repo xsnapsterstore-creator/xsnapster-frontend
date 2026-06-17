@@ -42,14 +42,6 @@ const offers = [
     discount: '₹1797 OFF'
   },
   {
-    id: 8,
-    title: 'Poster Offer',
-    description: 'Buy10Get15',
-    condition:
-      'Offer applies when you add 25 Posters and then apply valid coupon.',
-    discount: '₹1935 OFF'
-  },
-  {
     id: 9,
     title: 'A4 Size Frame Offer',
     description: 'Buy6Get5',

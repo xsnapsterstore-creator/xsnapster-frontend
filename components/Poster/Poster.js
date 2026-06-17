@@ -3,19 +3,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const banners = [
-  '/bmw_1.webp',
-  '/defender_1.webp',
-  '/porsche_1.webp',
-  '/bmw_2.webp',
-  '/ferrari_1.webp'
+  '/anime_mob.png',
+  '/car_mob.png',
+  '/forher_mob.png',
+  '/movie_mob.png',
+  '/bw_mob.png'
 ]
 
 const desktopBanners = [
-  '/bmw_desktop.png',
-  '/defender_desktop.png',
-  '/porsche_desktop.png',
-  '/bmw_desktop1.png',
-  '/ferrari_desktop.png'
+  '/anime_desk.png',
+  '/car_desk.png',
+  '/forher_desk.png',
+  '/movie_desk.png',
+  '/bw_desk.png'
 ]
 
 export default function Poster ({ categories }) {
@@ -117,9 +117,10 @@ export default function Poster ({ categories }) {
 
       {/* Content */}
       <div className='absolute left-5 md:left-14 top-1/2 -translate-y-1/2 text-white'>
-        <h4 className='text-xl md:text-3xl font-bold'>
-          Premium Frames & Offers
-        </h4>
+        <h2 className='text-lg md:text-3xl font-bold'>
+          Elevate Your Walls with <bold className='text-red-500'>X</bold>
+          SNAPSTER
+        </h2>
         <p className='text-xs md:text-sm mt-2 text-gray-200'>
           This is your sign to stop living with boring walls.
         </p>
