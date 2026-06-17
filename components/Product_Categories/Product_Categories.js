@@ -9,7 +9,7 @@ const Product_Categories = ({ categProd }) => {
     <div className='mt-3'>
       <div className='mb-3'>
         <h1 className='text-[30px] font-bold tracking-wide text-center'>
-          <bold className='text-red-500'>X</bold>SNAPSTER
+          <bold className='text-red-500'>X</bold>SNAPSTER STORE
         </h1>
         <h2 className='text-[15px] font-semibold tracking-wide text-center'>
           #TRENDINGNOW!

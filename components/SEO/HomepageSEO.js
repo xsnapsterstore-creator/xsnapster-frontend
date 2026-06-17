@@ -9,11 +9,7 @@ const HomepageSEO = ({ products, category }) => {
     category[ind]?.image_links[0] || 'https://www.xsnapster.store/logo.png'
   const keyword =
     'XSNAPSTER, Trending Frames & Posters in India, Aesthetic Frames & Posters by XSNAPSTER, Frames under 399, Posters under 99, Car Frames & Posters, Anime Frames & Posters, aesthetic wall decor India, Pinterest room decor India, acrylic photo frames India'
-  const prod = products.map(pro => {
-    return pro.products[0]
-  })
-  const finalProd = prod.filter(Boolean)
-  const title = "XSNAPSTER | Trending Frames & Posters in India"
+  const title = 'XSNAPSTER STORE | Trending Frames & Posters in India'
   const Desc =
     'Elevate your walls with our most-loved premium photo frames and trending posters. From minimalist frames to viral art prints, see what’s transforming homes today. Shop the best-sellers at XSNAPSTER.'
   const url = 'https://www.xsnapster.store/'
