@@ -5,11 +5,12 @@ import Image from 'next/image'
 
 const Orders = () => {
   const currentYear = new Date().getFullYear()
-  // const years = Array.from({ length: 30 }, (_, i) => currentYear - i)
+  const years = Array.from({ length: 30 }, (_, i) => currentYear - i)
   const months = Array.from({ length: 12 }, (_, i) =>
     new Date(0, i).toLocaleString('en-US', { month: 'long' })
   )
   const [openOrderId, setOpenOrderId] = useState(null)
+  const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
@@ -38,6 +39,13 @@ const Orders = () => {
   useEffect(() => {
     let result = [...data]
 
+    if (year) {
+      result = result.filter(item => {
+        const currYear = new Date(item.created_at).getUTCFullYear()
+        return currYear === Number(year)
+      })
+    }
+
     if (month) {
       result = result.filter(item => {
         const currMonth = new Date(item.created_at).getUTCMonth() + 1
@@ -46,7 +54,7 @@ const Orders = () => {
     }
 
     setFilteredData(result)
-  }, [month, data])
+  }, [year, month, data])
 
   return (
     <div className='p-6 bg-gray-50 rounded-xl shadow-sm border border-gray-200 min-h-screen'>
@@ -75,6 +83,19 @@ const Orders = () => {
         />
 
         <select
+          value={year}
+          onChange={e => setYear(e.target.value)}
+          className='px-4 py-2 border border-gray-300 rounded-lg text-sm'
+        >
+          <option value=''>All Years</option>
+          {years.map(y => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+
+        <select
           value={month}
           onChange={e => setMonth(e.target.value)}
           className='px-4 py-2 border border-gray-300 rounded-lg text-sm'
@@ -86,19 +107,6 @@ const Orders = () => {
             </option>
           ))}
         </select>
-
-        {/* <select
-          value={status}
-          onChange={e => setStatus(e.target.value)}
-          className='px-4 py-2 border border-gray-300 rounded-lg text-sm'
-        >
-          <option value=''>All Status</option>
-          <option value='CONFIRMED'>CONFIRMED</option>
-          <option value='DELIVERED'>DELIVERED</option>
-          <option value='SHIPPED'>SHIPPED</option>
-          <option value='PENDING'>PENDING</option>
-          <option value='CANCELLED'>CANCELLED</option>
-        </select> */}
       </div>
 
       {/* Orders Table */}
