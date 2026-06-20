@@ -439,7 +439,7 @@ export default function ProductDetailsPage ({ prod }) {
         {/* Fullscreen Image Overlay */}
         {fullscreenImage && (
           <div
-            className='fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4'
+            className='fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-5'
             onClick={() => setFullscreenImage(null)}
           >
             <button
@@ -453,7 +453,7 @@ export default function ProductDetailsPage ({ prod }) {
               alt='Full preview'
               width={800}
               height={600}
-              className='max-w-full max-h-[90vh] rounded-xl object-contain shadow-2xl'
+              className='max-w-full max-h-[95vh] rounded-xl object-cover'
               onClick={e => e.stopPropagation()}
             />
           </div>
